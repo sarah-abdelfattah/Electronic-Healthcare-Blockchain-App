@@ -1,0 +1,10 @@
+- create a smart contract --> EHR.sol
+- deploy thing f el migration
+- connect it to the blockchain
+- put the smart contract on the blockchain and talk to it 
+----------------------------------------------------------------------------------------------------------
+on the console (should not have build files and ganache should be open):
+truffle compile
+truffle migrate
+truffle console
+then deal with is ba2a
