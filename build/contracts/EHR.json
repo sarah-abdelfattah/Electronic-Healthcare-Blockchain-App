@@ -4,78 +4,128 @@
     {
       "constant": true,
       "inputs": [],
-      "name": "patients",
+      "name": "regularVisitsCount",
       "outputs": [
         {
           "name": "",
-          "type": "uint256"
+          "type": "int256"
         }
       ],
       "payable": false,
       "stateMutability": "view",
       "type": "function",
-      "signature": "0x134a25c5"
+      "signature": "0x62e59cf7"
     },
     {
       "constant": true,
-      "inputs": [],
-      "name": "regularVisits",
-      "outputs": [
+      "inputs": [
         {
           "name": "",
-          "type": "uint256"
+          "type": "int256"
         }
       ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function",
-      "signature": "0x81260d94"
-    },
-    {
-      "constant": true,
-      "inputs": [],
-      "name": "labVisits",
-      "outputs": [
-        {
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function",
-      "signature": "0xc1e75db0"
-    },
-    {
-      "constant": true,
-      "inputs": [],
       "name": "clinics",
       "outputs": [
         {
-          "name": "",
-          "type": "uint256"
+          "name": "clinicID",
+          "type": "int256"
+        },
+        {
+          "name": "location",
+          "type": "string"
+        },
+        {
+          "name": "numberOfPatients",
+          "type": "int256"
         }
       ],
       "payable": false,
       "stateMutability": "view",
       "type": "function",
-      "signature": "0xda5a9986"
+      "signature": "0x7fc08cc6"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "labVisitsCount",
+      "outputs": [
+        {
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function",
+      "signature": "0x8aa08e1d"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "patientsCount",
+      "outputs": [
+        {
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function",
+      "signature": "0xb6b1289d"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "clinicsCount",
+      "outputs": [
+        {
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function",
+      "signature": "0xc249bf7e"
+    },
+    {
+      "inputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor",
+      "signature": "constructor"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_location",
+          "type": "string"
+        }
+      ],
+      "name": "createClinic",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function",
+      "signature": "0xff779a09"
     }
   ],
-  "bytecode": "0x60806040526000805560006001556000600255600060035534801561002357600080fd5b5060ff806100326000396000f3fe608060405260043610605c5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663134a25c58114606157806381260d94146085578063c1e75db0146097578063da5a99861460a9575b600080fd5b348015606c57600080fd5b50607360bb565b60408051918252519081900360200190f35b348015609057600080fd5b50607360c1565b34801560a257600080fd5b50607360c7565b34801560b457600080fd5b50607360cd565b60005481565b60025481565b60035481565b6001548156fea165627a7a72305820c509f6be58557f60c41af042c57d65ca071233541baa2e0e279637f59a60bb2a0029",
-  "deployedBytecode": "0x608060405260043610605c5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663134a25c58114606157806381260d94146085578063c1e75db0146097578063da5a99861460a9575b600080fd5b348015606c57600080fd5b50607360bb565b60408051918252519081900360200190f35b348015609057600080fd5b50607360c1565b34801560a257600080fd5b50607360c7565b34801560b457600080fd5b50607360cd565b60005481565b60025481565b60035481565b6001548156fea165627a7a72305820c509f6be58557f60c41af042c57d65ca071233541baa2e0e279637f59a60bb2a0029",
-  "sourceMap": "25:133:0:-;;;65:1;42:24;;92:1;70:23;;125:1;97:29;;154:1;130:25;;25:133;8:9:-1;5:2;;;30:1;27;20:12;5:2;25:133:0;;;;;;;",
-  "deployedSourceMap": "25:133:0:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;42:24;;8:9:-1;5:2;;;30:1;27;20:12;5:2;42:24:0;;;;;;;;;;;;;;;;;;;;97:29;;8:9:-1;5:2;;;30:1;27;20:12;5:2;97:29:0;;;;130:25;;8:9:-1;5:2;;;30:1;27;20:12;5:2;130:25:0;;;;70:23;;8:9:-1;5:2;;;30:1;27;20:12;5:2;70:23:0;;;;42:24;;;;:::o;97:29::-;;;;:::o;130:25::-;;;;:::o;70:23::-;;;;:::o",
-  "source": "pragma solidity ^0.5.0;\n\ncontract EHR {\n  uint public patients = 0;\n  uint public clinics = 0;\n  uint public regularVisits = 0;\n  uint public labVisits = 0;\n} ",
+  "bytecode": "0x60806040526000805560006001556000600255600060035534801561002357600080fd5b5060408051808201909152600581527f4567797074000000000000000000000000000000000000000000000000000000602082015261006a9064010000000061006f810204565b610198565b600180548101905561007f6100db565b50604080516060810182526001805480835260208084018681526000858701819052928352600482529490912083518155935180519394859490936100c9939085019201906100fd565b50604082015181600201559050505050565b6060604051908101604052806000815260200160608152602001600081525090565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061013e57805160ff191683800117855561016b565b8280016001018555821561016b579182015b8281111561016b578251825591602001919060010190610150565b5061017792915061017b565b5090565b61019591905b808211156101775760008155600101610181565b90565b610461806101a76000396000f3fe6080604052600436106100775763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166362e59cf7811461007c5780637fc08cc6146100a35780638aa08e1d14610153578063b6b1289d14610168578063c249bf7e1461017d578063ff779a0914610192575b600080fd5b34801561008857600080fd5b50610091610247565b60408051918252519081900360200190f35b3480156100af57600080fd5b506100cd600480360360208110156100c657600080fd5b503561024d565b6040518084815260200180602001838152602001828103825284818151815260200191508051906020019080838360005b838110156101165781810151838201526020016100fe565b50505050905090810190601f1680156101435780820380516001836020036101000a031916815260200191505b5094505050505060405180910390f35b34801561015f57600080fd5b506100916102fa565b34801561017457600080fd5b50610091610300565b34801561018957600080fd5b50610091610306565b34801561019e57600080fd5b50610245600480360360208110156101b557600080fd5b8101906020810181356401000000008111156101d057600080fd5b8201836020820111156101e257600080fd5b8035906020019184600183028401116401000000008311171561020457600080fd5b91908080601f01602080910402602001604051908101604052809392919081815260200183838082843760009201919091525092955061030c945050505050565b005b60025481565b6004602090815260009182526040918290208054600180830180548651600293821615610100026000190190911692909204601f8101869004860283018601909652858252919492939092908301828280156102ea5780601f106102bf576101008083540402835291602001916102ea565b820191906000526020600020905b8154815290600101906020018083116102cd57829003601f168201915b5050505050908060020154905083565b60035481565b60005481565b60015481565b600180548101905561031c610378565b50604080516060810182526001805480835260208084018681526000858701819052928352600482529490912083518155935180519394859490936103669390850192019061039a565b50604082015181600201559050505050565b6060604051908101604052806000815260200160608152602001600081525090565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f106103db57805160ff1916838001178555610408565b82800160010185558215610408579182015b828111156104085782518255916020019190600101906103ed565b50610414929150610418565b5090565b61043291905b80821115610414576000815560010161041e565b9056fea165627a7a72305820738a0896e216bea4e6669d3b6940e0393b7bc95af909eaf6a56ea74fd76f5d130029",
+  "deployedBytecode": "0x6080604052600436106100775763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166362e59cf7811461007c5780637fc08cc6146100a35780638aa08e1d14610153578063b6b1289d14610168578063c249bf7e1461017d578063ff779a0914610192575b600080fd5b34801561008857600080fd5b50610091610247565b60408051918252519081900360200190f35b3480156100af57600080fd5b506100cd600480360360208110156100c657600080fd5b503561024d565b6040518084815260200180602001838152602001828103825284818151815260200191508051906020019080838360005b838110156101165781810151838201526020016100fe565b50505050905090810190601f1680156101435780820380516001836020036101000a031916815260200191505b5094505050505060405180910390f35b34801561015f57600080fd5b506100916102fa565b34801561017457600080fd5b50610091610300565b34801561018957600080fd5b50610091610306565b34801561019e57600080fd5b50610245600480360360208110156101b557600080fd5b8101906020810181356401000000008111156101d057600080fd5b8201836020820111156101e257600080fd5b8035906020019184600183028401116401000000008311171561020457600080fd5b91908080601f01602080910402602001604051908101604052809392919081815260200183838082843760009201919091525092955061030c945050505050565b005b60025481565b6004602090815260009182526040918290208054600180830180548651600293821615610100026000190190911692909204601f8101869004860283018601909652858252919492939092908301828280156102ea5780601f106102bf576101008083540402835291602001916102ea565b820191906000526020600020905b8154815290600101906020018083116102cd57829003601f168201915b5050505050908060020154905083565b60035481565b60005481565b60015481565b600180548101905561031c610378565b50604080516060810182526001805480835260208084018681526000858701819052928352600482529490912083518155935180519394859490936103669390850192019061039a565b50604082015181600201559050505050565b6060604051908101604052806000815260200160608152602001600081525090565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f106103db57805160ff1916838001178555610408565b82800160010185558215610408579182015b828111156104085782518255916020019190600101906103ed565b50610414929150610418565b5090565b61043291905b80821115610414576000815560010161041e565b9056fea165627a7a72305820738a0896e216bea4e6669d3b6940e0393b7bc95af909eaf6a56ea74fd76f5d130029",
+  "sourceMap": "25:2293:0:-;;;169:1;139:31;;205:1;176:30;;247:1;212:36;;285:1;254:32;;1778:59;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;1809:21:0;;;;;;;;;;;;;;;;;;;:12;;;;:21;:::i;:::-;25:2293;;2003:313;2067:12;:14;;;;;;2134:21;;:::i;:::-;-1:-1:-1;2158:109:0;;;;;;;;2178:12;;;2158:109;;;;;;;;;;-1:-1:-1;2158:109:0;;;;;;2278:21;;;:7;:21;;;;;;:31;;;;;;;;2158:109;;;;2278:21;;:31;;;;;;;;;:::i;:::-;;;;;;;;;;;;;2003:313;;:::o;25:2293::-;;;;;;;;;;;;;;;;;;;;;;;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;25:2293:0;;;-1:-1:-1;25:2293:0;:::i;:::-;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;:::o;:::-;;;;;;;",
+  "deployedSourceMap": "25:2293:0:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;212:36;;8:9:-1;5:2;;;30:1;27;20:12;5:2;212:36:0;;;;;;;;;;;;;;;;;;;;1731:40;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1731:40:0;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;1731:40:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;23:1:-1;8:100;33:3;30:1;27:10;8:100;;;90:11;;;84:18;71:11;;;64:39;52:2;45:10;8:100;;;12:14;1731:40:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;254:32;;8:9:-1;5:2;;;30:1;27;20:12;5:2;254:32:0;;;;139:31;;8:9:-1;5:2;;;30:1;27;20:12;5:2;139:31:0;;;;176:30;;8:9:-1;5:2;;;30:1;27;20:12;5:2;176:30:0;;;;2003:313;;8:9:-1;5:2;;;30:1;27;20:12;5:2;2003:313:0;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;2003:313:0;;;;;;;;21:11:-1;5:28;;2:2;;;46:1;43;36:12;2:2;2003:313:0;;35:9:-1;28:4;12:14;8:25;5:40;2:2;;;58:1;55;48:12;2:2;2003:313:0;;;;;;100:9:-1;95:1;81:12;77:20;67:8;63:35;60:50;39:11;25:12;22:29;11:107;8:2;;;131:1;128;121:12;8:2;2003:313:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;30:3:-1;22:6;14;1:33;99:1;81:16;;74:27;;;;-1:-1;2003:313:0;;-1:-1:-1;2003:313:0;;-1:-1:-1;;;;;2003:313:0;;;212:36;;;;:::o;1731:40::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;;1731:40:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;254:32::-;;;;:::o;139:31::-;;;;:::o;176:30::-;;;;:::o;2003:313::-;2067:12;:14;;;;;;2134:21;;:::i;:::-;-1:-1:-1;2158:109:0;;;;;;;;2178:12;;;2158:109;;;;;;;;;;-1:-1:-1;2158:109:0;;;;;;2278:21;;;:7;:21;;;;;;:31;;;;;;;;2158:109;;;;2278:21;;:31;;;;;;;;;:::i;:::-;;;;;;;;;;;;;2003:313;;:::o;25:2293::-;;;;;;;;;;;;;;;;;;;;;;;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;25:2293:0;;;-1:-1:-1;25:2293:0;:::i;:::-;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;:::o",
+  "source": "pragma solidity ^0.5.0;\n\ncontract EHR {\n    enum VisitTypes {\n        periodicCheckup,\n        caseManagement,\n        complain\n    }\n\n    int256 public patientsCount = 0;\n    int256 public clinicsCount = 0;\n    int256 public regularVisitsCount = 0;\n    int256 public labVisitsCount = 0;\n\n    struct Clinic {\n        int256 clinicID;\n        string location;\n        int256 numberOfPatients;\n        // Patient[] patients;\n        mapping(uint256 => Patient) patients;\n    }\n\n    struct Patient {\n        int256 patientID;\n        string name;\n        int256 age;\n        int256 weight;\n        int256 height;\n        string gender;\n        string initialBloodPressure;\n        string initialHeartRate;\n        string initialTemperature;\n        int256 regularVisitCounts;\n        int256 labVisitsCount;\n        int256 numberOfRegularVisits;\n        int256 numberOfLabVisits;\n        mapping(uint256 => RegularVisit) regularVisits;\n        mapping(uint256 => LabVisit) labVisits;\n    }\n\n    struct RegularVisit {\n        int256 regularVisitID;\n        int256 visitBloodPressure;\n        int256 visitHeartRate;\n        int256 visitTemperature;\n        string diagnosis;\n        VisitTypes visitType;\n        Prescription prescription;\n    }\n\n    struct LabVisit {\n        int256 labVisitID;\n        int256 visitBloodPressure;\n        int256 visitHeartRate;\n        int256 visitTemperature;\n        string testType;\n        string testResult;\n    }\n\n    struct Prescription {\n        string referral;\n        string followUp;\n        string lab;\n        int256 numberOfMedicines;\n        mapping(uint256 => Medicine) medicines;\n    }\n\n    struct Medicine {\n        string name;\n        string dose;\n        string period;\n    }\n\n    mapping(int256 => Clinic) public clinics;\n\n    constructor() public {\n        createClinic(\"Egypt\");\n    }\n\n    // mapping(uint => Patient) public patients;\n    // mapping(uint => RegularVisit) public regularVisits;\n    // mapping(uint => LabVisit) public labVisits;\n\n    function createClinic(string memory _location) public {\n        clinicsCount++;\n        // Patient[] memory emptyPatients;\n        Clinic memory _clinic = Clinic(\n            clinicsCount,\n            _location,\n            0\n            // emptyPatients\n        );\n\n        clinics[clinicsCount] = _clinic;\n    }\n}\n",
   "sourcePath": "/Users/sarah/GUC/Semester 10/Security/security-project/contracts/EHR.sol",
   "ast": {
     "absolutePath": "/Users/sarah/GUC/Semester 10/Security/security-project/contracts/EHR.sol",
     "exportedSymbols": {
       "EHR": [
-        14
+        147
       ]
     },
-    "id": 15,
+    "id": 148,
     "nodeType": "SourceUnit",
     "nodes": [
       {
@@ -95,47 +145,74 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 14,
+        "id": 147,
         "linearizedBaseContracts": [
-          14
+          147
         ],
         "name": "EHR",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
+            "canonicalName": "EHR.VisitTypes",
+            "id": 5,
+            "members": [
+              {
+                "id": 2,
+                "name": "periodicCheckup",
+                "nodeType": "EnumValue",
+                "src": "70:15:0"
+              },
+              {
+                "id": 3,
+                "name": "caseManagement",
+                "nodeType": "EnumValue",
+                "src": "95:14:0"
+              },
+              {
+                "id": 4,
+                "name": "complain",
+                "nodeType": "EnumValue",
+                "src": "119:8:0"
+              }
+            ],
+            "name": "VisitTypes",
+            "nodeType": "EnumDefinition",
+            "src": "44:89:0"
+          },
+          {
             "constant": false,
-            "id": 4,
-            "name": "patients",
+            "id": 8,
+            "name": "patientsCount",
             "nodeType": "VariableDeclaration",
-            "scope": 14,
-            "src": "42:24:0",
+            "scope": 147,
+            "src": "139:31:0",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_uint256",
-              "typeString": "uint256"
+              "typeIdentifier": "t_int256",
+              "typeString": "int256"
             },
             "typeName": {
-              "id": 2,
-              "name": "uint",
+              "id": 6,
+              "name": "int256",
               "nodeType": "ElementaryTypeName",
-              "src": "42:4:0",
+              "src": "139:6:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_uint256",
-                "typeString": "uint256"
+                "typeIdentifier": "t_int256",
+                "typeString": "int256"
               }
             },
             "value": {
               "argumentTypes": null,
               "hexValue": "30",
-              "id": 3,
+              "id": 7,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
               "kind": "number",
               "lValueRequested": false,
               "nodeType": "Literal",
-              "src": "65:1:0",
+              "src": "169:1:0",
               "subdenomination": null,
               "typeDescriptions": {
                 "typeIdentifier": "t_rational_0_by_1",
@@ -147,148 +224,1774 @@
           },
           {
             "constant": false,
-            "id": 7,
+            "id": 11,
+            "name": "clinicsCount",
+            "nodeType": "VariableDeclaration",
+            "scope": 147,
+            "src": "176:30:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_int256",
+              "typeString": "int256"
+            },
+            "typeName": {
+              "id": 9,
+              "name": "int256",
+              "nodeType": "ElementaryTypeName",
+              "src": "176:6:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_int256",
+                "typeString": "int256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "30",
+              "id": 10,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "205:1:0",
+              "subdenomination": null,
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_0_by_1",
+                "typeString": "int_const 0"
+              },
+              "value": "0"
+            },
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 14,
+            "name": "regularVisitsCount",
+            "nodeType": "VariableDeclaration",
+            "scope": 147,
+            "src": "212:36:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_int256",
+              "typeString": "int256"
+            },
+            "typeName": {
+              "id": 12,
+              "name": "int256",
+              "nodeType": "ElementaryTypeName",
+              "src": "212:6:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_int256",
+                "typeString": "int256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "30",
+              "id": 13,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "247:1:0",
+              "subdenomination": null,
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_0_by_1",
+                "typeString": "int_const 0"
+              },
+              "value": "0"
+            },
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 17,
+            "name": "labVisitsCount",
+            "nodeType": "VariableDeclaration",
+            "scope": 147,
+            "src": "254:32:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_int256",
+              "typeString": "int256"
+            },
+            "typeName": {
+              "id": 15,
+              "name": "int256",
+              "nodeType": "ElementaryTypeName",
+              "src": "254:6:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_int256",
+                "typeString": "int256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "30",
+              "id": 16,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "285:1:0",
+              "subdenomination": null,
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_0_by_1",
+                "typeString": "int_const 0"
+              },
+              "value": "0"
+            },
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "EHR.Clinic",
+            "id": 28,
+            "members": [
+              {
+                "constant": false,
+                "id": 19,
+                "name": "clinicID",
+                "nodeType": "VariableDeclaration",
+                "scope": 28,
+                "src": "317:15:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 18,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "317:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 21,
+                "name": "location",
+                "nodeType": "VariableDeclaration",
+                "scope": 28,
+                "src": "342:15:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 20,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "342:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 23,
+                "name": "numberOfPatients",
+                "nodeType": "VariableDeclaration",
+                "scope": 28,
+                "src": "367:23:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 22,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "367:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27,
+                "name": "patients",
+                "nodeType": "VariableDeclaration",
+                "scope": 28,
+                "src": "431:36:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Patient_$63_storage_$",
+                  "typeString": "mapping(uint256 => struct EHR.Patient)"
+                },
+                "typeName": {
+                  "id": 26,
+                  "keyType": {
+                    "id": 24,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "439:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "nodeType": "Mapping",
+                  "src": "431:27:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Patient_$63_storage_$",
+                    "typeString": "mapping(uint256 => struct EHR.Patient)"
+                  },
+                  "valueType": {
+                    "contractScope": null,
+                    "id": 25,
+                    "name": "Patient",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 63,
+                    "src": "450:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Patient_$63_storage_ptr",
+                      "typeString": "struct EHR.Patient"
+                    }
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Clinic",
+            "nodeType": "StructDefinition",
+            "scope": 147,
+            "src": "293:181:0",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "EHR.Patient",
+            "id": 63,
+            "members": [
+              {
+                "constant": false,
+                "id": 30,
+                "name": "patientID",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "505:16:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 29,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "505:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 32,
+                "name": "name",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "531:11:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 31,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "531:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34,
+                "name": "age",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "552:10:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 33,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "552:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 36,
+                "name": "weight",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "572:13:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 35,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "572:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 38,
+                "name": "height",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "595:13:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 37,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "595:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 40,
+                "name": "gender",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "618:13:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 39,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "618:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 42,
+                "name": "initialBloodPressure",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "641:27:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 41,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "641:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 44,
+                "name": "initialHeartRate",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "678:23:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 43,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "678:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 46,
+                "name": "initialTemperature",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "711:25:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 45,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "711:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 48,
+                "name": "regularVisitCounts",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "746:25:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 47,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "746:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 50,
+                "name": "labVisitsCount",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "781:21:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 49,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "781:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 52,
+                "name": "numberOfRegularVisits",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "812:28:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 51,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "812:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 54,
+                "name": "numberOfLabVisits",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "850:24:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 53,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "850:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 58,
+                "name": "regularVisits",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "884:46:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_RegularVisit_$78_storage_$",
+                  "typeString": "mapping(uint256 => struct EHR.RegularVisit)"
+                },
+                "typeName": {
+                  "id": 57,
+                  "keyType": {
+                    "id": 55,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "892:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "nodeType": "Mapping",
+                  "src": "884:32:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_RegularVisit_$78_storage_$",
+                    "typeString": "mapping(uint256 => struct EHR.RegularVisit)"
+                  },
+                  "valueType": {
+                    "contractScope": null,
+                    "id": 56,
+                    "name": "RegularVisit",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 78,
+                    "src": "903:12:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_RegularVisit_$78_storage_ptr",
+                      "typeString": "struct EHR.RegularVisit"
+                    }
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 62,
+                "name": "labVisits",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "940:38:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_LabVisit_$91_storage_$",
+                  "typeString": "mapping(uint256 => struct EHR.LabVisit)"
+                },
+                "typeName": {
+                  "id": 61,
+                  "keyType": {
+                    "id": 59,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "948:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "nodeType": "Mapping",
+                  "src": "940:28:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_LabVisit_$91_storage_$",
+                    "typeString": "mapping(uint256 => struct EHR.LabVisit)"
+                  },
+                  "valueType": {
+                    "contractScope": null,
+                    "id": 60,
+                    "name": "LabVisit",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 91,
+                    "src": "959:8:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_LabVisit_$91_storage_ptr",
+                      "typeString": "struct EHR.LabVisit"
+                    }
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Patient",
+            "nodeType": "StructDefinition",
+            "scope": 147,
+            "src": "480:505:0",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "EHR.RegularVisit",
+            "id": 78,
+            "members": [
+              {
+                "constant": false,
+                "id": 65,
+                "name": "regularVisitID",
+                "nodeType": "VariableDeclaration",
+                "scope": 78,
+                "src": "1021:21:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 64,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1021:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 67,
+                "name": "visitBloodPressure",
+                "nodeType": "VariableDeclaration",
+                "scope": 78,
+                "src": "1052:25:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 66,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1052:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 69,
+                "name": "visitHeartRate",
+                "nodeType": "VariableDeclaration",
+                "scope": 78,
+                "src": "1087:21:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 68,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1087:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 71,
+                "name": "visitTemperature",
+                "nodeType": "VariableDeclaration",
+                "scope": 78,
+                "src": "1118:23:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 70,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1118:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 73,
+                "name": "diagnosis",
+                "nodeType": "VariableDeclaration",
+                "scope": 78,
+                "src": "1151:16:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 72,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1151:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 75,
+                "name": "visitType",
+                "nodeType": "VariableDeclaration",
+                "scope": 78,
+                "src": "1177:20:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_enum$_VisitTypes_$5",
+                  "typeString": "enum EHR.VisitTypes"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 74,
+                  "name": "VisitTypes",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 5,
+                  "src": "1177:10:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_VisitTypes_$5",
+                    "typeString": "enum EHR.VisitTypes"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 77,
+                "name": "prescription",
+                "nodeType": "VariableDeclaration",
+                "scope": 78,
+                "src": "1207:25:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Prescription_$104_storage_ptr",
+                  "typeString": "struct EHR.Prescription"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 76,
+                  "name": "Prescription",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 104,
+                  "src": "1207:12:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Prescription_$104_storage_ptr",
+                    "typeString": "struct EHR.Prescription"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "RegularVisit",
+            "nodeType": "StructDefinition",
+            "scope": 147,
+            "src": "991:248:0",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "EHR.LabVisit",
+            "id": 91,
+            "members": [
+              {
+                "constant": false,
+                "id": 80,
+                "name": "labVisitID",
+                "nodeType": "VariableDeclaration",
+                "scope": 91,
+                "src": "1271:17:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 79,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1271:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 82,
+                "name": "visitBloodPressure",
+                "nodeType": "VariableDeclaration",
+                "scope": 91,
+                "src": "1298:25:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 81,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1298:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 84,
+                "name": "visitHeartRate",
+                "nodeType": "VariableDeclaration",
+                "scope": 91,
+                "src": "1333:21:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 83,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1333:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 86,
+                "name": "visitTemperature",
+                "nodeType": "VariableDeclaration",
+                "scope": 91,
+                "src": "1364:23:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 85,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1364:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 88,
+                "name": "testType",
+                "nodeType": "VariableDeclaration",
+                "scope": 91,
+                "src": "1397:15:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 87,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1397:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 90,
+                "name": "testResult",
+                "nodeType": "VariableDeclaration",
+                "scope": 91,
+                "src": "1422:17:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 89,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1422:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "LabVisit",
+            "nodeType": "StructDefinition",
+            "scope": 147,
+            "src": "1245:201:0",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "EHR.Prescription",
+            "id": 104,
+            "members": [
+              {
+                "constant": false,
+                "id": 93,
+                "name": "referral",
+                "nodeType": "VariableDeclaration",
+                "scope": 104,
+                "src": "1482:15:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 92,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1482:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 95,
+                "name": "followUp",
+                "nodeType": "VariableDeclaration",
+                "scope": 104,
+                "src": "1507:15:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 94,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1507:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 97,
+                "name": "lab",
+                "nodeType": "VariableDeclaration",
+                "scope": 104,
+                "src": "1532:10:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 96,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1532:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 99,
+                "name": "numberOfMedicines",
+                "nodeType": "VariableDeclaration",
+                "scope": 104,
+                "src": "1552:24:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 98,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1552:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 103,
+                "name": "medicines",
+                "nodeType": "VariableDeclaration",
+                "scope": 104,
+                "src": "1586:38:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Medicine_$111_storage_$",
+                  "typeString": "mapping(uint256 => struct EHR.Medicine)"
+                },
+                "typeName": {
+                  "id": 102,
+                  "keyType": {
+                    "id": 100,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1594:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "nodeType": "Mapping",
+                  "src": "1586:28:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Medicine_$111_storage_$",
+                    "typeString": "mapping(uint256 => struct EHR.Medicine)"
+                  },
+                  "valueType": {
+                    "contractScope": null,
+                    "id": 101,
+                    "name": "Medicine",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 111,
+                    "src": "1605:8:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Medicine_$111_storage_ptr",
+                      "typeString": "struct EHR.Medicine"
+                    }
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Prescription",
+            "nodeType": "StructDefinition",
+            "scope": 147,
+            "src": "1452:179:0",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "EHR.Medicine",
+            "id": 111,
+            "members": [
+              {
+                "constant": false,
+                "id": 106,
+                "name": "name",
+                "nodeType": "VariableDeclaration",
+                "scope": 111,
+                "src": "1663:11:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 105,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1663:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 108,
+                "name": "dose",
+                "nodeType": "VariableDeclaration",
+                "scope": 111,
+                "src": "1684:11:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 107,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1684:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 110,
+                "name": "period",
+                "nodeType": "VariableDeclaration",
+                "scope": 111,
+                "src": "1705:13:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 109,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1705:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Medicine",
+            "nodeType": "StructDefinition",
+            "scope": 147,
+            "src": "1637:88:0",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 115,
             "name": "clinics",
             "nodeType": "VariableDeclaration",
-            "scope": 14,
-            "src": "70:23:0",
+            "scope": 147,
+            "src": "1731:40:0",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_uint256",
-              "typeString": "uint256"
+              "typeIdentifier": "t_mapping$_t_int256_$_t_struct$_Clinic_$28_storage_$",
+              "typeString": "mapping(int256 => struct EHR.Clinic)"
             },
             "typeName": {
-              "id": 5,
-              "name": "uint",
-              "nodeType": "ElementaryTypeName",
-              "src": "70:4:0",
+              "id": 114,
+              "keyType": {
+                "id": 112,
+                "name": "int256",
+                "nodeType": "ElementaryTypeName",
+                "src": "1739:6:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "1731:25:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_uint256",
-                "typeString": "uint256"
+                "typeIdentifier": "t_mapping$_t_int256_$_t_struct$_Clinic_$28_storage_$",
+                "typeString": "mapping(int256 => struct EHR.Clinic)"
+              },
+              "valueType": {
+                "contractScope": null,
+                "id": 113,
+                "name": "Clinic",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 28,
+                "src": "1749:6:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Clinic_$28_storage_ptr",
+                  "typeString": "struct EHR.Clinic"
+                }
               }
             },
-            "value": {
-              "argumentTypes": null,
-              "hexValue": "30",
-              "id": 6,
-              "isConstant": false,
-              "isLValue": false,
-              "isPure": true,
-              "kind": "number",
-              "lValueRequested": false,
-              "nodeType": "Literal",
-              "src": "92:1:0",
-              "subdenomination": null,
-              "typeDescriptions": {
-                "typeIdentifier": "t_rational_0_by_1",
-                "typeString": "int_const 0"
-              },
-              "value": "0"
-            },
+            "value": null,
             "visibility": "public"
           },
           {
-            "constant": false,
-            "id": 10,
-            "name": "regularVisits",
-            "nodeType": "VariableDeclaration",
-            "scope": 14,
-            "src": "97:29:0",
-            "stateVariable": true,
-            "storageLocation": "default",
-            "typeDescriptions": {
-              "typeIdentifier": "t_uint256",
-              "typeString": "uint256"
+            "body": {
+              "id": 122,
+              "nodeType": "Block",
+              "src": "1799:38:0",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "4567797074",
+                        "id": 119,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "1822:7:0",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_d4c1f4eaecffa0c583b1f60abacf2587c10c668fa31f7826c627139251bb9eed",
+                          "typeString": "literal_string \"Egypt\""
+                        },
+                        "value": "Egypt"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_stringliteral_d4c1f4eaecffa0c583b1f60abacf2587c10c668fa31f7826c627139251bb9eed",
+                          "typeString": "literal_string \"Egypt\""
+                        }
+                      ],
+                      "id": 118,
+                      "name": "createClinic",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 146,
+                      "src": "1809:12:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (string memory)"
+                      }
+                    },
+                    "id": 120,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1809:21:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 121,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1809:21:0"
+                }
+              ]
             },
-            "typeName": {
-              "id": 8,
-              "name": "uint",
-              "nodeType": "ElementaryTypeName",
-              "src": "97:4:0",
-              "typeDescriptions": {
-                "typeIdentifier": "t_uint256",
-                "typeString": "uint256"
-              }
+            "documentation": null,
+            "id": 123,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 116,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1789:2:0"
             },
-            "value": {
-              "argumentTypes": null,
-              "hexValue": "30",
-              "id": 9,
-              "isConstant": false,
-              "isLValue": false,
-              "isPure": true,
-              "kind": "number",
-              "lValueRequested": false,
-              "nodeType": "Literal",
-              "src": "125:1:0",
-              "subdenomination": null,
-              "typeDescriptions": {
-                "typeIdentifier": "t_rational_0_by_1",
-                "typeString": "int_const 0"
-              },
-              "value": "0"
+            "returnParameters": {
+              "id": 117,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1799:0:0"
             },
+            "scope": 147,
+            "src": "1778:59:0",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
             "visibility": "public"
           },
           {
-            "constant": false,
-            "id": 13,
-            "name": "labVisits",
-            "nodeType": "VariableDeclaration",
-            "scope": 14,
-            "src": "130:25:0",
-            "stateVariable": true,
-            "storageLocation": "default",
-            "typeDescriptions": {
-              "typeIdentifier": "t_uint256",
-              "typeString": "uint256"
+            "body": {
+              "id": 145,
+              "nodeType": "Block",
+              "src": "2057:259:0",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 129,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "UnaryOperation",
+                    "operator": "++",
+                    "prefix": false,
+                    "src": "2067:14:0",
+                    "subExpression": {
+                      "argumentTypes": null,
+                      "id": 128,
+                      "name": "clinicsCount",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 11,
+                      "src": "2067:12:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_int256",
+                        "typeString": "int256"
+                      }
+                    },
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_int256",
+                      "typeString": "int256"
+                    }
+                  },
+                  "id": 130,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2067:14:0"
+                },
+                {
+                  "assignments": [
+                    132
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 132,
+                      "name": "_clinic",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 145,
+                      "src": "2134:21:0",
+                      "stateVariable": false,
+                      "storageLocation": "memory",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Clinic_$28_memory_ptr",
+                        "typeString": "struct EHR.Clinic"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 131,
+                        "name": "Clinic",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 28,
+                        "src": "2134:6:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Clinic_$28_storage_ptr",
+                          "typeString": "struct EHR.Clinic"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 138,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 134,
+                        "name": "clinicsCount",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 11,
+                        "src": "2178:12:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_int256",
+                          "typeString": "int256"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 135,
+                        "name": "_location",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 125,
+                        "src": "2204:9:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "30",
+                        "id": 136,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "number",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "2227:1:0",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_rational_0_by_1",
+                          "typeString": "int_const 0"
+                        },
+                        "value": "0"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_int256",
+                          "typeString": "int256"
+                        },
+                        {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        },
+                        {
+                          "typeIdentifier": "t_rational_0_by_1",
+                          "typeString": "int_const 0"
+                        }
+                      ],
+                      "id": 133,
+                      "name": "Clinic",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 28,
+                      "src": "2158:6:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_struct$_Clinic_$28_storage_ptr_$",
+                        "typeString": "type(struct EHR.Clinic storage pointer)"
+                      }
+                    },
+                    "id": 137,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "structConstructorCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2158:109:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Clinic_$28_memory",
+                      "typeString": "struct EHR.Clinic memory"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "2134:133:0"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 143,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "baseExpression": {
+                        "argumentTypes": null,
+                        "id": 139,
+                        "name": "clinics",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 115,
+                        "src": "2278:7:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_int256_$_t_struct$_Clinic_$28_storage_$",
+                          "typeString": "mapping(int256 => struct EHR.Clinic storage ref)"
+                        }
+                      },
+                      "id": 141,
+                      "indexExpression": {
+                        "argumentTypes": null,
+                        "id": 140,
+                        "name": "clinicsCount",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 11,
+                        "src": "2286:12:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_int256",
+                          "typeString": "int256"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "2278:21:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Clinic_$28_storage",
+                        "typeString": "struct EHR.Clinic storage ref"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 142,
+                      "name": "_clinic",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 132,
+                      "src": "2302:7:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Clinic_$28_memory_ptr",
+                        "typeString": "struct EHR.Clinic memory"
+                      }
+                    },
+                    "src": "2278:31:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Clinic_$28_storage",
+                      "typeString": "struct EHR.Clinic storage ref"
+                    }
+                  },
+                  "id": 144,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2278:31:0"
+                }
+              ]
             },
-            "typeName": {
-              "id": 11,
-              "name": "uint",
-              "nodeType": "ElementaryTypeName",
-              "src": "130:4:0",
-              "typeDescriptions": {
-                "typeIdentifier": "t_uint256",
-                "typeString": "uint256"
-              }
+            "documentation": null,
+            "id": 146,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "createClinic",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 126,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 125,
+                  "name": "_location",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 146,
+                  "src": "2025:23:0",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 124,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2025:6:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2024:25:0"
             },
-            "value": {
-              "argumentTypes": null,
-              "hexValue": "30",
-              "id": 12,
-              "isConstant": false,
-              "isLValue": false,
-              "isPure": true,
-              "kind": "number",
-              "lValueRequested": false,
-              "nodeType": "Literal",
-              "src": "154:1:0",
-              "subdenomination": null,
-              "typeDescriptions": {
-                "typeIdentifier": "t_rational_0_by_1",
-                "typeString": "int_const 0"
-              },
-              "value": "0"
+            "returnParameters": {
+              "id": 127,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2057:0:0"
             },
+            "scope": 147,
+            "src": "2003:313:0",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 15,
-        "src": "25:133:0"
+        "scope": 148,
+        "src": "25:2293:0"
       }
     ],
-    "src": "0:159:0"
+    "src": "0:2319:0"
   },
   "legacyAST": {
     "absolutePath": "/Users/sarah/GUC/Semester 10/Security/security-project/contracts/EHR.sol",
     "exportedSymbols": {
       "EHR": [
-        14
+        147
       ]
     },
-    "id": 15,
+    "id": 148,
     "nodeType": "SourceUnit",
     "nodes": [
       {
@@ -308,47 +2011,74 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 14,
+        "id": 147,
         "linearizedBaseContracts": [
-          14
+          147
         ],
         "name": "EHR",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
+            "canonicalName": "EHR.VisitTypes",
+            "id": 5,
+            "members": [
+              {
+                "id": 2,
+                "name": "periodicCheckup",
+                "nodeType": "EnumValue",
+                "src": "70:15:0"
+              },
+              {
+                "id": 3,
+                "name": "caseManagement",
+                "nodeType": "EnumValue",
+                "src": "95:14:0"
+              },
+              {
+                "id": 4,
+                "name": "complain",
+                "nodeType": "EnumValue",
+                "src": "119:8:0"
+              }
+            ],
+            "name": "VisitTypes",
+            "nodeType": "EnumDefinition",
+            "src": "44:89:0"
+          },
+          {
             "constant": false,
-            "id": 4,
-            "name": "patients",
+            "id": 8,
+            "name": "patientsCount",
             "nodeType": "VariableDeclaration",
-            "scope": 14,
-            "src": "42:24:0",
+            "scope": 147,
+            "src": "139:31:0",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_uint256",
-              "typeString": "uint256"
+              "typeIdentifier": "t_int256",
+              "typeString": "int256"
             },
             "typeName": {
-              "id": 2,
-              "name": "uint",
+              "id": 6,
+              "name": "int256",
               "nodeType": "ElementaryTypeName",
-              "src": "42:4:0",
+              "src": "139:6:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_uint256",
-                "typeString": "uint256"
+                "typeIdentifier": "t_int256",
+                "typeString": "int256"
               }
             },
             "value": {
               "argumentTypes": null,
               "hexValue": "30",
-              "id": 3,
+              "id": 7,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
               "kind": "number",
               "lValueRequested": false,
               "nodeType": "Literal",
-              "src": "65:1:0",
+              "src": "169:1:0",
               "subdenomination": null,
               "typeDescriptions": {
                 "typeIdentifier": "t_rational_0_by_1",
@@ -360,139 +2090,1765 @@
           },
           {
             "constant": false,
-            "id": 7,
+            "id": 11,
+            "name": "clinicsCount",
+            "nodeType": "VariableDeclaration",
+            "scope": 147,
+            "src": "176:30:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_int256",
+              "typeString": "int256"
+            },
+            "typeName": {
+              "id": 9,
+              "name": "int256",
+              "nodeType": "ElementaryTypeName",
+              "src": "176:6:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_int256",
+                "typeString": "int256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "30",
+              "id": 10,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "205:1:0",
+              "subdenomination": null,
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_0_by_1",
+                "typeString": "int_const 0"
+              },
+              "value": "0"
+            },
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 14,
+            "name": "regularVisitsCount",
+            "nodeType": "VariableDeclaration",
+            "scope": 147,
+            "src": "212:36:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_int256",
+              "typeString": "int256"
+            },
+            "typeName": {
+              "id": 12,
+              "name": "int256",
+              "nodeType": "ElementaryTypeName",
+              "src": "212:6:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_int256",
+                "typeString": "int256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "30",
+              "id": 13,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "247:1:0",
+              "subdenomination": null,
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_0_by_1",
+                "typeString": "int_const 0"
+              },
+              "value": "0"
+            },
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 17,
+            "name": "labVisitsCount",
+            "nodeType": "VariableDeclaration",
+            "scope": 147,
+            "src": "254:32:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_int256",
+              "typeString": "int256"
+            },
+            "typeName": {
+              "id": 15,
+              "name": "int256",
+              "nodeType": "ElementaryTypeName",
+              "src": "254:6:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_int256",
+                "typeString": "int256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "30",
+              "id": 16,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "285:1:0",
+              "subdenomination": null,
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_0_by_1",
+                "typeString": "int_const 0"
+              },
+              "value": "0"
+            },
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "EHR.Clinic",
+            "id": 28,
+            "members": [
+              {
+                "constant": false,
+                "id": 19,
+                "name": "clinicID",
+                "nodeType": "VariableDeclaration",
+                "scope": 28,
+                "src": "317:15:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 18,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "317:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 21,
+                "name": "location",
+                "nodeType": "VariableDeclaration",
+                "scope": 28,
+                "src": "342:15:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 20,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "342:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 23,
+                "name": "numberOfPatients",
+                "nodeType": "VariableDeclaration",
+                "scope": 28,
+                "src": "367:23:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 22,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "367:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27,
+                "name": "patients",
+                "nodeType": "VariableDeclaration",
+                "scope": 28,
+                "src": "431:36:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Patient_$63_storage_$",
+                  "typeString": "mapping(uint256 => struct EHR.Patient)"
+                },
+                "typeName": {
+                  "id": 26,
+                  "keyType": {
+                    "id": 24,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "439:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "nodeType": "Mapping",
+                  "src": "431:27:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Patient_$63_storage_$",
+                    "typeString": "mapping(uint256 => struct EHR.Patient)"
+                  },
+                  "valueType": {
+                    "contractScope": null,
+                    "id": 25,
+                    "name": "Patient",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 63,
+                    "src": "450:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Patient_$63_storage_ptr",
+                      "typeString": "struct EHR.Patient"
+                    }
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Clinic",
+            "nodeType": "StructDefinition",
+            "scope": 147,
+            "src": "293:181:0",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "EHR.Patient",
+            "id": 63,
+            "members": [
+              {
+                "constant": false,
+                "id": 30,
+                "name": "patientID",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "505:16:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 29,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "505:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 32,
+                "name": "name",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "531:11:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 31,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "531:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34,
+                "name": "age",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "552:10:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 33,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "552:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 36,
+                "name": "weight",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "572:13:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 35,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "572:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 38,
+                "name": "height",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "595:13:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 37,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "595:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 40,
+                "name": "gender",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "618:13:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 39,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "618:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 42,
+                "name": "initialBloodPressure",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "641:27:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 41,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "641:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 44,
+                "name": "initialHeartRate",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "678:23:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 43,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "678:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 46,
+                "name": "initialTemperature",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "711:25:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 45,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "711:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 48,
+                "name": "regularVisitCounts",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "746:25:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 47,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "746:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 50,
+                "name": "labVisitsCount",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "781:21:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 49,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "781:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 52,
+                "name": "numberOfRegularVisits",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "812:28:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 51,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "812:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 54,
+                "name": "numberOfLabVisits",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "850:24:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 53,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "850:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 58,
+                "name": "regularVisits",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "884:46:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_RegularVisit_$78_storage_$",
+                  "typeString": "mapping(uint256 => struct EHR.RegularVisit)"
+                },
+                "typeName": {
+                  "id": 57,
+                  "keyType": {
+                    "id": 55,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "892:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "nodeType": "Mapping",
+                  "src": "884:32:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_RegularVisit_$78_storage_$",
+                    "typeString": "mapping(uint256 => struct EHR.RegularVisit)"
+                  },
+                  "valueType": {
+                    "contractScope": null,
+                    "id": 56,
+                    "name": "RegularVisit",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 78,
+                    "src": "903:12:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_RegularVisit_$78_storage_ptr",
+                      "typeString": "struct EHR.RegularVisit"
+                    }
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 62,
+                "name": "labVisits",
+                "nodeType": "VariableDeclaration",
+                "scope": 63,
+                "src": "940:38:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_LabVisit_$91_storage_$",
+                  "typeString": "mapping(uint256 => struct EHR.LabVisit)"
+                },
+                "typeName": {
+                  "id": 61,
+                  "keyType": {
+                    "id": 59,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "948:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "nodeType": "Mapping",
+                  "src": "940:28:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_LabVisit_$91_storage_$",
+                    "typeString": "mapping(uint256 => struct EHR.LabVisit)"
+                  },
+                  "valueType": {
+                    "contractScope": null,
+                    "id": 60,
+                    "name": "LabVisit",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 91,
+                    "src": "959:8:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_LabVisit_$91_storage_ptr",
+                      "typeString": "struct EHR.LabVisit"
+                    }
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Patient",
+            "nodeType": "StructDefinition",
+            "scope": 147,
+            "src": "480:505:0",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "EHR.RegularVisit",
+            "id": 78,
+            "members": [
+              {
+                "constant": false,
+                "id": 65,
+                "name": "regularVisitID",
+                "nodeType": "VariableDeclaration",
+                "scope": 78,
+                "src": "1021:21:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 64,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1021:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 67,
+                "name": "visitBloodPressure",
+                "nodeType": "VariableDeclaration",
+                "scope": 78,
+                "src": "1052:25:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 66,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1052:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 69,
+                "name": "visitHeartRate",
+                "nodeType": "VariableDeclaration",
+                "scope": 78,
+                "src": "1087:21:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 68,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1087:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 71,
+                "name": "visitTemperature",
+                "nodeType": "VariableDeclaration",
+                "scope": 78,
+                "src": "1118:23:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 70,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1118:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 73,
+                "name": "diagnosis",
+                "nodeType": "VariableDeclaration",
+                "scope": 78,
+                "src": "1151:16:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 72,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1151:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 75,
+                "name": "visitType",
+                "nodeType": "VariableDeclaration",
+                "scope": 78,
+                "src": "1177:20:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_enum$_VisitTypes_$5",
+                  "typeString": "enum EHR.VisitTypes"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 74,
+                  "name": "VisitTypes",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 5,
+                  "src": "1177:10:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_VisitTypes_$5",
+                    "typeString": "enum EHR.VisitTypes"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 77,
+                "name": "prescription",
+                "nodeType": "VariableDeclaration",
+                "scope": 78,
+                "src": "1207:25:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Prescription_$104_storage_ptr",
+                  "typeString": "struct EHR.Prescription"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 76,
+                  "name": "Prescription",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 104,
+                  "src": "1207:12:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Prescription_$104_storage_ptr",
+                    "typeString": "struct EHR.Prescription"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "RegularVisit",
+            "nodeType": "StructDefinition",
+            "scope": 147,
+            "src": "991:248:0",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "EHR.LabVisit",
+            "id": 91,
+            "members": [
+              {
+                "constant": false,
+                "id": 80,
+                "name": "labVisitID",
+                "nodeType": "VariableDeclaration",
+                "scope": 91,
+                "src": "1271:17:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 79,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1271:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 82,
+                "name": "visitBloodPressure",
+                "nodeType": "VariableDeclaration",
+                "scope": 91,
+                "src": "1298:25:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 81,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1298:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 84,
+                "name": "visitHeartRate",
+                "nodeType": "VariableDeclaration",
+                "scope": 91,
+                "src": "1333:21:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 83,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1333:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 86,
+                "name": "visitTemperature",
+                "nodeType": "VariableDeclaration",
+                "scope": 91,
+                "src": "1364:23:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 85,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1364:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 88,
+                "name": "testType",
+                "nodeType": "VariableDeclaration",
+                "scope": 91,
+                "src": "1397:15:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 87,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1397:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 90,
+                "name": "testResult",
+                "nodeType": "VariableDeclaration",
+                "scope": 91,
+                "src": "1422:17:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 89,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1422:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "LabVisit",
+            "nodeType": "StructDefinition",
+            "scope": 147,
+            "src": "1245:201:0",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "EHR.Prescription",
+            "id": 104,
+            "members": [
+              {
+                "constant": false,
+                "id": 93,
+                "name": "referral",
+                "nodeType": "VariableDeclaration",
+                "scope": 104,
+                "src": "1482:15:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 92,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1482:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 95,
+                "name": "followUp",
+                "nodeType": "VariableDeclaration",
+                "scope": 104,
+                "src": "1507:15:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 94,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1507:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 97,
+                "name": "lab",
+                "nodeType": "VariableDeclaration",
+                "scope": 104,
+                "src": "1532:10:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 96,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1532:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 99,
+                "name": "numberOfMedicines",
+                "nodeType": "VariableDeclaration",
+                "scope": 104,
+                "src": "1552:24:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 98,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1552:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 103,
+                "name": "medicines",
+                "nodeType": "VariableDeclaration",
+                "scope": 104,
+                "src": "1586:38:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Medicine_$111_storage_$",
+                  "typeString": "mapping(uint256 => struct EHR.Medicine)"
+                },
+                "typeName": {
+                  "id": 102,
+                  "keyType": {
+                    "id": 100,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1594:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "nodeType": "Mapping",
+                  "src": "1586:28:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Medicine_$111_storage_$",
+                    "typeString": "mapping(uint256 => struct EHR.Medicine)"
+                  },
+                  "valueType": {
+                    "contractScope": null,
+                    "id": 101,
+                    "name": "Medicine",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 111,
+                    "src": "1605:8:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Medicine_$111_storage_ptr",
+                      "typeString": "struct EHR.Medicine"
+                    }
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Prescription",
+            "nodeType": "StructDefinition",
+            "scope": 147,
+            "src": "1452:179:0",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "EHR.Medicine",
+            "id": 111,
+            "members": [
+              {
+                "constant": false,
+                "id": 106,
+                "name": "name",
+                "nodeType": "VariableDeclaration",
+                "scope": 111,
+                "src": "1663:11:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 105,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1663:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 108,
+                "name": "dose",
+                "nodeType": "VariableDeclaration",
+                "scope": 111,
+                "src": "1684:11:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 107,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1684:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 110,
+                "name": "period",
+                "nodeType": "VariableDeclaration",
+                "scope": 111,
+                "src": "1705:13:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 109,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1705:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Medicine",
+            "nodeType": "StructDefinition",
+            "scope": 147,
+            "src": "1637:88:0",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 115,
             "name": "clinics",
             "nodeType": "VariableDeclaration",
-            "scope": 14,
-            "src": "70:23:0",
+            "scope": 147,
+            "src": "1731:40:0",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_uint256",
-              "typeString": "uint256"
+              "typeIdentifier": "t_mapping$_t_int256_$_t_struct$_Clinic_$28_storage_$",
+              "typeString": "mapping(int256 => struct EHR.Clinic)"
             },
             "typeName": {
-              "id": 5,
-              "name": "uint",
-              "nodeType": "ElementaryTypeName",
-              "src": "70:4:0",
+              "id": 114,
+              "keyType": {
+                "id": 112,
+                "name": "int256",
+                "nodeType": "ElementaryTypeName",
+                "src": "1739:6:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "1731:25:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_uint256",
-                "typeString": "uint256"
+                "typeIdentifier": "t_mapping$_t_int256_$_t_struct$_Clinic_$28_storage_$",
+                "typeString": "mapping(int256 => struct EHR.Clinic)"
+              },
+              "valueType": {
+                "contractScope": null,
+                "id": 113,
+                "name": "Clinic",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 28,
+                "src": "1749:6:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Clinic_$28_storage_ptr",
+                  "typeString": "struct EHR.Clinic"
+                }
               }
             },
-            "value": {
-              "argumentTypes": null,
-              "hexValue": "30",
-              "id": 6,
-              "isConstant": false,
-              "isLValue": false,
-              "isPure": true,
-              "kind": "number",
-              "lValueRequested": false,
-              "nodeType": "Literal",
-              "src": "92:1:0",
-              "subdenomination": null,
-              "typeDescriptions": {
-                "typeIdentifier": "t_rational_0_by_1",
-                "typeString": "int_const 0"
-              },
-              "value": "0"
-            },
+            "value": null,
             "visibility": "public"
           },
           {
-            "constant": false,
-            "id": 10,
-            "name": "regularVisits",
-            "nodeType": "VariableDeclaration",
-            "scope": 14,
-            "src": "97:29:0",
-            "stateVariable": true,
-            "storageLocation": "default",
-            "typeDescriptions": {
-              "typeIdentifier": "t_uint256",
-              "typeString": "uint256"
+            "body": {
+              "id": 122,
+              "nodeType": "Block",
+              "src": "1799:38:0",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "4567797074",
+                        "id": 119,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "1822:7:0",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_d4c1f4eaecffa0c583b1f60abacf2587c10c668fa31f7826c627139251bb9eed",
+                          "typeString": "literal_string \"Egypt\""
+                        },
+                        "value": "Egypt"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_stringliteral_d4c1f4eaecffa0c583b1f60abacf2587c10c668fa31f7826c627139251bb9eed",
+                          "typeString": "literal_string \"Egypt\""
+                        }
+                      ],
+                      "id": 118,
+                      "name": "createClinic",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 146,
+                      "src": "1809:12:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (string memory)"
+                      }
+                    },
+                    "id": 120,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1809:21:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 121,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1809:21:0"
+                }
+              ]
             },
-            "typeName": {
-              "id": 8,
-              "name": "uint",
-              "nodeType": "ElementaryTypeName",
-              "src": "97:4:0",
-              "typeDescriptions": {
-                "typeIdentifier": "t_uint256",
-                "typeString": "uint256"
-              }
+            "documentation": null,
+            "id": 123,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 116,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1789:2:0"
             },
-            "value": {
-              "argumentTypes": null,
-              "hexValue": "30",
-              "id": 9,
-              "isConstant": false,
-              "isLValue": false,
-              "isPure": true,
-              "kind": "number",
-              "lValueRequested": false,
-              "nodeType": "Literal",
-              "src": "125:1:0",
-              "subdenomination": null,
-              "typeDescriptions": {
-                "typeIdentifier": "t_rational_0_by_1",
-                "typeString": "int_const 0"
-              },
-              "value": "0"
+            "returnParameters": {
+              "id": 117,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1799:0:0"
             },
+            "scope": 147,
+            "src": "1778:59:0",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
             "visibility": "public"
           },
           {
-            "constant": false,
-            "id": 13,
-            "name": "labVisits",
-            "nodeType": "VariableDeclaration",
-            "scope": 14,
-            "src": "130:25:0",
-            "stateVariable": true,
-            "storageLocation": "default",
-            "typeDescriptions": {
-              "typeIdentifier": "t_uint256",
-              "typeString": "uint256"
+            "body": {
+              "id": 145,
+              "nodeType": "Block",
+              "src": "2057:259:0",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 129,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "UnaryOperation",
+                    "operator": "++",
+                    "prefix": false,
+                    "src": "2067:14:0",
+                    "subExpression": {
+                      "argumentTypes": null,
+                      "id": 128,
+                      "name": "clinicsCount",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 11,
+                      "src": "2067:12:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_int256",
+                        "typeString": "int256"
+                      }
+                    },
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_int256",
+                      "typeString": "int256"
+                    }
+                  },
+                  "id": 130,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2067:14:0"
+                },
+                {
+                  "assignments": [
+                    132
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 132,
+                      "name": "_clinic",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 145,
+                      "src": "2134:21:0",
+                      "stateVariable": false,
+                      "storageLocation": "memory",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Clinic_$28_memory_ptr",
+                        "typeString": "struct EHR.Clinic"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 131,
+                        "name": "Clinic",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 28,
+                        "src": "2134:6:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Clinic_$28_storage_ptr",
+                          "typeString": "struct EHR.Clinic"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 138,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 134,
+                        "name": "clinicsCount",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 11,
+                        "src": "2178:12:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_int256",
+                          "typeString": "int256"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 135,
+                        "name": "_location",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 125,
+                        "src": "2204:9:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "30",
+                        "id": 136,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "number",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "2227:1:0",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_rational_0_by_1",
+                          "typeString": "int_const 0"
+                        },
+                        "value": "0"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_int256",
+                          "typeString": "int256"
+                        },
+                        {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        },
+                        {
+                          "typeIdentifier": "t_rational_0_by_1",
+                          "typeString": "int_const 0"
+                        }
+                      ],
+                      "id": 133,
+                      "name": "Clinic",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 28,
+                      "src": "2158:6:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_struct$_Clinic_$28_storage_ptr_$",
+                        "typeString": "type(struct EHR.Clinic storage pointer)"
+                      }
+                    },
+                    "id": 137,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "structConstructorCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2158:109:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Clinic_$28_memory",
+                      "typeString": "struct EHR.Clinic memory"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "2134:133:0"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 143,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "baseExpression": {
+                        "argumentTypes": null,
+                        "id": 139,
+                        "name": "clinics",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 115,
+                        "src": "2278:7:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_int256_$_t_struct$_Clinic_$28_storage_$",
+                          "typeString": "mapping(int256 => struct EHR.Clinic storage ref)"
+                        }
+                      },
+                      "id": 141,
+                      "indexExpression": {
+                        "argumentTypes": null,
+                        "id": 140,
+                        "name": "clinicsCount",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 11,
+                        "src": "2286:12:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_int256",
+                          "typeString": "int256"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "2278:21:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Clinic_$28_storage",
+                        "typeString": "struct EHR.Clinic storage ref"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 142,
+                      "name": "_clinic",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 132,
+                      "src": "2302:7:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Clinic_$28_memory_ptr",
+                        "typeString": "struct EHR.Clinic memory"
+                      }
+                    },
+                    "src": "2278:31:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Clinic_$28_storage",
+                      "typeString": "struct EHR.Clinic storage ref"
+                    }
+                  },
+                  "id": 144,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2278:31:0"
+                }
+              ]
             },
-            "typeName": {
-              "id": 11,
-              "name": "uint",
-              "nodeType": "ElementaryTypeName",
-              "src": "130:4:0",
-              "typeDescriptions": {
-                "typeIdentifier": "t_uint256",
-                "typeString": "uint256"
-              }
+            "documentation": null,
+            "id": 146,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "createClinic",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 126,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 125,
+                  "name": "_location",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 146,
+                  "src": "2025:23:0",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 124,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2025:6:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2024:25:0"
             },
-            "value": {
-              "argumentTypes": null,
-              "hexValue": "30",
-              "id": 12,
-              "isConstant": false,
-              "isLValue": false,
-              "isPure": true,
-              "kind": "number",
-              "lValueRequested": false,
-              "nodeType": "Literal",
-              "src": "154:1:0",
-              "subdenomination": null,
-              "typeDescriptions": {
-                "typeIdentifier": "t_rational_0_by_1",
-                "typeString": "int_const 0"
-              },
-              "value": "0"
+            "returnParameters": {
+              "id": 127,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2057:0:0"
             },
+            "scope": 147,
+            "src": "2003:313:0",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 15,
-        "src": "25:133:0"
+        "scope": 148,
+        "src": "25:2293:0"
       }
     ],
-    "src": "0:159:0"
+    "src": "0:2319:0"
   },
   "compiler": {
     "name": "solc",
@@ -502,12 +3858,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x986258ADc8344181BDfC92C93292bD87AE4ea810",
-      "transactionHash": "0xf834205a240dff81fadfb0e1a93e6f6915d5bd74e1d727b44d93b257fbd5eb94"
+      "address": "0x676452EA0F9A0EE6F03a9b47BA68Ab650D6DF3bD",
+      "transactionHash": "0xcc2866ea0d6f2d5ad5a4da661e7a3dfe3a81002c0e47c9116671e023def0291a"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2022-06-07T18:13:56.678Z",
+  "updatedAt": "2022-06-07T21:29:13.710Z",
   "devdoc": {
     "methods": {}
   },

@@ -2,9 +2,22 @@
 - deploy thing f el migration
 - connect it to the blockchain
 - put the smart contract on the blockchain and talk to it 
-----------------------------------------------------------------------------------------------------------
+
 on the console (should not have build files and ganache should be open):
-truffle compile
-truffle migrate
+truffle compile (to check syntax w keda)
+truffle migrate (puts your smart contract on the blockchain)
+truffle console (to deal with it)
+ehr = await EHR.deployed() (in the console to get your smart contract)
+
+----------------------------------------------------------------------------------------------------------
+- list patients in the smart contract
+- list patients in the console
+- list patients in the client side application
+- list patients in the test
+
+truffle compile ..
+truffle migrate --reset (reset to ensure that the content in the blockchain is overwritten with the new updates)
 truffle console
-then deal with is ba2a
+ehr = await EHR.deployed()
+ehr.address (makes sure that it is there)
+clinic = await ehr.clinics(1) (retrieves clinic[0])
