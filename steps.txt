@@ -12,8 +12,6 @@ ehr = await EHR.deployed() (in the console to get your smart contract)
 ----------------------------------------------------------------------------------------------------------
 - list patients in the smart contract
 - list patients in the console
-- list patients in the client side application
-- list patients in the test
 
 truffle compile ..
 truffle migrate --reset (reset to ensure that the content in the blockchain is overwritten with the new updates)
@@ -21,3 +19,24 @@ truffle console
 ehr = await EHR.deployed()
 ehr.address (makes sure that it is there)
 clinic = await ehr.clinics(1) (retrieves clinic[0])
+
+----------------------------------------------------------------------------------------------------------
+- list patients in the client side application
+- lite-server is a web server to run the client side application
+- config lite-server --> bs-config.json
+- npm run dev (to run the server)
+
+NOW IN THE CLIENT side
+1- Load function .. should be asynchronous and after the page loads
+2- loadWeb3() (to connect the blockchain) --> metamask connects with our blockchain through Web3
+We want to connect to the blockchain to use our application, so:
+  a- we connect our browser to the blockchain (this is done through the metamask)
+  b- the client-side of our application needs to be connected to the blockchain (this is done through Web3 JS)
+Hence using Web3 library will can connect to the etherium blockchain tp CRUD
+Then metamask allows us to do this through our browser .. basically in it is a bridge
+
+3-you need to setup metamask with the private key of the blockchain (from chrome extension)
+4- get your smart contract
+
+NOTE: skipped any testing --> if done will be by MOCHA - CHAI
+----------------------------------------------------------------------------------------------------------

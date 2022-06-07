@@ -30,6 +30,7 @@
     "nodemon": "^1.17.3",
     "react-bootstrap": "^2.4.0",
     "truffle": "^5.0.2",
-    "truffle-contract": "^3.0.6"
+    "truffle-contract": "^3.0.6",
+    "web3": "^1.7.3"
   }
 }
