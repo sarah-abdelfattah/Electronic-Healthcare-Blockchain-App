@@ -175,7 +175,7 @@
                 <tr class="tableHeader">
                   <th class="cell">ID</th>
                   <th class="cell">Patient</th>
-                  <th class="cell">Client</th>
+                  <th class="cell">Clinic</th>
                   <th class="cell">Heart Rate</th>
                   <th class="cell">Temperature</th>
                   <th class="cell">Diagnosis</th>
@@ -185,7 +185,7 @@
                 <tr class="regularVisitTemplate row">
                   <td class="regularVisitID cell"></td>
                   <td class="regularVisitPatient cell"></td>
-                  <td class="regularVisitClient cell"></td>
+                  <td class="regularVisitClinic cell"></td>
                   <td class="regularVisitHeartRate cell"></td>
                   <td class="regularVisitTemperature cell"></td>
                   <td class="regularVisitDiagnosis cell"></td>
@@ -239,6 +239,31 @@
                   <td class="regularVisitClinicType cell"></td>
                   <td class="cell"><button class="regularVisitClinicPrescription" onclick="" hidden>Show
                       details</button></td>
+                </tr>
+              </table>
+          </div>
+          <hr />
+        </div>
+
+        <!-- PRESCRIPTIONS -->
+        <div class="innerContainer">
+          <h2 class="title">Prescription</h2>
+          <div class="section">
+            <h4 class="subTitle">Prescription for selected patient/clinic</h3>
+              <table id="prescriptionTable" class="table">
+                <tr class="tableHeader">
+                  <th class="cell">Regular visit ID</th>
+                  <th class="cell">Referral</th>
+                  <th class="cell">Follow up</th>
+                  <th class="cell">Lab</th>
+                  <th class="cell">Medications</th>
+                </tr>
+                <tr class="prescriptionTemplate row">
+                  <td class="prescriptionID cell"></td>
+                  <td class="prescriptionReferral cell"></td>
+                  <td class="prescriptionFollowUp cell"></td>
+                  <td class="prescriptionLab cell"></td>
+                  <td class="prescriptionMedicines cell"></td>
                 </tr>
               </table>
           </div>

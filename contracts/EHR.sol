@@ -136,8 +136,8 @@ contract EHR {
         createMedicine(3, "m5", "d5", "p4");
 
         // Initial lab visits
-        createLabVisit(1, 1, 55, 55, "RBC", "good");
-        createLabVisit(2, 1, 55, 55, "WBC", "moderate");
+        createLabVisit(1, 1, 44, 55, "RBC", "good");
+        createLabVisit(2, 1, 44, 55, "WBC", "moderate");
     }
 
     function createClinic(string memory _location) public {
@@ -231,6 +231,7 @@ contract EHR {
         string memory _lab,
         int256 _numberOfMedicines
     ) public {
+        prescriptionsCount++;
         prescriptions[_regularVisitID] = Prescription(
             _regularVisitID,
             _referral,
@@ -239,17 +240,6 @@ contract EHR {
             _numberOfMedicines,
             medicinesCount
         );
-
-        // for (int256 i = 0; i < _medicinesArr.length; i++) {
-        //     medicinesCount++;
-        //     createMedicine(
-        //         medicinesCount,
-        //         _regularVisitID,
-        //         _medicinesArr[i].name,
-        //         _medicinesArr[i].dose,
-        //         _medicinesArr[i].period
-        //     );
-        // }
     }
 
     function createMedicine(

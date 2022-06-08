@@ -277,7 +277,8 @@ App = {
       $newTemplate.find('.regularVisitHeartRate').html(regularVisit[3].toNumber())
       $newTemplate.find('.regularVisitTemperature').html(regularVisit[4].toNumber())
       $newTemplate.find('.regularVisitDiagnosis').html(regularVisit[5])
-      $newTemplate.find('.regularVisitType').html(regularVisit[6])
+      let types = ["Periodic Checkup", "Case Management", "Complain"]
+      $newTemplate.find('.regularVisitType').html(types[regularVisit[6].toNumber()])
 
       // patients
       let patient = $newTemplate.find('.regularVisitPatient')[0]
@@ -295,7 +296,7 @@ App = {
       patient.appendChild(btn);
 
       // clinics
-      let clinic = $newTemplate.find('.regularVisitClient')[0]
+      let clinic = $newTemplate.find('.regularVisitClinic')[0]
       p = document.createElement("p");
       count = document.createTextNode(regularVisit[2].toNumber());
       p.appendChild(count);
@@ -321,6 +322,8 @@ App = {
       $('#regularVisitsTable').append($newTemplate)
       App.savedRegularVisits.push(regularVisit)
     }
+
+    await App.renderPrescriptions()
   },
 
   viewPatientsRegularVisit: async (patientID) => {
@@ -335,7 +338,8 @@ App = {
       $newTemplate.find('.regularVisitPatientHeartRate').html(patientRegularVisits[i][3].toNumber())
       $newTemplate.find('.regularVisitPatientTemperature').html(patientRegularVisits[i][4].toNumber())
       $newTemplate.find('.regularVisitPatientDiagnosis').html(patientRegularVisits[i][5])
-      $newTemplate.find('.regularVisitPatientType').html(patientRegularVisits[i][6])
+      let types = ["Periodic Checkup", "Case Management", "Complain"]
+      $newTemplate.find('.regularVisitPatientType').html(types[patientRegularVisits[i][6].toNumber()])
 
       // Prescription
       let viewPatientsBtn = $newTemplate.find('.regularVisitPatientPrescription')[0]
@@ -362,7 +366,8 @@ App = {
       $newTemplate.find('.regularVisitClinicHeartRate').html(clinicRegularVisits[i][3].toNumber())
       $newTemplate.find('.regularVisitClinicTemperature').html(clinicRegularVisits[i][4].toNumber())
       $newTemplate.find('.regularVisitClinicDiagnosis').html(clinicRegularVisits[i][5])
-      $newTemplate.find('.regularVisitClinicType').html(clinicRegularVisits[i][6])
+      let types = ["Periodic Checkup", "Case Management", "Complain"]
+      $newTemplate.find('.regularVisitClinicType').html(types[clinicRegularVisits[i][6].toNumber()])
 
       // Prescription
       let viewClinicsBtn = $newTemplate.find('.regularVisitClinicPrescription')[0]
@@ -378,8 +383,46 @@ App = {
   },
 
   /******************** PRESCRIPTION *********************/
+  renderPrescriptions: async () => {
+    const prescriptionCount = await App.EHR_Contract.prescriptionsCount()
+
+    for (let i = 1; i <= prescriptionCount; i++) {
+      let prescription = await App.EHR_Contract.prescriptions(i);
+      App.savedPrescriptions.push(prescription)
+    }
+  },
+
   viewPrescription: async (prescriptionID) => {
-    console.log("🚀 ~ file: app.js ~ line 327 ~ viewPrescription: ~ prescriptionID", prescriptionID);
+    let prescription = (App.savedPrescriptions).find((p) => p[0].toNumber() == prescriptionID)
+    const $prescriptionTemplate = $('.prescriptionTemplate')
+
+    let $newTemplate = $prescriptionTemplate.clone()
+    $newTemplate.find('.prescriptionID').html(prescription[0].toNumber())
+    $newTemplate.find('.prescriptionReferral').html(prescription[1])
+    $newTemplate.find('.prescriptionFollowUp').html(prescription[2])
+    $newTemplate.find('.prescriptionLab').html(prescription[3])
+
+    // medicines
+    let medicines = $newTemplate.find('.prescriptionMedicines')[0]
+    let p = document.createElement("p");
+    let count = document.createTextNode(prescription[4].toNumber());
+    p.appendChild(count);
+    medicines.appendChild(p);
+    let btn = document.createElement("button");
+    let text = document.createTextNode("Show");
+    btn.id = prescription[5].toNumber() //offset
+    btn.appendChild(text);
+    btn.addEventListener('click', function handleClick(event) {
+      App.viewMedicines(event.target.id)
+    });
+    medicines.appendChild(btn);
+
+    $('#prescriptionTable').append($newTemplate)
+  },
+
+  /******************** MEDICINES *********************/
+  viewMedicines: async (offset) => {
+    console.log("🚀 ~ file: app.js ~ line 427 ~ viewMedicines: ~ offset", offset);
   },
 
   /******************** LAB VISITS *********************/
