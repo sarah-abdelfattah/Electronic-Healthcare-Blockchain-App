@@ -93,7 +93,7 @@
             <h4 class="subTitle">Add Patient</h3>
               <form onsubmit="App.createPatient(); return false;">
                 <input id="newPatientName" type="text" placeholder="Patient Name" required></input>
-                <input id="newPatientClinic" type="text" placeholder="Clinic Name" required></input>
+                <input id="newPatientClinic" type="text" placeholder="Clinic ID" required></input>
                 <input id="newPatientAge" type="number" placeholder="Patient Age" required></input>
                 <input id="newPatientWeight" type="number" placeholder="Patient Weight" required></input>
                 <input id="newPatientHeight" type="number" placeholder="Patient Height" required></input>
@@ -133,6 +133,89 @@
                   <td class="patientTemperature cell"></td>
                   <td class="patientRegularVisits cell"></td>
                   <td class="patientLabVisits cell"></td>
+                </tr>
+              </table>
+          </div>
+          <hr />
+        </div>
+
+        <!-- Lab VISITS -->
+        <div class="innerContainer">
+          <h2 class="title">Lab Visits</h2>
+          <div class="section">
+            <h4 class="subTitle">Record a lab visit for a Patient</h3>
+              <form onsubmit="App.createLabVisit(); return false;">
+                <input id="newLabVisitPatient" type="number" placeholder="Patient ID" required></input>
+                <input id="newLabVisitClinic" type="number" placeholder="Clinic ID" required></input>
+                <input id="newLabVisitHeartRate" type="number" placeholder="Heart Rate" required></input>
+                <input id="newLabVisitTemperature" type="number" placeholder="Temperature" required></input>
+                <input id="newLabTestType" type="Text" placeholder="Test Type" required></textarea>
+                <textarea id="newLabVisitTestResult" type="Text" placeholder="Test Result" required></textarea>
+                <button type="submit">Create Lab visit</button>
+              </form>
+          </div>
+          <div class="section">
+            <h4 class="subTitle">All Lab Visits</h3>
+              <table id="LabVisitsTable" class="table">
+                <tr class="tableHeader">
+                  <th class="cell">ID</th>
+                  <th class="cell">Patient</th>
+                  <th class="cell">Clinic</th>
+                  <th class="cell">Heart Rate</th>
+                  <th class="cell">Temperature</th>
+                  <th class="cell">Test Type</th>
+                  <th class="cell">Test Results</th>
+                </tr>
+                <tr class="labVisitTemplate row">
+                  <td class="labVisitID cell"></td>
+                  <td class="labVisitPatient cell"></td>
+                  <td class="labVisitClinic cell"></td>
+                  <td class="labVisitHeartRate cell"></td>
+                  <td class="labVisitTemperature cell"></td>
+                  <td class="labVisitTestType cell"></td>
+                  <td class="labVisitTestResult cell"></td>
+                </tr>
+              </table>
+          </div>
+          <div class="section">
+            <h4 class="subTitle">All lab visits for a specific <b>patient</b></h3>
+              <table id="LabVisitsPatientsTable" class="table">
+                <tr class="tableHeader">
+                  <th class="cell">ID</th>
+                  <th class="cell">Clinic ID</th>
+                  <th class="cell">Heart Rate</th>
+                  <th class="cell">Temperature</th>
+                  <th class="cell">Test Type</th>
+                  <th class="cell">Test Results</th>
+                </tr>
+                <tr class="labVisitPatientTemplate row">
+                  <td class="labVisitPatientID cell"></td>
+                  <td class="labVisitPatientClinicID cell"></td>
+                  <td class="labVisitPatientHeartRate cell"></td>
+                  <td class="labVisitPatientTemperature cell"></td>
+                  <td class="labVisitPatientTestType cell"></td>
+                  <td class="labVisitPatientTestResult cell"></td>
+                </tr>
+              </table>
+          </div>
+          <div class="section">
+            <h4 class="subTitle">All lab visits for a specific <b>clinic</b></h3>
+              <table id="LabVisitsClinicsTable" class="table">
+                <tr class="tableHeader">
+                  <th class="cell">ID</th>
+                  <th class="cell">Patient ID</th>
+                  <th class="cell">Heart Rate</th>
+                  <th class="cell">Temperature</th>
+                  <th class="cell">Test Type</th>
+                  <th class="cell">Test Results</th>
+                </tr>
+                <tr class="labVisitClinicTemplate row">
+                  <td class="labVisitClinicID cell"></td>
+                  <td class="labVisitClinicPatientID cell"></td>
+                  <td class="labVisitClinicHeartRate cell"></td>
+                  <td class="labVisitClinicTemperature cell"></td>
+                  <td class="labVisitClinicTestType cell"></td>
+                  <td class="labVisitClinicTestResult cell"></td>
                 </tr>
               </table>
           </div>

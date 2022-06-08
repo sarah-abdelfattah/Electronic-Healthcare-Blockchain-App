@@ -3,6 +3,10 @@ App = {
   contracts: {},
   savedClinics: [],
   savedPatients: [],
+  savedRegularVisits: [],
+  savedLabVisits: [],
+  savedPrescriptions: [],
+  savedMedicines: [],
 
   load: async () => {
     await App.loadWeb3()
@@ -12,7 +16,6 @@ App = {
   },
 
   /******************** SETUP *********************/
-
   loadWeb3: async () => {
     if (typeof web3 !== 'undefined') {
       App.web3Provider = web3.currentProvider
@@ -67,8 +70,9 @@ App = {
 
     $('#account').html(App.account) // Render Account
 
-    await App.renderClinics()
-    await App.renderPatients()
+    // await App.renderClinics()
+    // await App.renderPatients()
+    await App.renderLabVisits()
 
     App.setLoading(false)  // Update loading state
   },
@@ -167,9 +171,6 @@ App = {
       });
       labVisits.appendChild(btn);
 
-      const $general = $('#clinicPatientsTable')
-      console.log("🚀 ~ file: app.js ~ line 171 ~ viewClinicsPatient: ~ general", $general);
-
       $('#clinicPatientsTable').append($newTemplate)
     }
   },
@@ -215,7 +216,7 @@ App = {
       });
       regularVisits.appendChild(btn);
 
-      //regular visits
+      //lab visits
       let labVisits = $newTemplate.find('.patientLabVisits')[0]
       p = document.createElement("p");
       count = document.createTextNode(patient[10].toNumber());
@@ -235,14 +236,17 @@ App = {
       App.savedPatients.push(patient)
     }
   },
+
   viewPatientRegularVisits: async (bothIDs) => {
     //TODO:
     console.log("viewPatientRegularVisits", bothIDs)
   },
+
   viewPatientLabVisits: async (bothIDs) => {
     //TODO:
     console.log("viewPatientLabVisits", bothIDs)
   },
+
   createPatient: async () => {
     App.setLoading(true)
     const name = $('#newPatientName').val()
@@ -257,6 +261,95 @@ App = {
     const result = await App.EHR_Contract.createPatient(clinic, name, age, weight, height, gender, heartRate, temperature,
       { from: App.account })
     window.location.reload()
+  },
+
+  /******************** REGULAR VISITS *********************/
+  renderRegularVisits: async () => {
+
+  },
+
+  /******************** LAB VISITS *********************/
+  renderLabVisits: async () => {
+    const labVisitsCount = await App.EHR_Contract.labVisitsCount()
+    const $labVisitTemplate = $('.labVisitTemplate')
+
+    for (let i = 1; i <= labVisitsCount; i++) {
+      let labVisit = await App.EHR_Contract.labVisits(i);
+
+      let $newTemplate = $labVisitTemplate.clone()
+      $newTemplate.find('.labVisitID').html(labVisit[0].toNumber())
+      $newTemplate.find('.labVisitHeartRate').html(labVisit[3].toNumber())
+      $newTemplate.find('.labVisitTemperature').html(labVisit[4].toNumber())
+      $newTemplate.find('.labVisitTestType').html(labVisit[5])
+      $newTemplate.find('.labVisitTestResult').html(labVisit[6])
+
+      // patients
+      let patient = $newTemplate.find('.labVisitPatient')[0]
+      let p = document.createElement("p");
+      let count = document.createTextNode(labVisit[1].toNumber());
+      p.appendChild(count);
+      patient.appendChild(p);
+      let btn = document.createElement("button");
+      let text = document.createTextNode("Show");
+      btn.id = labVisit[1].toNumber()
+      btn.appendChild(text);
+      btn.addEventListener('click', function handleClick(event) {
+        App.viewPatientsLabVisit(event.target.id)
+      });
+      patient.appendChild(btn);
+
+      // clinics
+      let clinic = $newTemplate.find('.labVisitClinic')[0]
+      p = document.createElement("p");
+      count = document.createTextNode(labVisit[2].toNumber());
+      p.appendChild(count);
+      clinic.appendChild(p);
+      btn = document.createElement("button");
+      text = document.createTextNode("Show");
+      btn.id = labVisit[2].toNumber()
+      btn.appendChild(text);
+      btn.addEventListener('click', function handleClick(event) {
+        App.viewClinicsLabVisit(event.target.id)
+      });
+      clinic.appendChild(btn);
+
+      $('#LabVisitsTable').append($newTemplate)
+      App.savedLabVisits.push(labVisit)
+    }
+  },
+
+  viewPatientsLabVisit: async (patientID) => {
+    let patientLabVisits = (App.savedLabVisits).filter((labVisit) => labVisit[1].toNumber() == patientID)
+
+    const $labVisitPatientTemplate = $('.labVisitPatientTemplate')
+
+    for (let i = 0; i < patientLabVisits.length; i++) {
+      let $newTemplate = $labVisitPatientTemplate.clone()
+      $newTemplate.find('.labVisitPatientID').html(patientLabVisits[i][0].toNumber())
+      $newTemplate.find('.labVisitPatientClinicID').html(patientLabVisits[i][2].toNumber())
+      $newTemplate.find('.labVisitPatientHeartRate').html(patientLabVisits[i][3].toNumber())
+      $newTemplate.find('.labVisitPatientTemperature').html(patientLabVisits[i][4].toNumber())
+      $newTemplate.find('.labVisitPatientTestType').html(patientLabVisits[i][5])
+      $newTemplate.find('.labVisitPatientTestResult').html(patientLabVisits[i][6])
+      $('#LabVisitsPatientsTable').append($newTemplate)
+    }
+  },
+
+  viewClinicsLabVisit: async (clinicID) => {
+    let clinicLabVisits = (App.savedLabVisits).filter((labVisit) => labVisit[2].toNumber() == clinicID)
+
+    const $labVisitClinicTemplate = $('.labVisitClinicTemplate')
+
+    for (let i = 0; i < clinicLabVisits.length; i++) {
+      let $newTemplate = $labVisitClinicTemplate.clone()
+      $newTemplate.find('.labVisitClinicID').html(clinicLabVisits[i][0].toNumber())
+      $newTemplate.find('.labVisitClinicPatientID').html(clinicLabVisits[i][1].toNumber())
+      $newTemplate.find('.labVisitClinicHeartRate').html(clinicLabVisits[i][3].toNumber())
+      $newTemplate.find('.labVisitClinicTemperature').html(clinicLabVisits[i][4].toNumber())
+      $newTemplate.find('.labVisitClinicTestType').html(clinicLabVisits[i][5])
+      $newTemplate.find('.labVisitClinicTestResult').html(clinicLabVisits[i][6])
+      $('#LabVisitsClinicsTable').append($newTemplate)
+    }
   },
 }
 

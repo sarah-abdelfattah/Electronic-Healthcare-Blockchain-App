@@ -43,7 +43,8 @@ p{
   margin: 0.5rem 0;
 }
 
-input{
+input, textarea{
+  display: block;
   width: 30%;
   margin: 0;
   padding: 0.5rem 0.75rem ;
@@ -89,4 +90,8 @@ th{
 .cell{
   display: table-cell;
   padding: 6px 
+}
+
+button[type="submit"]{
+margin: 1rem 0;
 }
