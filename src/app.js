@@ -112,7 +112,6 @@ App = {
   }
 }
 
-
 $(() => {
   $(window).load(async () => {
     await App.load()

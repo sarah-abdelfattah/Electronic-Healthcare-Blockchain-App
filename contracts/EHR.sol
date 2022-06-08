@@ -16,12 +16,11 @@ contract EHR {
         int256 clinicID;
         string location;
         int256 numberOfPatients;
-        // Patient[] patients;
-        mapping(uint256 => Patient) patients;
     }
 
     struct Patient {
         int256 patientID;
+        int256 clinicID;
         string name;
         int256 age;
         int256 weight;
@@ -30,8 +29,6 @@ contract EHR {
         string initialBloodPressure;
         string initialHeartRate;
         string initialTemperature;
-        int256 regularVisitCounts;
-        int256 labVisitsCount;
         int256 numberOfRegularVisits;
         int256 numberOfLabVisits;
         mapping(uint256 => RegularVisit) regularVisits;
@@ -83,14 +80,6 @@ contract EHR {
 
     function createClinic(string memory _location) public {
         clinicsCount++;
-        // Patient[] memory emptyPatients;
-        Clinic memory _clinic = Clinic(
-            clinicsCount,
-            _location,
-            0
-            // emptyPatients
-        );
-
-        clinics[clinicsCount] = _clinic;
+        clinics[clinicsCount] = Clinic(clinicsCount, _location, 0);
     }
 }
