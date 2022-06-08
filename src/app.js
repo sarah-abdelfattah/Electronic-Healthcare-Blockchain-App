@@ -70,9 +70,10 @@ App = {
 
     $('#account').html(App.account) // Render Account
 
-    await App.renderClinics()
-    await App.renderPatients()
-    await App.renderLabVisits()
+    // await App.renderClinics()
+    // await App.renderPatients()
+    await App.renderRegularVisits()
+    // await App.renderLabVisits()
 
     App.setLoading(false)  // Update loading state
   },
@@ -265,7 +266,120 @@ App = {
 
   /******************** REGULAR VISITS *********************/
   renderRegularVisits: async () => {
+    const regularVisitsCount = await App.EHR_Contract.regularVisitsCount()
+    const $regularVisitTemplate = $('.regularVisitTemplate')
 
+    for (let i = 1; i <= regularVisitsCount; i++) {
+      let regularVisit = await App.EHR_Contract.regularVisits(i);
+
+      let $newTemplate = $regularVisitTemplate.clone()
+      $newTemplate.find('.regularVisitID').html(regularVisit[0].toNumber())
+      $newTemplate.find('.regularVisitHeartRate').html(regularVisit[3].toNumber())
+      $newTemplate.find('.regularVisitTemperature').html(regularVisit[4].toNumber())
+      $newTemplate.find('.regularVisitDiagnosis').html(regularVisit[5])
+      $newTemplate.find('.regularVisitType').html(regularVisit[6])
+
+      // patients
+      let patient = $newTemplate.find('.regularVisitPatient')[0]
+      let p = document.createElement("p");
+      let count = document.createTextNode(regularVisit[1].toNumber());
+      p.appendChild(count);
+      patient.appendChild(p);
+      let btn = document.createElement("button");
+      let text = document.createTextNode("Show");
+      btn.id = regularVisit[1].toNumber()
+      btn.appendChild(text);
+      btn.addEventListener('click', function handleClick(event) {
+        App.viewPatientsRegularVisit(event.target.id)
+      });
+      patient.appendChild(btn);
+
+      // clinics
+      let clinic = $newTemplate.find('.regularVisitClient')[0]
+      p = document.createElement("p");
+      count = document.createTextNode(regularVisit[2].toNumber());
+      p.appendChild(count);
+      clinic.appendChild(p);
+      btn = document.createElement("button");
+      text = document.createTextNode("Show");
+      btn.id = regularVisit[2].toNumber()
+      btn.appendChild(text);
+      btn.addEventListener('click', function handleClick(event) {
+        App.viewClinicsRegularVisit(event.target.id)
+      });
+      clinic.appendChild(btn);
+
+      // Prescription
+      let viewPatientsBtn = $newTemplate.find('.regularVisitPrescription')[0]
+      viewPatientsBtn.innerText = "View"
+      viewPatientsBtn.id = regularVisit[0].toNumber()
+      viewPatientsBtn.removeAttribute("hidden");
+      viewPatientsBtn.addEventListener('click', function handleClick(event) {
+        App.viewPrescription(event.target.id)
+      });
+
+      $('#regularVisitsTable').append($newTemplate)
+      App.savedRegularVisits.push(regularVisit)
+    }
+  },
+
+  viewPatientsRegularVisit: async (patientID) => {
+    let patientRegularVisits = (App.savedRegularVisits).filter((regularVisit) => regularVisit[1].toNumber() == patientID)
+
+    const $regularVisitPatientTemplate = $('.regularVisitPatientTemplate')
+
+    for (let i = 0; i < patientRegularVisits.length; i++) {
+      let $newTemplate = $regularVisitPatientTemplate.clone()
+      $newTemplate.find('.regularVisitPatientID').html(patientRegularVisits[i][0].toNumber())
+      $newTemplate.find('.regularVisitPatientClinicID').html(patientRegularVisits[i][2].toNumber())
+      $newTemplate.find('.regularVisitPatientHeartRate').html(patientRegularVisits[i][3].toNumber())
+      $newTemplate.find('.regularVisitPatientTemperature').html(patientRegularVisits[i][4].toNumber())
+      $newTemplate.find('.regularVisitPatientDiagnosis').html(patientRegularVisits[i][5])
+      $newTemplate.find('.regularVisitPatientType').html(patientRegularVisits[i][6])
+
+      // Prescription
+      let viewPatientsBtn = $newTemplate.find('.regularVisitPatientPrescription')[0]
+      viewPatientsBtn.innerText = "View"
+      viewPatientsBtn.id = patientRegularVisits[i][0].toNumber()
+      viewPatientsBtn.removeAttribute("hidden");
+      viewPatientsBtn.addEventListener('click', function handleClick(event) {
+        App.viewPrescription(event.target.id)
+      });
+
+      $('#RegularVisitsPatientsTable').append($newTemplate)
+    }
+  },
+
+  viewClinicsRegularVisit: async (clinicID) => {
+    let clinicRegularVisits = (App.savedRegularVisits).filter((regularVisit) => regularVisit[2].toNumber() == clinicID)
+
+    const $regularVisitClinicTemplate = $('.regularVisitClinicTemplate')
+
+    for (let i = 0; i < clinicRegularVisits.length; i++) {
+      let $newTemplate = $regularVisitClinicTemplate.clone()
+      $newTemplate.find('.regularVisitClinicID').html(clinicRegularVisits[i][0].toNumber())
+      $newTemplate.find('.regularVisitClinicPatientID').html(clinicRegularVisits[i][1].toNumber())
+      $newTemplate.find('.regularVisitClinicHeartRate').html(clinicRegularVisits[i][3].toNumber())
+      $newTemplate.find('.regularVisitClinicTemperature').html(clinicRegularVisits[i][4].toNumber())
+      $newTemplate.find('.regularVisitClinicDiagnosis').html(clinicRegularVisits[i][5])
+      $newTemplate.find('.regularVisitClinicType').html(clinicRegularVisits[i][6])
+
+      // Prescription
+      let viewClinicsBtn = $newTemplate.find('.regularVisitClinicPrescription')[0]
+      viewClinicsBtn.innerText = "View"
+      viewClinicsBtn.id = clinicRegularVisits[i][0].toNumber()
+      viewClinicsBtn.removeAttribute("hidden");
+      viewClinicsBtn.addEventListener('click', function handleClick(event) {
+        App.viewPrescription(event.target.id)
+      });
+
+      $('#RegularVisitsClinicsTable').append($newTemplate)
+    }
+  },
+
+  /******************** PRESCRIPTION *********************/
+  viewPrescription: async (prescriptionID) => {
+    console.log("🚀 ~ file: app.js ~ line 327 ~ viewPrescription: ~ prescriptionID", prescriptionID);
   },
 
   /******************** LAB VISITS *********************/

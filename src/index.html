@@ -18,7 +18,6 @@
       <p>A blockchain application for Electronic Healthcare Records</p>
 
       <div class="container">
-
         <!-- ACCOUNT -->
         <div class="innerContainer">
           <h2 class="title">Account</h2>
@@ -134,6 +133,112 @@
                   <td class="patientTemperature cell"></td>
                   <td class="patientRegularVisits cell"></td>
                   <td class="patientLabVisits cell"></td>
+                </tr>
+              </table>
+          </div>
+          <hr />
+        </div>
+
+        <!-- REGULAR VISITS -->
+        <div class="innerContainer">
+          <h2 class="title">Regular Visits</h2>
+          <div class="section">
+            <h4 class="subTitle">Record a visit for a Patient</h3>
+              <!-- TODO -->
+              <form onsubmit="App.createRegularVisit(); return false;">
+                <input id="newRegularVisitPatient" type="number" placeholder="Patient ID" required></input>
+                <input id="newRegularVisitClinic" type="number" placeholder="Clinic ID" required></input>
+                <input id="newRegularVisitHeartRate" type="number" placeholder="Heart Rate" required></input>
+                <input id="newRegularVisitTemperature" type="number" placeholder="Temperature" required></input>
+                <textarea id="newRegularVisitDiagnosis" type="Text" placeholder=" Diagnosis" required></textarea>
+
+                <!-- visit type  -->
+                <input type="radio" id="periodCheckup" name="newRegularVisitVisitType" value="periodCheckup">
+                <label for="periodCheckup">Period Checkup</label><br>
+                <input type="radio" id="caseManagement" name="newRegularVisitVisitType" value="caseManagement">
+                <label for="caseManagement">Case Management</label><br>
+                <input type="radio" id="complain" name="newRegularVisitVisitType" value="complain">
+                <label for="complain">Complain</label>
+
+                <!-- Prescription -->
+                <input id="newRegularVisitReferral" type="text" placeholder="Referral"></input>
+                <input id="newRegularVisitFollowUp" type="text" placeholder="Follow up"></input>
+                <input id="newRegularVisitLab" type="text" placeholder="Lab"></input>
+
+                <!-- TODO: Medicines -->
+                <button type="submit">Create</button>
+              </form>
+          </div>
+          <div class="section">
+            <h4 class="subTitle">All Regular Visits</h3>
+              <table id="regularVisitsTable" class="table">
+                <tr class="tableHeader">
+                  <th class="cell">ID</th>
+                  <th class="cell">Patient</th>
+                  <th class="cell">Client</th>
+                  <th class="cell">Heart Rate</th>
+                  <th class="cell">Temperature</th>
+                  <th class="cell">Diagnosis</th>
+                  <th class="cell">Type</th>
+                  <th class="cell">Prescriptions</th>
+                </tr>
+                <tr class="regularVisitTemplate row">
+                  <td class="regularVisitID cell"></td>
+                  <td class="regularVisitPatient cell"></td>
+                  <td class="regularVisitClient cell"></td>
+                  <td class="regularVisitHeartRate cell"></td>
+                  <td class="regularVisitTemperature cell"></td>
+                  <td class="regularVisitDiagnosis cell"></td>
+                  <td class="regularVisitType cell"></td>
+                  <td class="cell"><button class="regularVisitPrescription" onclick="" hidden>Show details</button></td>
+                </tr>
+              </table>
+          </div>
+          <div class="section">
+            <h4 class="subTitle">All regular visits for a specific <b>patient</b></h3>
+              <table id="RegularVisitsPatientsTable" class="table">
+                <tr class="tableHeader">
+                  <th class="cell">ID</th>
+                  <th class="cell">Clinic ID</th>
+                  <th class="cell">Heart Rate</th>
+                  <th class="cell">Temperature</th>
+                  <th class="cell">Diagnosis</th>
+                  <th class="cell">Type</th>
+                  <th class="cell">Prescriptions</th>
+                </tr>
+                <tr class="regularVisitPatientTemplate row">
+                  <td class="regularVisitPatientID cell"></td>
+                  <td class="regularVisitPatientClinicID cell"></td>
+                  <td class="regularVisitPatientHeartRate cell"></td>
+                  <td class="regularVisitPatientTemperature cell"></td>
+                  <td class="regularVisitPatientDiagnosis cell"></td>
+                  <td class="regularVisitPatientType cell"></td>
+                  <td class="cell"><button class="regularVisitPatientPrescription" onclick="" hidden>Show
+                      details</button></td>
+                </tr>
+              </table>
+          </div>
+          <div class="section">
+            <h4 class="subTitle">All regular visits for a specific <b>clinic</b></h3>
+              <table id="RegularVisitsClinicsTable" class="table">
+                <tr class="tableHeader">
+                  <th class="cell">ID</th>
+                  <th class="cell">Patient ID</th>
+                  <th class="cell">Heart Rate</th>
+                  <th class="cell">Temperature</th>
+                  <th class="cell">Diagnosis</th>
+                  <th class="cell">Type</th>
+                  <th class="cell">Prescriptions</th>
+                </tr>
+                <tr class="regularVisitClinicTemplate row">
+                  <td class="regularVisitClinicID cell"></td>
+                  <td class="regularVisitClinicPatientID cell"></td>
+                  <td class="regularVisitClinicHeartRate cell"></td>
+                  <td class="regularVisitClinicTemperature cell"></td>
+                  <td class="regularVisitClinicDiagnosis cell"></td>
+                  <td class="regularVisitClinicType cell"></td>
+                  <td class="cell"><button class="regularVisitClinicPrescription" onclick="" hidden>Show
+                      details</button></td>
                 </tr>
               </table>
           </div>
