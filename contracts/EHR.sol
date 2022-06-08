@@ -11,6 +11,7 @@ contract EHR {
     int256 public clinicsCount = 0;
     int256 public regularVisitsCount = 0;
     int256 public labVisitsCount = 0;
+    int256 public prescriptionsCount = 0;
     int256 public medicinesCount = 0;
 
     struct Clinic {
@@ -29,29 +30,24 @@ contract EHR {
         string gender;
         int256 initialHeartRate;
         int256 initialTemperature;
-        int256 numberOfRegularVisits;
-        int256 numberOfLabVisits;
-        int256[] regularVisitsIds;
-        int256[] labVisitsIds;
-        // mapping(uint256 => RegularVisit) regularVisits;
-        // mapping(uint256 => LabVisit) labVisits;
+        int256 numberOfRegularVisits; //TODO
+        int256 numberOfLabVisits; //TODO
     }
 
     struct RegularVisit {
+        int256 regularVisitID;
         int256 patientID;
         int256 clinicID;
-        int256 regularVisitID;
         int256 visitHeartRate;
         int256 visitTemperature;
         string diagnosis;
         VisitTypes visitType;
-        Prescription prescription;
     }
 
     struct LabVisit {
+        int256 labVisitID;
         int256 patientID;
         int256 clinicID;
-        int256 labVisitID;
         int256 visitHeartRate;
         int256 visitTemperature;
         string testType;
@@ -59,18 +55,17 @@ contract EHR {
     }
 
     struct Prescription {
-        int256 prescriptionId;
+        int256 regularVisitID;
         string referral;
         string followUp;
         string lab;
         int256 numberOfMedicines;
-        int256[] medicines;
-        // mapping(uint256 => Medicine) medicines;
+        int256 medicineOffset;
     }
 
     struct Medicine {
         int256 medicineId;
-        int256 prescriptionId;
+        int256 regularVisitID;
         string name;
         string dose;
         string period;
@@ -78,6 +73,10 @@ contract EHR {
 
     mapping(int256 => Clinic) public clinics;
     mapping(int256 => Patient) public patients;
+    mapping(int256 => RegularVisit) public regularVisits;
+    mapping(int256 => LabVisit) public labVisits;
+    mapping(int256 => Prescription) public prescriptions;
+    mapping(int256 => Medicine) public medicines;
 
     constructor() public {
         // Initial clinics
@@ -90,10 +89,56 @@ contract EHR {
         createPatient(1, "Mohammed", 25, 63, 181, "male", 68, 36);
         createPatient(2, "Ahmed", 25, 63, 181, "male", 68, 36);
         createPatient(2, "Alaa", 25, 63, 181, "female", 68, 36);
-    }
 
-    // mapping(uint => RegularVisit) public regularVisits;
-    // mapping(uint => LabVisit) public labVisits;
+        // Initial regular visits (with their medicines)
+        createRegularVisit(
+            1,
+            1,
+            11,
+            11,
+            "flu",
+            VisitTypes.periodicCheckup,
+            "",
+            "yes",
+            "",
+            2
+        );
+        createMedicine(1, "m1", "d1", "p1");
+        createMedicine(1, "m2", "d2", "p2");
+
+        createRegularVisit(
+            1,
+            1,
+            11,
+            11,
+            "cough",
+            VisitTypes.complain,
+            "test",
+            "yes",
+            "",
+            1
+        );
+        createMedicine(2, "m3", "d3", "p3");
+
+        createRegularVisit(
+            2,
+            1,
+            11,
+            11,
+            "cough and flu",
+            VisitTypes.caseManagement,
+            "test",
+            "none",
+            "none",
+            2
+        );
+        createMedicine(3, "m4", "d4", "p4");
+        createMedicine(3, "m5", "d5", "p4");
+
+        // Initial lab visits
+        createLabVisit(1, 1, 55, 55, "RBC", "good");
+        createLabVisit(2, 1, 55, 55, "WBC", "moderate");
+    }
 
     function createClinic(string memory _location) public {
         clinicsCount++;
@@ -122,9 +167,106 @@ contract EHR {
             _initialHeartRate,
             _initialTemperature,
             0,
-            0,
-            new int256[](0),
-            new int256[](0)
+            0
+        );
+    }
+
+    function createRegularVisit(
+        int256 _patientID,
+        int256 _clinicID,
+        int256 _visitHeartRate,
+        int256 _visitTemperature,
+        string memory _diagnosis,
+        VisitTypes _visitType,
+        string memory _referral,
+        string memory _followUp,
+        string memory _lab,
+        int256 _numberOfMedicines
+    ) public {
+        regularVisitsCount++;
+
+        regularVisits[regularVisitsCount] = RegularVisit(
+            regularVisitsCount,
+            _patientID,
+            _clinicID,
+            _visitHeartRate,
+            _visitTemperature,
+            _diagnosis,
+            _visitType
+        );
+
+        createPrescription(
+            regularVisitsCount,
+            _referral,
+            _followUp,
+            _lab,
+            _numberOfMedicines
+        );
+    }
+
+    function createLabVisit(
+        int256 _patientID,
+        int256 _clinicID,
+        int256 _visitHeartRate,
+        int256 _visitTemperature,
+        string memory _testType,
+        string memory _testResult
+    ) public {
+        labVisitsCount++;
+        labVisits[labVisitsCount] = LabVisit(
+            labVisitsCount,
+            _patientID,
+            _clinicID,
+            _visitHeartRate,
+            _visitTemperature,
+            _testType,
+            _testResult
+        );
+    }
+
+    function createPrescription(
+        int256 _regularVisitID,
+        string memory _referral,
+        string memory _followUp,
+        string memory _lab,
+        int256 _numberOfMedicines
+    ) public {
+        prescriptions[_regularVisitID] = Prescription(
+            _regularVisitID,
+            _referral,
+            _followUp,
+            _lab,
+            _numberOfMedicines,
+            medicinesCount
+        );
+
+        // for (int256 i = 0; i < _medicinesArr.length; i++) {
+        //     medicinesCount++;
+        //     createMedicine(
+        //         medicinesCount,
+        //         _regularVisitID,
+        //         _medicinesArr[i].name,
+        //         _medicinesArr[i].dose,
+        //         _medicinesArr[i].period
+        //     );
+        // }
+    }
+
+    function createMedicine(
+        int256 _regularVisitID,
+        string memory _name,
+        string memory _dose,
+        string memory _period
+    ) public {
+        medicinesCount++;
+        medicines[medicinesCount] = Medicine(
+            medicinesCount,
+            _regularVisitID,
+            _name,
+            _dose,
+            _period
         );
     }
 }
+
+// Creating a regular visit --> creates a prescription --> creates medicines
