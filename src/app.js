@@ -73,6 +73,8 @@ App = {
     // await App.renderClinics()
     // await App.renderPatients()
     await App.renderRegularVisits()
+    await App.renderPrescriptions()
+    await App.renderMedicines()
     // await App.renderLabVisits()
 
     App.setLoading(false)  // Update loading state
@@ -322,8 +324,6 @@ App = {
       $('#regularVisitsTable').append($newTemplate)
       App.savedRegularVisits.push(regularVisit)
     }
-
-    await App.renderPrescriptions()
   },
 
   viewPatientsRegularVisit: async (patientID) => {
@@ -410,7 +410,8 @@ App = {
     medicines.appendChild(p);
     let btn = document.createElement("button");
     let text = document.createTextNode("Show");
-    btn.id = prescription[5].toNumber() //offset
+    // btn.id = prescription[5].toNumber() + "-" + prescription[4].toNumber() //offset-count
+    btn.id = prescription[0].toNumber() //prescriptionId
     btn.appendChild(text);
     btn.addEventListener('click', function handleClick(event) {
       App.viewMedicines(event.target.id)
@@ -421,8 +422,33 @@ App = {
   },
 
   /******************** MEDICINES *********************/
-  viewMedicines: async (offset) => {
-    console.log("🚀 ~ file: app.js ~ line 427 ~ viewMedicines: ~ offset", offset);
+  renderMedicines: async () => {
+    const medicinesCount = await App.EHR_Contract.medicinesCount()
+
+    for (let i = 1; i <= medicinesCount; i++) {
+      let medicine = await App.EHR_Contract.medicines(i);
+      App.savedMedicines.push(medicine)
+    }
+  },
+
+  viewMedicines: async (prescriptionID) => {
+    let medicines = (App.savedMedicines).filter((medicine) => medicine[1].toNumber() == prescriptionID)
+    const $medicineTemplate = $('.medicineTemplate')
+
+    // const offset = parseInt(id.split("-")[0]) + 1
+    // const count = id.split("-")[1]
+
+    for (let i = 0; i < medicines.length; i++) {
+      let $newTemplate = $medicineTemplate.clone()
+      $newTemplate.find('.medicineID').html(medicines[i][0].toNumber())
+      $newTemplate.find('.medicinePrescription').html(medicines[i][1].toNumber())
+      $newTemplate.find('.medicineName').html(medicines[i][2])
+      $newTemplate.find('.medicineDose').html(medicines[i][3])
+      $newTemplate.find('.medicinePeriod').html(medicines[i][4])
+
+      $('#medicinesTable').append($newTemplate)
+    }
+
   },
 
   /******************** LAB VISITS *********************/
