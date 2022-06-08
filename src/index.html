@@ -19,105 +19,138 @@
 
       <div class="container">
         <!-- ACCOUNT -->
-        <h2 class="title">Account</h2>
-        <p id="account"> </p>
-        <hr />
+        <div class="innerContainer">
+          <h2 class="title">Account</h2>
+          <p id="account"> </p>
+          <hr />
+        </div>
 
         <!-- CLINICS -->
-        <h2 class="title">Clinics</h2>
-        <div class="section">
-          <h3 class="subTitle">Add New Clinic</h3>
-          <form onsubmit="App.createClinic(); return false;">
-            <input id="newClinicLocation" placeholder="Clinic location" required></input>
-            <input type="submit" hidden="">
-          </form>
+        <div class="innerContainer">
+          <h2 class="title">Clinics</h2>
+
+          <div class="section">
+            <h4 class="subTitle">Add New Clinic</h4>
+            <form onsubmit="App.createClinic(); return false;">
+              <input id="newClinicLocation" placeholder="Clinic location" required></input>
+              <button type="submit">Create</button>
+            </form>
+          </div>
+          <div class="section">
+            <h4 class="subTitle">All Clinics</h3>
+              <table id="clinicTable" class="table">
+                <tr class="tableHeader">
+                  <th class="cell">Clinic ID</th>
+                  <th class="cell">Location</th>
+                  <th class="cell">Number of patients</th>
+                  <th class="cell">View Patients</th>
+                </tr>
+                <tbody>
+                  <tr class="clinicTemplate row">
+                    <td class="clinicID cell"></td>
+                    <td class="clinicLocation cell"></td>
+                    <td class="clinicNumberOfPatients cell"></td>
+                    <td class="cell" onclick=""><button class="clinicViewButton" hidden></button></td>
+                  </tr>
+              </table>
+          </div>
+          <div class="section">
+            <h4 class="subTitle">Patients of this clinic</h3>
+              <table id="clinicPatientsTable" class="table">
+                <tr class="tableHeader">
+                  <th class="cell">ID</th>
+                  <th class="cell">Name</th>
+                  <th class="cell">Age</th>
+                  <th class="cell">Weight</th>
+                  <th class="cell">Height</th>
+                  <th class="cell">Gender</th>
+                  <th class="cell">Heart Rate</th>
+                  <th class="cell">Temperature</th>
+                  <th class="cell">Regular Visits</th>
+                  <th class="cell">Lab Visits</th>
+                </tr>
+                <tr class="clinicPatientsTemplate row">
+                  <td class="clinicPatientID cell"></td>
+                  <td class="clinicPatientName cell"></td>
+                  <td class="clinicPatientAge cell"></td>
+                  <td class="clinicPatientWeight cell"></td>
+                  <td class="clinicPatientHeight cell"></td>
+                  <td class="clinicPatientGender cell"></td>
+                  <td class="clinicPatientHeartRate cell"></td>
+                  <td class="clinicPatientTemperature cell"></td>
+                  <td class="clinicPatientNumberOfRegularVisits cell"></td>
+                  <td class="clinicPatientNumberOfLabVisits cell"></td>
+                </tr>
+              </table>
+          </div>
+          <hr />
         </div>
-        <div class="section">
-          <h3 class="subTitle">All Clinics</h3>
-          <table id="clinicTable" class="table">
-            <tr class="tableHeader">
-              <th class="cell">Clinic ID</th>
-              <th class="cell">Location</th>
-              <!-- TODO: number of patients -->
-            </tr>
-            <tr class="clinicTemplate row">
-              <td class="clinicID cell"></td>
-              <td class="clinicLocation cell"></td>
-            </tr>
-          </table>
-        </div>
-        <hr />
 
         <!-- PATIENTS -->
-        <h2 class="title">Patients</h2>
-        <div class="section">
-          <h3 class="subTitle">Add Patient Clinic</h3>
-          <form onsubmit="App.createClinic(); return false;">
-            <input id="newPatientName" type="text" placeholder="Patient Name" required></input>
-            <input id="newPatientAge" type="number" placeholder="Patient Age" required></input>
-            <input id="newPatientWeight" type="number" placeholder="Patient Weight" required></input>
-            <input id="newPatientHeight" type="number" placeholder="Patient Height" required></input>
-            <input id="newPatientGender" type="text" placeholder="Patient Gender" required></input>
-            <input id="newPatientInitialBloodPressure" type="number" placeholder="Patient Initial Blood Pressure"
-              required></input>
-            <input id="newPatientInitialHeartRate" type="number" placeholder="Patient Initial Heart Rate"
-              required></input>
-            <input id="newPatientInitialTemperature" type="number" placeholder="Patient Initial Temperature"
-              required></input>
-            <input type="submit" hidden="">
-          </form>
+        <div class="innerContainer">
+          <h2 class="title">Patients</h2>
+          <div class="section">
+            <h4 class="subTitle">Add Patient</h3>
+              <form onsubmit="App.createPatient(); return false;">
+                <input id="newPatientName" type="text" placeholder="Patient Name" required></input>
+                <input id="newPatientClinic" type="text" placeholder="Clinic Name" required></input>
+                <input id="newPatientAge" type="number" placeholder="Patient Age" required></input>
+                <input id="newPatientWeight" type="number" placeholder="Patient Weight" required></input>
+                <input id="newPatientHeight" type="number" placeholder="Patient Height" required></input>
+                <input id="newPatientGender" type="text" placeholder="Patient Gender" required></input>
+                <input id="newPatientInitialHeartRate" type="number" placeholder="Patient Initial Heart Rate"
+                  required></input>
+                <input id="newPatientInitialTemperature" type="number" placeholder="Patient Initial Temperature"
+                  required></input>
+                <button type="submit">Create</button>
+              </form>
+          </div>
+          <div class="section">
+            <h4 class="subTitle">All Patients</h3>
+              <table id="patientsTable" class="table">
+                <tr class="tableHeader">
+                  <th class="cell">ID</th>
+                  <th class="cell">Clinic</th>
+                  <th class="cell">Name</th>
+                  <th class="cell">Age</th>
+                  <th class="cell">Weight</th>
+                  <th class="cell">Height</th>
+                  <th class="cell">Gender</th>
+                  <th class="cell">Heart Rate</th>
+                  <th class="cell">Temperature</th>
+                  <th class="cell">Regular Visits</th>
+                  <th class="cell">Lab Visits</th>
+                </tr>
+                <tr class="patientTemplate row">
+                  <td class="patientID cell"></td>
+                  <td class="patientClinic cell"></td>
+                  <td class="patientName cell"></td>
+                  <td class="patientAge cell"></td>
+                  <td class="patientWeight cell"></td>
+                  <td class="patientHeight cell"></td>
+                  <td class="patientGender cell"></td>
+                  <td class="patientHeartRate cell"></td>
+                  <td class="patientTemperature cell"></td>
+                  <td class="patientRegularVisits cell"></td>
+                  <td class="patientLabVisits cell"></td>
+                </tr>
+              </table>
+          </div>
+          <hr />
         </div>
-        <div class="section">
-          <h3 class="subTitle">All Patients</h3>
-          <table id="patientsTable" class="table">
-            <tr class="tableHeader">
-              <th class="cell">ID</th>
-              <th class="cell">Name</th>
-              <th class="cell">Age</th>
-              <th class="cell">Weight</th>
-              <th class="cell">Height</th>
-              <th class="cell">Gender</th>
-              <th class="cell">Blood Pressure</th>
-              <th class="cell">Heart Rate</th>
-              <th class="cell">Temper-ature</th>
-              <th class="cell">Regular Visits</th>
-              <th class="cell">Lab Visits</th>
-              <th class="cell">Clinic</th>
-            </tr>
-            <tr class="PatientTemplate row">
-              <td class="patientID cell"></td>
-              <td class="patientName cell"></td>
-              <td class="patientWeight cell"></td>
-              <td class="patientHeight cell"></td>
-              <td class="patientGender cell"></td>
-              <td class="patientBloodPressure cell"></td>
-              <td class="patientHeartRate cell"></td>
-              <td class="patientTemperature cell"></td>
-              <td class="patientRegularVisits cell"></td>
-              <td class="patientLabVisits cell"></td>
-              <td class="patientClinic cell"></td>
-              <td class="patient cell"></td>
-              <td class="patient cell"></td>
-            </tr>
-          </table>
-        </div>
-        <hr />
       </div>
-
     </div>
 
 
-
-
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <!-- <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="vendor/truffle-contract/dist/truffle-contract.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js"
       integrity="sha256-nWBTbvxhJgjslRyuAKJHK+XcZPlCnmIAAMixz6EefVk=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@truffle/contract@4.3.5/dist/truffle-contract.js"></script>
-    <script src="app.js"></script> -->
+    <script src="app.js"></script>
   </body>
 
 </html>

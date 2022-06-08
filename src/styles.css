@@ -5,7 +5,8 @@ body{
 
 hr{
   border: none;
-  border-top: 1px solid #b1b1b1;
+  border-top: 2px solid #b1b1b1;
+  margin: 0;
 }
 
 h1{
@@ -24,6 +25,10 @@ p{
   padding: 1rem 2rem;
 }
 
+.innerContainer{
+  margin-bottom: 3rem;
+}
+
 .title{
   color: #01334b;
   margin: 10px 0;
@@ -34,8 +39,8 @@ p{
 }
 
 .subTitle {
-  color: #003f5c;
-  margin: 0.5rem;
+  color: #7a1919;
+  margin: 0.5rem 0;
 }
 
 input{
@@ -56,6 +61,7 @@ input{
   border-radius: 5px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   display: table;
+  table-layout: auto;
 }
 
 .tableHeader{
