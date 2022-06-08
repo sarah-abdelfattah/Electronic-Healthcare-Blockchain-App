@@ -70,8 +70,8 @@ App = {
 
     $('#account').html(App.account) // Render Account
 
-    // await App.renderClinics()
-    // await App.renderPatients()
+    await App.renderClinics()
+    await App.renderPatients()
     await App.renderLabVisits()
 
     App.setLoading(false)  // Update loading state
@@ -350,6 +350,21 @@ App = {
       $newTemplate.find('.labVisitClinicTestResult').html(clinicLabVisits[i][6])
       $('#LabVisitsClinicsTable').append($newTemplate)
     }
+  },
+
+  createLabVisit: async () => {
+    App.setLoading(true)
+    const patientId = $('#newLabVisitPatient').val()
+    const heartRate = $('#newLabVisitHeartRate').val()
+    const temperature = $('#newLabVisitTemperature').val()
+    const testType = $('#newLabTestType').val()
+    const testResult = $('#newLabVisitTestResult').val()
+
+    const patient = (App.savedPatients).find((patient) => patient[0].toNumber() == patientId)
+    const clinicId = patient[1].toNumber()
+
+    const result = await App.EHR_Contract.createLabVisit(patientId, clinicId, heartRate, temperature, testType, testResult, { from: App.account })
+    window.location.reload()
   },
 }
 

@@ -5,7 +5,7 @@
 - Create new regular visit
 	- Create new prescription 
 		- Create new Medicine 
-- Create new lab visit
+- ~~Create new lab visit~~
 
 #### Read
 - ~~View all clinics~~
@@ -15,9 +15,9 @@
 - View all regular visits
 	- View prescriptions
 		- View Medicines 
-- View all lab visits
-  - View all lab visits for a specific patient
-  - View all lab visits for a specific clinic
+- ~~View all lab visits~~
+  - ~~View all lab visits for a specific patient~~
+  - ~~View all lab visits for a specific clinic~~
 
 
 - Add timestamps
