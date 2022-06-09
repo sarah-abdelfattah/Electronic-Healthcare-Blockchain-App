@@ -153,11 +153,11 @@
                 <textarea id="newRegularVisitDiagnosis" type="Text" placeholder=" Diagnosis" required></textarea>
 
                 <!-- visit type  -->
-                <input type="radio" id="periodCheckup" name="newRegularVisitVisitType" value="periodCheckup">
+                <input type="radio" id="periodCheckup" name="newRegularVisitVisitType" value="0">
                 <label for="periodCheckup">Period Checkup</label><br>
-                <input type="radio" id="caseManagement" name="newRegularVisitVisitType" value="caseManagement">
+                <input type="radio" id="caseManagement" name="newRegularVisitVisitType" value="1">
                 <label for="caseManagement">Case Management</label><br>
-                <input type="radio" id="complain" name="newRegularVisitVisitType" value="complain">
+                <input type="radio" id="complain" name="newRegularVisitVisitType" value="2">
                 <label for="complain">Complain</label>
 
                 <!-- Prescription -->
@@ -165,9 +165,32 @@
                 <input id="newRegularVisitFollowUp" type="text" placeholder="Follow up"></input>
                 <input id="newRegularVisitLab" type="text" placeholder="Lab"></input>
 
-                <!-- TODO: Medicines -->
+                <!-- Medicines Added -->
+                <h6>Medicines</h6>
+                <table id="newMedicinesTable">
+                  <tr class="tableHeader">
+                    <th class="cell">Name</th>
+                    <th class="cell">Dose</th>
+                    <th class="cell">Period</th>
+                  </tr>
+                  <tr class="newMedicineTemplate row">
+                    <td class="newMedicineName cell"></td>
+                    <td class="newMedicineDose cell"></td>
+                    <td class="newMedicinePeriod cell"></td>
+                  </tr>
+                </table>
+
                 <button type="submit">Create</button>
               </form>
+
+              <!-- TODO: Medicines -->
+              <form onsubmit="App.createMedicine(); return false;">
+                <input id="newMedicineNameInput" type="text" placeholder="Medicine Name" required></input>
+                <input id="newMedicineDoseInput" type="text" placeholder="Medicine Dose" required></input>
+                <input id="newMedicinePeriodInput" type="text" placeholder="Medicine Period" required></input>
+                <button type="submit">Add medicine to prescription</button>
+              </form>
+
           </div>
           <div class="section">
             <h4 class="subTitle">All Regular Visits</h3>

@@ -7,6 +7,8 @@ App = {
   savedLabVisits: [],
   savedPrescriptions: [],
   savedMedicines: [],
+  addedMedicines: [],
+  numberOfAddedMedicines: 0,
 
   load: async () => {
     await App.loadWeb3()
@@ -70,12 +72,12 @@ App = {
 
     $('#account').html(App.account) // Render Account
 
-    // await App.renderClinics()
-    // await App.renderPatients()
+    await App.renderClinics()
+    await App.renderPatients()
     await App.renderRegularVisits()
     await App.renderPrescriptions()
     await App.renderMedicines()
-    // await App.renderLabVisits()
+    await App.renderLabVisits()
 
     App.setLoading(false)  // Update loading state
   },
@@ -382,6 +384,25 @@ App = {
     }
   },
 
+  createRegularVisit: async () => {
+    App.setLoading(true)
+    const patient = $('#newRegularVisitPatient').val()
+    const clinic = $('#newRegularVisitClinic').val()
+    const heartRate = $('#newRegularVisitHeartRate').val()
+    const temperature = $('#newRegularVisitTemperature').val()
+    const diagnosis = $('#newRegularVisitDiagnosis').val()
+    const type = document.querySelector('input[name="newRegularVisitVisitType"]:checked').value;
+    const referral = $('#newRegularVisitReferral').val()
+    const followUp = $('#newRegularVisitFollowUp').val()
+    const lab = $('#newRegularVisitLab').val()
+
+    const result = await App.EHR_Contract.createRegularVisit(patient, clinic, heartRate, temperature, diagnosis, type,
+      referral, followUp, lab, App.numberOfAddedMedicines, { from: App.account })
+    numberOfAddedMedicines = 0;
+    addedMedicines = []
+    window.location.reload()
+  },
+
   /******************** PRESCRIPTION *********************/
   renderPrescriptions: async () => {
     const prescriptionCount = await App.EHR_Contract.prescriptionsCount()
@@ -423,6 +444,7 @@ App = {
 
   /******************** MEDICINES *********************/
   renderMedicines: async () => {
+    App.savedMedicines = []
     const medicinesCount = await App.EHR_Contract.medicinesCount()
 
     for (let i = 1; i <= medicinesCount; i++) {
@@ -449,6 +471,27 @@ App = {
       $('#medicinesTable').append($newTemplate)
     }
 
+  },
+
+  createMedicine: async () => {
+    const name = $('#newMedicineNameInput').val()
+    const dose = $('#newMedicineDoseInput').val()
+    const period = $('#newMedicinePeriodInput').val()
+    const visitID = App.savedRegularVisits[App.savedRegularVisits.length - 1][0].toNumber()
+
+    App.addedMedicines.push({ name, dose, period })
+    const result = await App.EHR_Contract.createMedicine(visitID, name, dose, period, { from: App.account })
+    App.numberOfAddedMedicines++
+
+    const $newMedicineTemplate = $('.newMedicineTemplate')
+
+    let $newTemplate = $newMedicineTemplate.clone()
+    $newTemplate.find('.newMedicineName').html(name)
+    $newTemplate.find('.newMedicineDose').html(dose)
+    $newTemplate.find('.newMedicinePeriod').html(period)
+    $('#newMedicinesTable').append($newTemplate)
+
+    await renderMedicines()
   },
 
   /******************** LAB VISITS *********************/

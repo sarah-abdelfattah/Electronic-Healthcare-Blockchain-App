@@ -183,6 +183,15 @@ contract EHR {
         string memory _lab,
         int256 _numberOfMedicines
     ) public {
+        // VisitTypes temp = VisitTypes.periodicCheckup;
+        // if (_visitType == 0) {
+        //     temp = VisitTypes.periodicCheckup;
+        // } else if (_visitType == 1) {
+        //     temp = VisitTypes.caseManagement;
+        // } else {
+        //     temp = VisitTypes.complain;
+        // }
+
         regularVisitsCount++;
 
         regularVisits[regularVisitsCount] = RegularVisit(
