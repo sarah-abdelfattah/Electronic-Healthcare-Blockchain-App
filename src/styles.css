@@ -89,9 +89,19 @@ th{
 
 .cell{
   display: table-cell;
-  padding: 6px 
+  padding: 6px ;
+  text-align: center;
+  vertical-align: middle !important;
 }
 
 button[type="submit"]{
-margin: 1rem 0;
+margin: 1rem auto;
+}
+
+button{
+  border: none;
+  border-radius: 5px;
+  padding: 5px 15px;
+  color: white;
+  background-color: #871c1c;
 }
