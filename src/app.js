@@ -1,3 +1,6 @@
+adminAddress = ""
+smartContract = ""
+
 App = {
   loading: false,
   contracts: {},
@@ -13,7 +16,7 @@ App = {
 
   load: async () => {
     await App.loadWeb3()
-    await App.loadAccount()
+    await App.loadAdminAccount()
     await App.loadContract()
     await App.render()
   },
@@ -51,8 +54,10 @@ App = {
     }
   },
 
-  loadAccount: async () => {
-    var accounts = await web3.eth.getAccounts();
+  loadAdminAccount: async () => {
+    const accounts = await web3.eth.getAccounts();
+    console.log("🚀 ~ file: app.js ~ line 59 ~ loadAdminAccount: ~ accounts", accounts);
+    adminAddress = accounts[0];
     App.account = accounts[0];
   },
 
@@ -61,6 +66,7 @@ App = {
     App.contracts.EHR = TruffleContract(EHR_Contract) //this is a wrapper
     App.contracts.EHR.setProvider(App.web3Provider)
     App.EHR_Contract = await App.contracts.EHR.deployed() //gets our actual values from the blockchain
+    smartContract = EHR_Contract
   },
 
   render: async () => {
@@ -71,15 +77,15 @@ App = {
 
     App.setLoading(true)
 
+    // $('#role').html() //TODO:
     $('#account').html(App.account) // Render Account
 
-    await App.renderHumans()
-    await App.renderClinics()
-    await App.renderPatients()
-    await App.renderRegularVisits()
-    await App.renderPrescriptions()
-    await App.renderMedicines()
-    await App.renderLabVisits()
+    // await App.renderClinics()
+    // await App.renderPatients()
+    // await App.renderRegularVisits()
+    // await App.renderPrescriptions()
+    // await App.renderMedicines()
+    // await App.renderLabVisits()
 
     App.setLoading(false)  // Update loading state
   },
@@ -218,16 +224,22 @@ App = {
   },
 
   createClinic: async () => {
-    App.setLoading(true)
     const location = $('#newClinicLocation').val()
-    const result = await App.EHR_Contract.createClinic(location, { from: App.account })
-    window.location.reload()
+
+    try {
+      const newAccount = await web3.eth.accounts.create();
+      console.log("🚀 ~ file: app.js ~ line 2 ~ adminAddress", adminAddress);
+      const result = await App.EHR_Contract.createClinic(newAccount.address, location, { from: App.account })
+      window.alert("Clinic added successfully")
+    } catch (error) {
+      console.log("🚀 ~ file: app.js ~ line 233 ~ createClinic: ~ error", error);
+      window.alert("Sorry you are not authorized")
+    }
   },
 
   /******************** PATIENTS *********************/
   renderPatients: async () => {
     const patientsCount = await App.EHR_Contract.patientsCount()
-    console.log("🚀 ~ file: app.js ~ line 230 ~ renderPatients: ~ patientsCount", patientsCount.toNumber());
     const $patientTemplate = $('.patientTemplate')
 
     for (let i = 1; i <= patientsCount; i++) {
