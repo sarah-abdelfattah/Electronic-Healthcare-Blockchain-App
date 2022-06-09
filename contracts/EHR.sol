@@ -7,12 +7,22 @@ contract EHR {
         complain
     }
 
+    int256 public humansCount = 0;
     int256 public patientsCount = 0;
     int256 public clinicsCount = 0;
     int256 public regularVisitsCount = 0;
     int256 public labVisitsCount = 0;
     int256 public prescriptionsCount = 0;
     int256 public medicinesCount = 0;
+
+    struct Human {
+        int256 humanID;
+        string name;
+        int256 age;
+        int256 weight;
+        int256 height;
+        string gender;
+    }
 
     struct Clinic {
         int256 clinicID;
@@ -22,16 +32,12 @@ contract EHR {
 
     struct Patient {
         int256 patientID;
+        int256 humanID;
         int256 clinicID;
-        string name;
-        int256 age;
-        int256 weight;
-        int256 height;
-        string gender;
         int256 initialHeartRate;
         int256 initialTemperature;
-        int256 numberOfRegularVisits; //TODO
-        int256 numberOfLabVisits; //TODO
+        int256 numberOfRegularVisits;
+        int256 numberOfLabVisits;
     }
 
     struct RegularVisit {
@@ -71,6 +77,7 @@ contract EHR {
         string period;
     }
 
+    mapping(int256 => Human) public humans;
     mapping(int256 => Clinic) public clinics;
     mapping(int256 => Patient) public patients;
     mapping(int256 => RegularVisit) public regularVisits;
@@ -84,11 +91,17 @@ contract EHR {
         createClinic("KSA");
         createClinic("Germany");
 
+        // Initial humans
+        createHuman("Sarah", 23, 53, 171, "female");
+        createHuman("Mohammed", 25, 63, 181, "male");
+        createHuman("Ahmed", 25, 63, 181, "male");
+        createHuman("Alaa", 25, 63, 181, "female");
+
         // Initial patients
-        createPatient(1, "Sarah", 23, 53, 171, "female", 68, 36);
-        createPatient(1, "Mohammed", 25, 63, 181, "male", 68, 36);
-        createPatient(2, "Ahmed", 25, 63, 181, "male", 68, 36);
-        createPatient(2, "Alaa", 25, 63, 181, "female", 68, 36);
+        createPatient(1, 1, 68, 36);
+        createPatient(2, 1, 68, 36);
+        createPatient(3, 2, 68, 36);
+        createPatient(4, 2, 68, 36);
 
         // Initial regular visits (with their medicines)
         createRegularVisit(
@@ -140,30 +153,40 @@ contract EHR {
         createLabVisit(2, 1, 44, 55, "WBC", "moderate");
     }
 
+    function createHuman(
+        string memory _name,
+        int256 _age,
+        int256 _weight,
+        int256 _height,
+        string memory _gender
+    ) public {
+        humansCount++;
+        humans[humansCount] = Human(
+            humansCount,
+            _name,
+            _age,
+            _weight,
+            _height,
+            _gender
+        );
+    }
+
     function createClinic(string memory _location) public {
         clinicsCount++;
         clinics[clinicsCount] = Clinic(clinicsCount, _location, 0);
     }
 
     function createPatient(
+        int256 _humanID,
         int256 _clinicID,
-        string memory _name,
-        int256 _age,
-        int256 _weight,
-        int256 _height,
-        string memory _gender,
         int256 _initialHeartRate,
         int256 _initialTemperature
     ) public {
         patientsCount++;
         patients[patientsCount] = Patient(
             patientsCount,
+            _humanID,
             _clinicID,
-            _name,
-            _age,
-            _weight,
-            _height,
-            _gender,
             _initialHeartRate,
             _initialTemperature,
             0,
@@ -191,6 +214,10 @@ contract EHR {
         // } else {
         //     temp = VisitTypes.complain;
         // }
+
+        patients[_patientID].numberOfRegularVisits =
+            patients[_patientID].numberOfRegularVisits +
+            1;
 
         regularVisitsCount++;
 
@@ -221,6 +248,10 @@ contract EHR {
         string memory _testType,
         string memory _testResult
     ) public {
+        patients[_patientID].numberOfLabVisits =
+            patients[_patientID].numberOfLabVisits +
+            1;
+
         labVisitsCount++;
         labVisits[labVisitsCount] = LabVisit(
             labVisitsCount,

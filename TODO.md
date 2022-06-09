@@ -1,5 +1,6 @@
 ### CRUD
 #### Create
+- ~~Create new human~~
 - ~~Create new clinic~~
 - ~~Create new patient~~
 - Create new regular visit
@@ -8,6 +9,7 @@
 - ~~Create new lab visit~~
 
 #### Read
+- ~~View all humans~~
 - ~~View all clinics~~
   - ~~View all patients of a clinic~~
 - ~~View all patients~~

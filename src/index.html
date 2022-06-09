@@ -25,6 +25,44 @@
           <hr />
         </div>
 
+        <!-- HUMANS -->
+        <div class="innerContainer">
+          <h2 class="title">Humans</h2>
+          <div class="section">
+            <h4 class="subTitle">Add Human</h3>
+              <form onsubmit="App.createHuman(); return false;">
+                <input id="newHumanName" type="text" placeholder="Human Name" required></input>
+                <input id="newHumanAge" type="number" placeholder="Human Age" required></input>
+                <input id="newHumanWeight" type="number" placeholder="Human Weight" required></input>
+                <input id="newHumanHeight" type="number" placeholder="Human Height" required></input>
+                <input id="newHumanGender" type="text" placeholder="Human Gender" required></input>
+                <button type="submit">Create</button>
+              </form>
+          </div>
+          <div class="section">
+            <h4 class="subTitle">All Humans</h3>
+              <table id="humansTable" class="table">
+                <tr class="tableHeader">
+                  <th class="cell">ID</th>
+                  <th class="cell">Name</th>
+                  <th class="cell">Age</th>
+                  <th class="cell">Weight</th>
+                  <th class="cell">Height</th>
+                  <th class="cell">Gender</th>
+                </tr>
+                <tr class="humanTemplate row">
+                  <td class="humanID cell"></td>
+                  <td class="humanName cell"></td>
+                  <td class="humanAge cell"></td>
+                  <td class="humanWeight cell"></td>
+                  <td class="humanHeight cell"></td>
+                  <td class="humanGender cell"></td>
+                </tr>
+              </table>
+          </div>
+          <hr />
+        </div>
+
         <!-- CLINICS -->
         <div class="innerContainer">
           <h2 class="title">Clinics</h2>
@@ -92,12 +130,8 @@
           <div class="section">
             <h4 class="subTitle">Add Patient</h3>
               <form onsubmit="App.createPatient(); return false;">
-                <input id="newPatientName" type="text" placeholder="Patient Name" required></input>
+                <input id="newPatientHuman" type="text" placeholder="Human ID" required></input>
                 <input id="newPatientClinic" type="text" placeholder="Clinic ID" required></input>
-                <input id="newPatientAge" type="number" placeholder="Patient Age" required></input>
-                <input id="newPatientWeight" type="number" placeholder="Patient Weight" required></input>
-                <input id="newPatientHeight" type="number" placeholder="Patient Height" required></input>
-                <input id="newPatientGender" type="text" placeholder="Patient Gender" required></input>
                 <input id="newPatientInitialHeartRate" type="number" placeholder="Patient Initial Heart Rate"
                   required></input>
                 <input id="newPatientInitialTemperature" type="number" placeholder="Patient Initial Temperature"

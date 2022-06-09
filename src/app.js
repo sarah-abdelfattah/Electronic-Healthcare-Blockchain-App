@@ -1,6 +1,7 @@
 App = {
   loading: false,
   contracts: {},
+  savedHumans: [],
   savedClinics: [],
   savedPatients: [],
   savedRegularVisits: [],
@@ -72,6 +73,7 @@ App = {
 
     $('#account').html(App.account) // Render Account
 
+    await App.renderHumans()
     await App.renderClinics()
     await App.renderPatients()
     await App.renderRegularVisits()
@@ -94,6 +96,41 @@ App = {
       loader.hide()
       content.show()
     }
+  },
+
+  /******************** HUMANS *********************/
+  renderHumans: async () => {
+    const humansCount = await App.EHR_Contract.humansCount()
+    const $humanTemplate = $('.humanTemplate')
+
+    for (let i = 1; i <= humansCount; i++) {
+      let human = await App.EHR_Contract.humans(i);
+
+      let $newTemplate = $humanTemplate.clone()
+      $newTemplate.find('.humanID').html(human[0].toNumber())
+      $newTemplate.find('.humanName').html(human[1])
+      $newTemplate.find('.humanAge').html(human[2].toNumber())
+      $newTemplate.find('.humanWeight').html(human[3].toNumber())
+      $newTemplate.find('.humanHeight').html(human[4].toNumber())
+      $newTemplate.find('.humanGender').html(human[5])
+
+      $('#humansTable').append($newTemplate)
+
+      App.savedHumans.push(human)
+    }
+  },
+
+  createHuman: async () => {
+    App.setLoading(true)
+    const name = $('#newHumanName').val()
+    const age = $('#newHumanAge').val()
+    const weight = $('#newHumanWeight').val()
+    const height = $('#newHumanHeight').val()
+    const gender = $('#newHumanGender').val()
+
+    const result = await App.EHR_Contract.createHuman(name, age, weight, height, gender,
+      { from: App.account })
+    window.location.reload()
   },
 
   /******************** CLINICS *********************/
@@ -153,10 +190,10 @@ App = {
 
       let btn = document.createElement("button");
       let text = document.createTextNode("Show");
-      btn.id = clinicPatients[i][0].toNumber() + "-" + clinicPatients[i][1].toNumber()
+      btn.id = clinicPatients[i][0].toNumber()
       btn.appendChild(text);
       btn.addEventListener('click', function handleClick(event) {
-        App.viewPatientRegularVisits(event.target.id)
+        App.viewPatientsRegularVisit(event.target.id)
       });
       regularVisits.appendChild(btn);
 
@@ -169,10 +206,10 @@ App = {
 
       btn = document.createElement("button");
       text = document.createTextNode("Show");
-      btn.id = clinicPatients[i][0].toNumber() + "-" + clinicPatients[i][1].toNumber()
+      btn.id = clinicPatients[i][0].toNumber()
       btn.appendChild(text);
       btn.addEventListener('click', function handleClick(event) {
-        App.viewPatientLabVisits(event.target.id)
+        App.viewPatientsLabVisit(event.target.id)
       });
       labVisits.appendChild(btn);
 
@@ -190,6 +227,7 @@ App = {
   /******************** PATIENTS *********************/
   renderPatients: async () => {
     const patientsCount = await App.EHR_Contract.patientsCount()
+    console.log("🚀 ~ file: app.js ~ line 230 ~ renderPatients: ~ patientsCount", patientsCount.toNumber());
     const $patientTemplate = $('.patientTemplate')
 
     for (let i = 1; i <= patientsCount; i++) {
@@ -197,18 +235,21 @@ App = {
 
       let $newTemplate = $patientTemplate.clone()
       $newTemplate.find('.patientID').html(patient[0].toNumber())
-      $newTemplate.find('.patientClinic').html(patient[1].toNumber())
-      $newTemplate.find('.patientName').html(patient[2])
-      $newTemplate.find('.patientAge').html(patient[3].toNumber())
-      $newTemplate.find('.patientWeight').html(patient[4].toNumber())
-      $newTemplate.find('.patientHeight').html(patient[5].toNumber())
-      $newTemplate.find('.patientGender').html(patient[6])
-      $newTemplate.find('.patientHeartRate').html(patient[7].toNumber())
-      $newTemplate.find('.patientTemperature').html(patient[8].toNumber())
+      $newTemplate.find('.patientClinic').html(patient[2].toNumber())
+
+      let human = (App.savedHumans).find((h) => h[0].toNumber() == patient[1].toNumber())
+      $newTemplate.find('.patientName').html(human[1])
+      $newTemplate.find('.patientAge').html(human[2].toNumber())
+      $newTemplate.find('.patientWeight').html(human[3].toNumber())
+      $newTemplate.find('.patientHeight').html(human[4].toNumber())
+      $newTemplate.find('.patientGender').html(human[5])
+
+      $newTemplate.find('.patientHeartRate').html(patient[3].toNumber())
+      $newTemplate.find('.patientTemperature').html(patient[4].toNumber())
       //regular visits
       let regularVisits = $newTemplate.find('.patientRegularVisits')[0]
       let p = document.createElement("p");
-      let count = document.createTextNode(patient[9].toNumber());
+      let count = document.createTextNode(patient[5].toNumber());
       p.appendChild(count);
       regularVisits.appendChild(p);
 
@@ -224,7 +265,7 @@ App = {
       //lab visits
       let labVisits = $newTemplate.find('.patientLabVisits')[0]
       p = document.createElement("p");
-      count = document.createTextNode(patient[10].toNumber());
+      count = document.createTextNode(patient[6].toNumber());
       p.appendChild(count);
       labVisits.appendChild(p);
 
@@ -242,28 +283,14 @@ App = {
     }
   },
 
-  viewPatientRegularVisits: async (bothIDs) => {
-    //TODO:
-    console.log("viewPatientRegularVisits", bothIDs)
-  },
-
-  viewPatientLabVisits: async (bothIDs) => {
-    //TODO:
-    console.log("viewPatientLabVisits", bothIDs)
-  },
-
   createPatient: async () => {
     App.setLoading(true)
-    const name = $('#newPatientName').val()
+    const human = $('#newPatientHuman').val()
     const clinic = $('#newPatientClinic').val()
-    const age = $('#newPatientAge').val()
-    const weight = $('#newPatientWeight').val()
-    const height = $('#newPatientHeight').val()
-    const gender = $('#newPatientGender').val()
     const heartRate = $('#newPatientInitialHeartRate').val()
     const temperature = $('#newPatientInitialTemperature').val()
 
-    const result = await App.EHR_Contract.createPatient(clinic, name, age, weight, height, gender, heartRate, temperature,
+    const result = await App.EHR_Contract.createPatient(human, clinic, heartRate, temperature,
       { from: App.account })
     window.location.reload()
   },
