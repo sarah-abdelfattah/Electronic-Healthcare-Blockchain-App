@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "crypto-js": "^4.1.1"
+  },
+  "devDependencies": {
+    "solidity-cli": "^1.0.3"
   }
 }
