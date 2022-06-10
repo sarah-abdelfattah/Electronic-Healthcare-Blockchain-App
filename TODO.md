@@ -27,8 +27,8 @@
 - ~~Digital signature --> Hash + sign --> verify~~
 - ~~integrity --> attaching hash~~ --> producing hash and comparing --> NO NEED .. it is done by the blockchain (Ganache)
 
-- Add timestamps
-- BUG: after adding a visit and showing its prescription
+**- Add timestamps
+**- BUG: after adding a visit and showing its prescription
 
 
 ## TOTALLY DONE:
@@ -47,7 +47,7 @@
   - Encryption
   - DS
   - integrity
-
+----------------------------------------------------------------
 - Create patient 
   - By admin only
   - Encryption
@@ -59,6 +59,22 @@
   - DS
   - integrity
 - View specific patient by ID
+  - By admin only
+  - Encryption
+  - DS
+  - integrity
+----------------------------------------------------------------
+- Create Lab visit for the patient 
+  - By admin only
+  - Encryption
+  - DS
+  - integrity
+- View all lab visits for a specific patient
+  - By admin only
+  - Encryption
+  - DS
+  - integrity
+- View all lab visits for my clinic
   - By admin only
   - Encryption
   - DS
@@ -81,7 +97,11 @@
   - Encryption
   - DS
   - integrity
-
+- View all lab visits (for admin)
+  - By admin only
+  - Encryption
+  - DS
+  - integrity
 
 
 

@@ -315,7 +315,6 @@ App = {
       const height = $('#newPatientHeight').val()
       const heartRate = $('#newPatientInitialHeartRate').val()
       const temperature = $('#newPatientInitialTemperature').val()
-      console.log("🚀 ~ file: app.js ~ line 318 ~ createPatient: ~ temperature", temperature);
 
       let allData = name + ":" + gender + ":" + age + ":" + weight + ":" + height + ":" + heartRate + ":" + temperature
       const encryptedData = encryptWithAES(allData, currentAddress)
@@ -353,7 +352,7 @@ App = {
         let data = decryptWithAES(patient[3], currentAddress)
         data = id + ":" + data
 
-        await draw(9, 'patientBody', data)
+        await draw(8, 'patientBody', data)
 
         // regular visits
         let btn = document.createElement("button");
@@ -395,7 +394,7 @@ App = {
       let data = decryptWithAES(patient[3], currentAddress)
       data = id + ":" + data
 
-      await draw(9, 'patientBody', data)
+      await draw(8, 'patientBody', data)
 
       // regular visits
       let btn = document.createElement("button");
@@ -468,6 +467,78 @@ App = {
     } catch (error) {
       console.log("🚀 ~ file: app.js ~ line 247 ~ viewClinicByID: ~ error", error);
       window.alert("Sorry, you are not Authorized!")
+    }
+  },
+
+  /******************** LAB VISITS *********************/
+  createLabVisit: async () => {
+    try {
+      print("current account: " + currentAddress)
+
+      const patientID = $('#newLabVisitPatient').val()
+      const heartRate = $('#newLabVisitHeartRate').val()
+      const temperature = $('#newLabVisitTemperature').val()
+      const testType = $('#newLabVisitTestType').val()
+      const testResult = $('#newLabVisitTestResult').val()
+
+      let allData = heartRate + ":" + temperature + ":" + testType + ":" + testResult
+      const encryptedData = encryptWithAES(allData, currentAddress)
+
+      print("ENCRYPTION", 1)
+      print("Encrypted Data: " + encryptedData)
+
+      const dispatchCreate = async (address, hash, sign, data, acc) => {
+        await App.EHR_Contract.createLabVisit(patientID, hash, sign, data, { from: acc })
+      }
+
+      await App.creationHelper(encryptedData, dispatchCreate)
+
+      print("LAB VISIT ADDED SUCCESSFULLY", 1)
+    } catch (error) {
+      print("error: " + error);
+      window.alert("Sorry you are not authorized")
+    }
+  },
+
+  viewPatientLabVisits: async () => {
+    let el = document.getElementsByClassName(`labVisitBody`)[0]
+    const requiredPatient = parseInt($('#requiredPatientLabVisit').val())
+
+    const labVisitsCount = await App.EHR_Contract.getPatientLabVisitsCount(requiredPatient, currentAddress)
+    print("Number of Lab Visits: " + labVisitsCount)
+
+    while (el.hasChildNodes()) {
+      el.removeChild(el.lastChild);
+    }
+
+    for (let i = 0; i < labVisitsCount; i++) {
+      let patient = await App.EHR_Contract.getPatientLabVisits(requiredPatient, i, currentAddress);
+      let id = patient[0]
+      let patientID = patient[1]
+      let data = decryptWithAES(patient[4], currentAddress)
+      data = id + ":" + patientID + ":" + data
+
+      await draw(6, 'labVisitBody', data)
+    }
+  },
+
+  viewMyLabVisits: async () => {
+    let el = document.getElementsByClassName(`labVisitBody`)[0]
+    const labVisitsCount = await App.EHR_Contract.getClinicLabVisitsCount(currentAddress)
+    print("Number of Lab Visits: " + labVisitsCount)
+
+    while (el.hasChildNodes()) {
+      el.removeChild(el.lastChild);
+    }
+
+    for (let i = 0; i < labVisitsCount; i++) {
+      let patient = await App.EHR_Contract.getClinicLabVisits(i, currentAddress);
+      let id = patient[0]
+      let patientID = patient[1]
+      let data = decryptWithAES(patient[4], currentAddress)
+      data = id + ":" + patientID + ":" + data
+
+      await draw(6, 'labVisitBody', data)
     }
   },
 
@@ -697,105 +768,23 @@ App = {
     await renderMedicines()
   },
 
-  /******************** LAB VISITS *********************/
-  renderLabVisits: async () => {
-    const labVisitsCount = await App.EHR_Contract.labVisitsCount()
-    const $labVisitTemplate = $('.labVisitTemplate')
 
-    for (let i = 1; i <= labVisitsCount; i++) {
-      let labVisit = await App.EHR_Contract.labVisits(i);
+  // createLabVisit: async () => {
+  //   App.setLoading(true)
+  //   const patientId = $('#newLabVisitPatient').val()
+  //   const heartRate = $('#newLabVisitHeartRate').val()
+  //   const temperature = $('#newLabVisitTemperature').val()
+  //   const testType = $('#newLabTestType').val()
+  //   const testResult = $('#newLabVisitTestResult').val()
 
-      let $newTemplate = $labVisitTemplate.clone()
-      $newTemplate.find('.labVisitID').html(labVisit[0].toNumber())
-      $newTemplate.find('.labVisitHeartRate').html(labVisit[3].toNumber())
-      $newTemplate.find('.labVisitTemperature').html(labVisit[4].toNumber())
-      $newTemplate.find('.labVisitTestType').html(labVisit[5])
-      $newTemplate.find('.labVisitTestResult').html(labVisit[6])
+  //   const patient = (App.savedPatients).find((patient) => patient[0].toNumber() == patientId)
+  //   const clinicId = patient[1].toNumber()
 
-      // patients
-      let patient = $newTemplate.find('.labVisitPatient')[0]
-      let p = document.createElement("p");
-      let count = document.createTextNode(labVisit[1].toNumber());
-      p.appendChild(count);
-      patient.appendChild(p);
-      let btn = document.createElement("button");
-      let text = document.createTextNode("Show");
-      btn.id = labVisit[1].toNumber()
-      btn.appendChild(text);
-      btn.addEventListener('click', function handleClick(event) {
-        App.viewPatientsLabVisit(event.target.id)
-      });
-      patient.appendChild(btn);
+  //   const result = await App.EHR_Contract.createLabVisit(patientId, clinicId, heartRate, temperature, testType, testResult, { from: App.account })
+  //   window.location.reload()
+  // },
 
-      // clinics
-      let clinic = $newTemplate.find('.labVisitClinic')[0]
-      p = document.createElement("p");
-      count = document.createTextNode(labVisit[2].toNumber());
-      p.appendChild(count);
-      clinic.appendChild(p);
-      btn = document.createElement("button");
-      text = document.createTextNode("Show");
-      btn.id = labVisit[2].toNumber()
-      btn.appendChild(text);
-      btn.addEventListener('click', function handleClick(event) {
-        App.viewClinicsLabVisit(event.target.id)
-      });
-      clinic.appendChild(btn);
-
-      $('#LabVisitsTable').append($newTemplate)
-      App.savedLabVisits.push(labVisit)
-    }
-  },
-
-  viewPatientsLabVisit: async (patientID) => {
-    let patientLabVisits = (App.savedLabVisits).filter((labVisit) => labVisit[1].toNumber() == patientID)
-
-    const $labVisitPatientTemplate = $('.labVisitPatientTemplate')
-
-    for (let i = 0; i < patientLabVisits.length; i++) {
-      let $newTemplate = $labVisitPatientTemplate.clone()
-      $newTemplate.find('.labVisitPatientID').html(patientLabVisits[i][0].toNumber())
-      $newTemplate.find('.labVisitPatientClinicID').html(patientLabVisits[i][2].toNumber())
-      $newTemplate.find('.labVisitPatientHeartRate').html(patientLabVisits[i][3].toNumber())
-      $newTemplate.find('.labVisitPatientTemperature').html(patientLabVisits[i][4].toNumber())
-      $newTemplate.find('.labVisitPatientTestType').html(patientLabVisits[i][5])
-      $newTemplate.find('.labVisitPatientTestResult').html(patientLabVisits[i][6])
-      $('#LabVisitsPatientsTable').append($newTemplate)
-    }
-  },
-
-  viewClinicsLabVisit: async (clinicID) => {
-    let clinicLabVisits = (App.savedLabVisits).filter((labVisit) => labVisit[2].toNumber() == clinicID)
-
-    const $labVisitClinicTemplate = $('.labVisitClinicTemplate')
-
-    for (let i = 0; i < clinicLabVisits.length; i++) {
-      let $newTemplate = $labVisitClinicTemplate.clone()
-      $newTemplate.find('.labVisitClinicID').html(clinicLabVisits[i][0].toNumber())
-      $newTemplate.find('.labVisitClinicPatientID').html(clinicLabVisits[i][1].toNumber())
-      $newTemplate.find('.labVisitClinicHeartRate').html(clinicLabVisits[i][3].toNumber())
-      $newTemplate.find('.labVisitClinicTemperature').html(clinicLabVisits[i][4].toNumber())
-      $newTemplate.find('.labVisitClinicTestType').html(clinicLabVisits[i][5])
-      $newTemplate.find('.labVisitClinicTestResult').html(clinicLabVisits[i][6])
-      $('#LabVisitsClinicsTable').append($newTemplate)
-    }
-  },
-
-  createLabVisit: async () => {
-    App.setLoading(true)
-    const patientId = $('#newLabVisitPatient').val()
-    const heartRate = $('#newLabVisitHeartRate').val()
-    const temperature = $('#newLabVisitTemperature').val()
-    const testType = $('#newLabTestType').val()
-    const testResult = $('#newLabVisitTestResult').val()
-
-    const patient = (App.savedPatients).find((patient) => patient[0].toNumber() == patientId)
-    const clinicId = patient[1].toNumber()
-
-    const result = await App.EHR_Contract.createLabVisit(patientId, clinicId, heartRate, temperature, testType, testResult, { from: App.account })
-    window.location.reload()
-  },
-
+  /******************** SEEDING *********************/
   seedingFunction: async () => {
     // CLINICS
     let locations = ['Egypt', 'KSA', 'Germany']
