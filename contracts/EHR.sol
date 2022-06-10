@@ -1,13 +1,24 @@
 pragma solidity ^0.5.0;
 
+// Creating a regular visit --> creates a prescription --> creates medicines
+// Address = public key
+// Only 1 admin
+
+/******************* ROLES OF ADMINS ********************/
+// Admin can add clinics
+
+/******************* ROLES OF CLINICS ********************/
+// Clinics can add patients
+
 contract EHR {
+    address systemAdmin;
+
     enum VisitTypes {
         periodicCheckup,
         caseManagement,
         complain
     }
 
-    int256 public humansCount = 0;
     int256 public patientsCount = 0;
     int256 public clinicsCount = 0;
     int256 public regularVisitsCount = 0;
@@ -15,25 +26,23 @@ contract EHR {
     int256 public prescriptionsCount = 0;
     int256 public medicinesCount = 0;
 
-    struct Human {
-        int256 humanID;
+    struct Clinic {
+        int256 clinicID;
+        address clinicAddress;
+        string location;
+        int256 numberOfPatients;
+        bytes32 hashMessage;
+    }
+
+    struct Patient {
+        int256 patientID;
+        address patientAddress;
+        int256 clinicID;
         string name;
         int256 age;
         int256 weight;
         int256 height;
         string gender;
-    }
-
-    struct Clinic {
-        int256 clinicID;
-        string location;
-        int256 numberOfPatients;
-    }
-
-    struct Patient {
-        int256 patientID;
-        int256 humanID;
-        int256 clinicID;
         int256 initialHeartRate;
         int256 initialTemperature;
         int256 numberOfRegularVisits;
@@ -77,7 +86,6 @@ contract EHR {
         string period;
     }
 
-    mapping(int256 => Human) public humans;
     mapping(int256 => Clinic) public clinics;
     mapping(int256 => Patient) public patients;
     mapping(int256 => RegularVisit) public regularVisits;
@@ -86,107 +94,53 @@ contract EHR {
     mapping(int256 => Medicine) public medicines;
 
     constructor() public {
-        // Initial clinics
-        createClinic("Egypt");
-        createClinic("KSA");
-        createClinic("Germany");
-
-        // Initial humans
-        createHuman("Sarah", 23, 53, 171, "female");
-        createHuman("Mohammed", 25, 63, 181, "male");
-        createHuman("Ahmed", 25, 63, 181, "male");
-        createHuman("Alaa", 25, 63, 181, "female");
-
-        // Initial patients
-        createPatient(1, 1, 68, 36);
-        createPatient(2, 1, 68, 36);
-        createPatient(3, 2, 68, 36);
-        createPatient(4, 2, 68, 36);
-
-        // Initial regular visits (with their medicines)
-        createRegularVisit(
-            1,
-            1,
-            11,
-            11,
-            "flu",
-            VisitTypes.periodicCheckup,
-            "",
-            "yes",
-            "",
-            2
-        );
-        createMedicine(1, "m1", "d1", "p1");
-        createMedicine(1, "m2", "d2", "p2");
-
-        createRegularVisit(
-            1,
-            1,
-            11,
-            11,
-            "cough",
-            VisitTypes.complain,
-            "test",
-            "yes",
-            "",
-            1
-        );
-        createMedicine(2, "m3", "d3", "p3");
-
-        createRegularVisit(
-            2,
-            1,
-            11,
-            11,
-            "cough and flu",
-            VisitTypes.caseManagement,
-            "test",
-            "none",
-            "none",
-            2
-        );
-        createMedicine(3, "m4", "d4", "p4");
-        createMedicine(3, "m5", "d5", "p4");
-
-        // Initial lab visits
-        createLabVisit(1, 1, 44, 55, "RBC", "good");
-        createLabVisit(2, 1, 44, 55, "WBC", "moderate");
+        systemAdmin = msg.sender;
     }
 
-    function createHuman(
+    function createClinic(
+        address _clinicAddress,
+        string memory _location,
+        bytes32 _hash,
+        bytes memory _signature
+    ) public {
+        address recoveredAddress = recover(_hash, _signature);
+        require(
+            recoveredAddress == systemAdmin,
+            "Sorry, you are not authorized"
+        );
+        // require(msg.sender == systemAdmin, "Sorry, you are not authorized");
+
+        clinicsCount++;
+        clinics[clinicsCount] = Clinic(
+            clinicsCount,
+            _clinicAddress,
+            _location,
+            0,
+            _hash
+        );
+    }
+
+    function createPatient(
+        address _patientAddress,
+        int256 _clinicID,
         string memory _name,
         int256 _age,
         int256 _weight,
         int256 _height,
-        string memory _gender
-    ) public {
-        humansCount++;
-        humans[humansCount] = Human(
-            humansCount,
-            _name,
-            _age,
-            _weight,
-            _height,
-            _gender
-        );
-    }
-
-    function createClinic(string memory _location) public {
-        clinicsCount++;
-        clinics[clinicsCount] = Clinic(clinicsCount, _location, 0);
-    }
-
-    function createPatient(
-        int256 _humanID,
-        int256 _clinicID,
+        string memory _gender,
         int256 _initialHeartRate,
         int256 _initialTemperature
     ) public {
         patientsCount++;
         patients[patientsCount] = Patient(
             patientsCount,
-            _humanID,
+            _patientAddress,
             _clinicID,
+            _name,
+            _age,
+            _weight,
+            _height,
+            _gender,
             _initialHeartRate,
             _initialTemperature,
             0,
@@ -297,6 +251,38 @@ contract EHR {
             _period
         );
     }
-}
 
-// Creating a regular visit --> creates a prescription --> creates medicines
+    /**
+     * Based upon ECDSA library from OpenZeppelin Solidity
+     * https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/cryptography/ECDSA.sol
+     */
+    function recover(bytes32 hash, bytes memory signature)
+        public
+        pure
+        returns (address)
+    {
+        bytes32 r;
+        bytes32 s;
+        uint8 v;
+
+        if (signature.length != 65) {
+            return (address(0));
+        }
+
+        assembly {
+            r := mload(add(signature, 0x20))
+            s := mload(add(signature, 0x40))
+            v := byte(0, mload(add(signature, 0x60)))
+        }
+
+        if (v < 27) {
+            v += 27;
+        }
+
+        if (v != 27 && v != 28) {
+            return (address(0));
+        } else {
+            return ecrecover(hash, v, r, s);
+        }
+    }
+}

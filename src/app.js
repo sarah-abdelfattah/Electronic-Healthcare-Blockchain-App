@@ -1,3 +1,10 @@
+// const CryptoJS = require('crypto-js');
+
+/* eslint-disable */
+
+adminAddress = ""
+smartContract = ""
+
 App = {
   loading: false,
   contracts: {},
@@ -13,7 +20,7 @@ App = {
 
   load: async () => {
     await App.loadWeb3()
-    await App.loadAccount()
+    await App.loadAdminAccount()
     await App.loadContract()
     await App.render()
   },
@@ -51,9 +58,15 @@ App = {
     }
   },
 
-  loadAccount: async () => {
-    var accounts = await web3.eth.getAccounts();
+  loadAdminAccount: async () => {
+    const accounts = await web3.eth.getAccounts();
+    adminAddress = accounts[0];
     App.account = accounts[0];
+  },
+
+  getAccount: async () => {
+    const accounts = await web3.eth.getAccounts();
+    return accounts[0]
   },
 
   loadContract: async () => {
@@ -61,6 +74,7 @@ App = {
     App.contracts.EHR = TruffleContract(EHR_Contract) //this is a wrapper
     App.contracts.EHR.setProvider(App.web3Provider)
     App.EHR_Contract = await App.contracts.EHR.deployed() //gets our actual values from the blockchain
+    smartContract = EHR_Contract
   },
 
   render: async () => {
@@ -69,17 +83,17 @@ App = {
       return
     }
 
-    App.setLoading(true)
+    // App.setLoading(true)
 
+    // $('#role').html() //TODO:
     $('#account').html(App.account) // Render Account
 
-    await App.renderHumans()
-    await App.renderClinics()
-    await App.renderPatients()
-    await App.renderRegularVisits()
-    await App.renderPrescriptions()
-    await App.renderMedicines()
-    await App.renderLabVisits()
+    // await App.renderClinics()
+    // await App.renderPatients()
+    // await App.renderRegularVisits()
+    // await App.renderPrescriptions()
+    // await App.renderMedicines()
+    // await App.renderLabVisits()
 
     App.setLoading(false)  // Update loading state
   },
@@ -98,39 +112,17 @@ App = {
     }
   },
 
-  /******************** HUMANS *********************/
-  renderHumans: async () => {
-    const humansCount = await App.EHR_Contract.humansCount()
-    const $humanTemplate = $('.humanTemplate')
-
-    for (let i = 1; i <= humansCount; i++) {
-      let human = await App.EHR_Contract.humans(i);
-
-      let $newTemplate = $humanTemplate.clone()
-      $newTemplate.find('.humanID').html(human[0].toNumber())
-      $newTemplate.find('.humanName').html(human[1])
-      $newTemplate.find('.humanAge').html(human[2].toNumber())
-      $newTemplate.find('.humanWeight').html(human[3].toNumber())
-      $newTemplate.find('.humanHeight').html(human[4].toNumber())
-      $newTemplate.find('.humanGender').html(human[5])
-
-      $('#humansTable').append($newTemplate)
-
-      App.savedHumans.push(human)
-    }
-  },
-
-  createHuman: async () => {
-    App.setLoading(true)
-    const name = $('#newHumanName').val()
-    const age = $('#newHumanAge').val()
-    const weight = $('#newHumanWeight').val()
-    const height = $('#newHumanHeight').val()
-    const gender = $('#newHumanGender').val()
-
-    const result = await App.EHR_Contract.createHuman(name, age, weight, height, gender,
-      { from: App.account })
-    window.location.reload()
+  sign: async (message, address) => {
+    // dataToSign, address, callback function
+    let res = await web3.eth.sign(message, address, async function (err, result) {
+      if (err)
+        print("Sorry an error occurred " + err)
+      else {
+        print("message after signing: " + result)
+        return result
+      }
+    })
+    return res
   },
 
   /******************** CLINICS *********************/
@@ -218,16 +210,32 @@ App = {
   },
 
   createClinic: async () => {
-    App.setLoading(true)
+    const currentAccount = await App.getAccount()
+    console.log("🚀 ~ file: app.js ~ line 214 ~ createClinic: ~ currentAccount", currentAccount);
+    print("CREATING A DIGITAL SIGNATURE", 1)
+
     const location = $('#newClinicLocation').val()
-    const result = await App.EHR_Contract.createClinic(location, { from: App.account })
-    window.location.reload()
+
+    let message = location + ""
+    print("message before: " + message)
+    message = web3.utils.sha3(message)
+    print("message after hashing: " + message)
+
+    try {
+      let signature = await App.sign(message, currentAccount)
+      print("VERIFYING ACCOUNT")
+      const newAccount = await web3.eth.accounts.create();
+      const creationResult = await App.EHR_Contract.createClinic(newAccount.address, location, message, signature, { from: currentAccount })
+      print("CLINIC ADDED SUCCESSFULLY")
+    } catch (error) {
+      print("error: " + error.data);
+      window.alert("Sorry you are not authorized")
+    }
   },
 
   /******************** PATIENTS *********************/
   renderPatients: async () => {
     const patientsCount = await App.EHR_Contract.patientsCount()
-    console.log("🚀 ~ file: app.js ~ line 230 ~ renderPatients: ~ patientsCount", patientsCount.toNumber());
     const $patientTemplate = $('.patientTemplate')
 
     for (let i = 1; i <= patientsCount; i++) {
@@ -620,6 +628,26 @@ App = {
     window.location.reload()
   },
 }
+
+const print = (text = "", type = 0) => {
+  if (type === 1) {
+    console.log("*********************************")
+    console.log(text)
+    console.log("*********************************")
+  } else {
+    console.log("🚀 ~ ", text);
+  }
+};
+
+// const encryptWithAES = (text, key) => {
+//   return CryptoJS.AES.encrypt(text, key).toString();
+// }
+
+// const decryptWithAES = (ciphertext, key) => {
+//   const bytes = CryptoJS.AES.decrypt(ciphertext, key);
+//   const originalText = bytes.toString(CryptoJS.enc.Utf8);
+//   return originalText;
+// }
 
 $(() => {
   $(window).load(async () => {
