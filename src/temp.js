@@ -117,9 +117,7 @@ App = {
     }
   },
 
-  creationHelper: async (encryptedData, fn) => {
-    const currentAccount = await App.getAccount()
-
+  creationHelper: async (currentAccount, encryptedData, fn) => {
     print("HASHING", 1)
     const encryptedHashedMsg = web3.utils.sha3(encryptedData)
     print("Hashed Message: " + encryptedHashedMsg)
@@ -131,7 +129,7 @@ App = {
     print("New account details")
     console.log(newAccount)
 
-    await fn(newAccount.address, encryptedHashedMsg, signature, encryptedData, currentAccount)
+    await fn(newAccount.address, encryptedData, encryptedHashedMsg, signature, { from: currentAccount })
   },
 
   sign: async (message, address) => {
@@ -161,11 +159,22 @@ App = {
       print("ENCRYPTION", 1)
       print("Encrypted Data: " + encryptedData)
 
-      const dispatchCreate = async (address, hash, sign, data, acc) => {
-        await App.EHR_Contract.createClinic(address, hash, sign, data, { from: acc })
-      }
+      // const dispatchCreate = async (a, e, m, s, acc) => {
+      //   await App.EHR_Contract.createClinic(a, e, m, s, { from: acc })
+      // }
 
-      await App.creationHelper(encryptedData, dispatchCreate)
+      print("HASHING", 1)
+      const encryptedHashedMsg = web3.utils.sha3(encryptedData)
+      print("Hashed Message: " + encryptedHashedMsg)
+
+      let signature = await App.sign(encryptedHashedMsg, currentAccount)
+      print("signature concat with separate hash : " + signature + web3.utils.sha3(currentAccount))
+
+      const newAccount = await web3.eth.accounts.create();
+      print("New account details")
+      console.log(newAccount)
+
+      await App.EHR_Contract.createClinic(newAccount.address, encryptedData, encryptedHashedMsg, signature, { from: currentAccount })
 
       print("CLINIC ADDED SUCCESSFULLY", 1)
     } catch (error) {
@@ -183,11 +192,13 @@ App = {
     for (let i = 1; i <= clinicCount; i++) {
       let clinic = await App.EHR_Contract.getClinic(i);
       let id = clinic[0]
-      let location = decryptWithAES(clinic[3], currentAccount)
+      let location = decryptWithAES(clinic[2], currentAccount)
+      let numberOfPatients = clinic[3]
 
       let $newTemplate = $clinicTemplate.clone()
       $newTemplate.find('.clinicID').html(id)
       $newTemplate.find('.clinicLocation').html(location)
+      $newTemplate.find('.clinicNumberOfPatients').html(numberOfPatients)
       let viewPatientsBtn = $newTemplate.find('.clinicViewButton')[0]
       viewPatientsBtn.innerText = "View"
       viewPatientsBtn.id = id
@@ -213,11 +224,13 @@ App = {
 
     let clinic = await App.EHR_Contract.getClinic(requiredClinic);
     let id = clinic[0]
-    let location = decryptWithAES(clinic[3], currentAccount)
+    let location = decryptWithAES(clinic[2], currentAccount)
+    let numberOfPatients = clinic[3]
 
     let $newTemplate = $clinicTemplate.clone()
     $newTemplate.find('.clinicID').html(id)
     $newTemplate.find('.clinicLocation').html(location)
+    $newTemplate.find('.clinicNumberOfPatients').html(numberOfPatients)
     let viewPatientsBtn = $newTemplate.find('.clinicViewButton')[0]
     viewPatientsBtn.innerText = "View"
     viewPatientsBtn.id = id
@@ -678,7 +691,7 @@ App = {
 }
 
 const print = (text = "", type = 0) => {
-  if (type === 1) console.log("***************** " + text + " *****************")
+  if (type === 1) console.log("******************** " + text + " ********************")
   else console.log("🚀 ~ ", text);
 };
 

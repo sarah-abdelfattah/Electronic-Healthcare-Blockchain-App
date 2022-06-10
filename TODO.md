@@ -31,3 +31,27 @@
 - BUG: after adding a visit and showing its prescription
 
 
+## TOTALLY DONE:
+- Create clinic 
+  - By admin only
+  - Encryption
+  - DS
+  - integrity
+- View all clinics
+  - By admin only
+  - Encryption
+  - DS
+  - integrity
+- View specific clinic 
+  - By admin only
+  - Encryption
+  - DS
+  - integrity
+
+## TODO:
+- View patients of a specific clinic 
+  - By admin only
+  - Encryption
+  - DS
+  - integrity
+
