@@ -30,7 +30,7 @@ contract EHR {
 
     mapping(address => bool) public availableClinics;
     mapping(address => int256) public mapClinicAddressToID;
-    mapping(address => int256[]) clinicPatients; //clinic ID -> patients
+    mapping(address => Patient[]) clinicPatients; //clinic ID -> patients
 
     enum VisitTypes {
         periodicCheckup,
@@ -124,7 +124,7 @@ contract EHR {
         );
 
         availableClinics[_clinicAddress] = true;
-        mapClinicAddressToID[_clinicAddress] = clinicsCount;
+        // mapClinicAddressToID[_clinicAddress] = clinicsCount;
         // clinicPatients[_clinicAddress] = [];
     }
 
@@ -151,7 +151,7 @@ contract EHR {
             recoveredAddress
         );
 
-        clinicPatients[recoveredAddress].push(patientsCount);
+        clinicPatients[recoveredAddress].push(patients[patientsCount]);
     }
 
     function getPatient(int256 _id) public view returns (Patient memory) {
@@ -162,9 +162,18 @@ contract EHR {
         return patients[_id];
     }
 
-    function getMyPatients() public view returns (Patient memory) {
-        require(isClinic(msg.sender), "Sorry, you are not authorized");
-        return clinicPatients[msg.sender];
+    function getMyPatientsCount(address _sender) public view returns (uint256) {
+        require(isClinic(_sender), "Sorry, you are not authorized");
+        return clinicPatients[_sender].length;
+    }
+
+    function getMyPatients(uint256 _id, address _sender)
+        public
+        view
+        returns (Patient memory)
+    {
+        require(isClinic(_sender), "Sorry, you are not authorized");
+        return clinicPatients[_sender][_id];
     }
 
     // function createRegularVisit(

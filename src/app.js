@@ -35,6 +35,7 @@ App = {
     await App.loadWeb3()
     await App.loadAccount()
     await App.loadContract()
+    // await App.seedingFunction()
     await App.render()
   },
 
@@ -183,11 +184,6 @@ App = {
       el.removeChild(el.lastChild);
     }
 
-    if (currentAddress != adminAddress) {
-      print("Sorry, you are not Authorized!")
-      return
-    }
-
     try {
       print("Number of clinics: " + clinicCount)
 
@@ -195,18 +191,22 @@ App = {
         let clinic = await App.EHR_Contract.getClinic(i);
         let id = clinic[0]
         let location = decryptWithAES(clinic[3], currentAddress)
-        let data = id + ":" + location
+        if (location) {
+          let data = id + ":" + location
 
-        await draw(2, 'clinicBody', data)
+          await draw(2, 'clinicBody', data)
 
-        let btn = document.createElement("button");
-        btn.id = id
-        btn.innerText = "View"
-        btn.addEventListener('click', function handleClick(event) {
-          console.log("🚀 ~ file: app.js ~ line 208 ~ handleClick ~ event", event.target.id);
-          // App.viewClinicsPatient(event.target.id) // TODO
-        });
-        el.lastChild.appendChild(btn)
+          let btn = document.createElement("button");
+          btn.id = id
+          btn.innerText = "View"
+          btn.addEventListener('click', function handleClick(event) {
+            console.log("🚀 ~ file: app.js ~ line 208 ~ handleClick ~ event", event.target.id);
+            // App.viewClinicsPatient(event.target.id) // TODO
+          });
+          el.lastChild.appendChild(btn)
+        } else {
+          throw new Error('Authorization')
+        }
       }
     } catch (error) {
       console.log("🚀 ~ file: app.js ~ line 247 ~ viewClinicByID: ~ error", error);
@@ -308,7 +308,6 @@ App = {
     try {
       print("current account: " + currentAddress)
 
-      const clinic = $('#newPatientClinic').val()
       const name = $('#newPatientName').val()
       const gender = $('#newPatientGender').val()
       const age = $('#newPatientAge').val()
@@ -316,8 +315,9 @@ App = {
       const height = $('#newPatientHeight').val()
       const heartRate = $('#newPatientInitialHeartRate').val()
       const temperature = $('#newPatientInitialTemperature').val()
+      console.log("🚀 ~ file: app.js ~ line 318 ~ createPatient: ~ temperature", temperature);
 
-      let allData = clinic + ":" + name + ":" + gender + ":" + age + ":" + weight + ":" + height + ":" + heartRate + ":" + temperature
+      let allData = name + ":" + gender + ":" + age + ":" + weight + ":" + height + ":" + heartRate + ":" + temperature
       const encryptedData = encryptWithAES(allData, currentAddress)
 
       print("ENCRYPTION", 1)
@@ -382,43 +382,41 @@ App = {
 
   viewMyPatients: async () => {
     let el = document.getElementsByClassName(`patientBody`)[0]
-    const patientCount = await App.EHR_Contract.patientsCount()
+    const patientCount = await App.EHR_Contract.getMyPatientsCount(currentAddress)
     print("Number of patients: " + patientCount)
 
-    // while (el.hasChildNodes()) {
-    //   el.removeChild(el.lastChild);
-    // }
+    while (el.hasChildNodes()) {
+      el.removeChild(el.lastChild);
+    }
 
-    // for (let i = 1; i <= patientCount; i++) {
-    //   let patient = await App.EHR_Contract.getPatient(i);
-    //   if (patient[4] === currentAddress) {
-    //     let id = patient[0]
-    //     let data = decryptWithAES(patient[3], currentAddress)
-    //     data = id + ":" + data
+    for (let i = 0; i < patientCount; i++) {
+      let patient = await App.EHR_Contract.getMyPatients(i, currentAddress);
+      let id = patient[0]
+      let data = decryptWithAES(patient[3], currentAddress)
+      data = id + ":" + data
 
-    //     await draw(9, 'patientBody', data)
+      await draw(9, 'patientBody', data)
 
-    //     // regular visits
-    //     let btn = document.createElement("button");
-    //     btn.id = id
-    //     btn.innerText = "View"
-    //     btn.addEventListener('click', function handleClick(event) {
-    //       console.log("🚀 ~ file: app.js ~ line 208 ~ handleClick ~ event", event.target.id);
-    //       // TODO
-    //     });
-    //     el.lastChild.appendChild(btn)
+      // regular visits
+      let btn = document.createElement("button");
+      btn.id = id
+      btn.innerText = "View"
+      btn.addEventListener('click', function handleClick(event) {
+        console.log("🚀 ~ file: app.js ~ line 208 ~ handleClick ~ event", event.target.id);
+        // TODO
+      });
+      el.lastChild.appendChild(btn)
 
-    //     //lab visits
-    //     btn = document.createElement("button");
-    //     btn.id = id
-    //     btn.innerText = "View"
-    //     btn.addEventListener('click', function handleClick(event) {
-    //       console.log("🚀 ~ file: app.js ~ line 208 ~ handleClick ~ event", event.target.id);
-    //       // TODO
-    //     });
-    //     el.lastChild.appendChild(btn)
-    //   }
-    // }
+      //lab visits
+      btn = document.createElement("button");
+      btn.id = id
+      btn.innerText = "View"
+      btn.addEventListener('click', function handleClick(event) {
+        console.log("🚀 ~ file: app.js ~ line 208 ~ handleClick ~ event", event.target.id);
+        // TODO
+      });
+      el.lastChild.appendChild(btn)
+    }
   },
 
   viewPatientByID: async () => {
@@ -803,7 +801,7 @@ App = {
     let locations = ['Egypt', 'KSA', 'Germany']
 
     for (let i = 0; i < locations.length; i++) {
-      const encryptedData = encryptWithAES(location[i], currentAddress)
+      const encryptedData = encryptWithAES(location[i], adminAddress)
 
       const dispatchCreate = async (address, hash, sign, data, acc) => {
         await App.EHR_Contract.createClinic(address, hash, sign, data, { from: acc })
