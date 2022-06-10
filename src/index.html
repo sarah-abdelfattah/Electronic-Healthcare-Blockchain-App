@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="widp=device-widp, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -15,7 +15,7 @@
     <h1 id="loader">Loading...</h1>
     <div id="content">
       <h1>EHR</h1>
-      <p>A blockchain application for Electronic Healthcare Records</p>
+      <p>A blockchain application for Electronic Healpcare Records</p>
 
       <div class="container">
         <!-- ACCOUNT -->
@@ -26,7 +26,6 @@
           <hr />
         </div>
 
-
         <!-- CLINICS -->
         <div class="innerContainer">
           <h2 class="title">Clinics</h2>
@@ -35,66 +34,79 @@
             <h4 class="subTitle">Add New Clinic</h4>
             <form onsubmit="App.createClinic(); return false;">
               <input id="newClinicLocation" placeholder="Clinic location" required></input>
-              <button type="submit">Create</button>
+              <button type="submit">Create Clinic</button>
             </form>
           </div>
           <div class="section">
             <h4 class="subTitle">Find clinic by id</h4>
             <form onsubmit="App.viewClinicByID(); return false;">
-              <input id="requiredClinicID" placeholder="Clinic location" required></input>
-              <button type="submit">Find clinic</button>
+              <input id="requiredClinicID" placeholder="Clinic ID" required></input>
+              <button type="submit">Find Clinic</button>
             </form>
           </div>
           <div class="section">
             <h4 class="subTitle">Clinics Data</h3>
-              <button onclick="App.viewAllClinics(); return false;">View all clinics</button>
-              <table id="clinicTable" class="table">
-                <tr class="tableHeader">
-                  <th class="cell">Clinic ID</th>
-                  <th class="cell">Location</th>
-                  <th class="cell">View Patients</th>
-                </tr>
-                <tbody id="clinicBody">
-                  <tr class="clinicTemplate row">
-                    <td class="clinicID cell"></td>
-                    <td class="clinicLocation cell"></td>
-                    <td class="cell" onclick=""><button class="clinicViewButton" hidden></button></td>
-                  </tr>
-                </tbody>
-              </table>
+              <button onclick="App.viewAllClinics(); return false;">View All Clinics</button>
+              <div id="clinicTable" class="table">
+                <div class="tableHeader">
+                  <p>Clinic ID</p>
+                  <p>Location</p>
+                  <p>View Patients</p>
+                </div>
+                <div class="clinicBody tableBody"></div>
+              </div>
           </div>
-          <!-- <div class="section">
-            <h4 class="subTitle">Patients of this clinic</h3>
-              <table id="clinicPatientsTable" class="table">
-                <tr class="tableHeader">
-                  <th class="cell">ID</th>
-                  <th class="cell">Name</th>
-                  <th class="cell">Age</th>
-                  <th class="cell">Weight</th>
-                  <th class="cell">Height</th>
-                  <th class="cell">Gender</th>
-                  <th class="cell">Heart Rate</th>
-                  <th class="cell">Temperature</th>
-                  <th class="cell">Regular Visits</th>
-                  <th class="cell">Lab Visits</th>
-                </tr>
-                <tr class="clinicPatientsTemplate row">
-                  <td class="clinicPatientID cell"></td>
-                  <td class="clinicPatientName cell"></td>
-                  <td class="clinicPatientAge cell"></td>
-                  <td class="clinicPatientWeight cell"></td>
-                  <td class="clinicPatientHeight cell"></td>
-                  <td class="clinicPatientGender cell"></td>
-                  <td class="clinicPatientHeartRate cell"></td>
-                  <td class="clinicPatientTemperature cell"></td>
-                  <td class="clinicPatientNumberOfRegularVisits cell"></td>
-                  <td class="clinicPatientNumberOfLabVisits cell"></td>
-                </tr>
-              </table>
-          </div> -->
           <hr />
         </div>
 
+        <!-- PATIENTS -->
+        <div class="innerContainer">
+          <h2 class="title">Patients</h2>
+          <div class="section">
+            <h4 class="subTitle">Add Patient</h3>
+              <form onsubmit="App.createPatient(); return false;">
+                <input id="newPatientClinic" type="text" placeholder="Clinic ID" required></input>
+                <input id="newPatientName" type="text" placeholder="Patient Name" required></input>
+                <input id="newPatientGender" type="text" placeholder="Patient Gender" required></input>
+                <input id="newPatientAge" type="number" placeholder="Patient Age" required></input>
+                <input id="newPatientWeight" type="number" placeholder="Patient Weight" required></input>
+                <input id="newPatientHeight" type="number" placeholder="Patient Height" required></input>
+                <input id="newPatientInitialHeartRate" type="number" placeholder="Patient Initial Heart Rate"
+                  required></input>
+                <input id="newPatientInitialTemperature" type="number" placeholder="Patient Initial Temperature"
+                  required></input>
+                <button type="submit">Create Patient</button>
+              </form>
+          </div>
+          <div class="section">
+            <h4 class="subTitle">Find patient by id</h4>
+            <form onsubmit="App.viewPatientByID(); return false;">
+              <input id="requiredPatient" placeholder="Patient ID" required></input>
+              <button type="submit">Find Patient</button>
+            </form>
+          </div>
+          <div class="section">
+            <h4 class="subTitle">Patients Data</h3>
+              <button onclick="App.viewAllPatients(); return false;">View All Patients</button>
+              <table id="patientsTable" class="table">
+                <div class="tableHeader">
+                  <p>ID</p>
+                  <p>Clinic</p>
+                  <p>Name</p>
+                  <p>Gender</p>
+                  <p>Age</p>
+                  <p>Weight</p>
+                  <p>Height</p>
+                  <p>Heart Rate</p>
+                  <p>Temperature</p>
+                  <p>Regular Visits</p>
+                  <p>Lab Visits</p>
+                </div>
+                <div class="patientBody tableBody"></div>
+              </table>
+          </div>
+          <hr />
+        </div>
       </div>
     </div>
 

@@ -16,7 +16,7 @@ h1{
 
 p{
   text-align: center;
-  margin: 1rem auto;
+  margin: 1rem 0;
 }
 
 .container{
@@ -61,41 +61,41 @@ input, textarea{
   width: 100%;
   border-radius: 5px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-  display: table;
-  table-layout: auto;
+  display: flex;
+  flex-direction: column;
 }
+
+  /* font-family: 'Courier New', Courier, monospace; */
 
 .tableHeader{
-  font-weight: 900;
+  font-size: 20px;
+  font-weight: 500;
   color: #ffffff;
   background: #7d92a8;
-  border: none;
   width: 100%;
-  margin: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
-th{
-  text-align: left;
+.bodyItem{
+display: flex;
+flex-direction: row;
+ justify-content: space-around;
+  align-items: center;
 }
 
-.row{
-  display: table-row;
+.tableBody{
   background: #fafafa;
 }
 
-.row:nth-of-type(odd){
+ .tableBody div:nth-of-type(even){
   background: #f5f5f5;
 }
 
-.cell{
-  display: table-cell;
-  padding: 6px ;
-  text-align: center;
-  vertical-align: middle !important;
-}
 
-button[type="submit"]{
-margin: 1rem auto;
+button{
+  margin: 1rem 0;
 }
 
 button{
@@ -105,4 +105,5 @@ button{
   color: white;
   background-color: #871c1c;
   cursor: pointer;
+  
 }

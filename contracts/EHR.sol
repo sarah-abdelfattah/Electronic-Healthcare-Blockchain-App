@@ -28,7 +28,7 @@ contract EHR {
     mapping(int256 => Prescription) public prescriptions;
     mapping(int256 => Medicine) public medicines;
 
-    mapping(address => bool) availableClinics;
+    mapping(address => bool) public availableClinics;
 
     enum VisitTypes {
         periodicCheckup,
@@ -89,6 +89,8 @@ contract EHR {
 
     constructor() public {
         systemAdmin = msg.sender;
+        address a = 0xdF252F4b48dC5954ca39822E41479cD5B1ff72c9;
+        availableClinics[a] = true;
     }
 
     function createClinic(
@@ -144,6 +146,15 @@ contract EHR {
             _hash,
             _data
         );
+    }
+
+    function getPatient(int256 _id, address _sender)
+        public
+        view
+        returns (Patient memory)
+    {
+        require(isClinic(_sender), "Sorry, you are not authorized");
+        return patients[_id];
     }
 
     // function createRegularVisit(

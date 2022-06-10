@@ -42,7 +42,23 @@
   - Encryption
   - DS
   - integrity
-- View specific clinic 
+- View specific clinic by ID
+  - By admin only
+  - Encryption
+  - DS
+  - integrity
+
+- Create patient 
+  - By admin only
+  - Encryption
+  - DS
+  - integrity
+- View all patients
+  - By admin only
+  - Encryption
+  - DS
+  - integrity
+- View specific patient by ID
   - By admin only
   - Encryption
   - DS
@@ -55,3 +71,13 @@
   - DS
   - integrity
 
+- View regular visits of a specific patient 
+  - By admin only
+  - Encryption
+  - DS
+  - integrity
+- View lab visits of a specific patient 
+  - By admin only
+  - Encryption
+  - DS
+  - integrity
