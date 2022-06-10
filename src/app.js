@@ -1,6 +1,11 @@
-// const CryptoJS = require('crypto-js');
-
 /* eslint-disable */
+/**
+ * 1- message
+ * 2- encrypt
+ * 3- hash
+ * 4- digital signature
+ * 5- verify
+ */
 
 adminAddress = ""
 smartContract = ""
@@ -113,6 +118,8 @@ App = {
   },
 
   sign: async (message, address) => {
+    print("CREATING A DIGITAL SIGNATURE", 1)
+
     // dataToSign, address, callback function
     let res = await web3.eth.sign(message, address, async function (err, result) {
       if (err)
@@ -126,19 +133,45 @@ App = {
   },
 
   /******************** CLINICS *********************/
-  renderClinics: async () => {
-    // 1- load total count of clinics from the blockchain
+  createClinic: async () => {
+    const currentAccount = await App.getAccount()
+    print("current account: " + currentAccount)
+
+    const location = $('#newClinicLocation').val()
+    const encryptedLocation = encryptWithAES(location, currentAccount)
+    print("ENCRYPTION", 1)
+    print("Location: " + encryptedLocation)
+
+    let message = location + ""
+    print("HASHING", 1)
+    print("message before: " + message)
+    message = web3.utils.sha3(message)
+    print("message after hashing: " + message)
+
+    try {
+      let signature = await App.sign(message, currentAccount)
+      print("signature concat with separate hash : " + signature + web3.utils.sha3(currentAccount))
+
+      const newAccount = await web3.eth.accounts.create();
+      const creationResult = await App.EHR_Contract.createClinic(newAccount.address, encryptedLocation, message, signature, { from: currentAccount })
+      print("CLINIC ADDED SUCCESSFULLY", 1)
+    } catch (error) {
+      print("error: " + error.data);
+      window.alert("Sorry you are not authorized")
+    }
+  },
+
+  viewAllClinics: async () => {
+    const currentAccount = await App.getAccount()
     const clinicCount = await App.EHR_Contract.clinicsCount()
     const $clinicTemplate = $('.clinicTemplate')
 
-    // 2- render each task one by one (creating our own template)
     for (let i = 1; i <= clinicCount; i++) {
-      let clinic = await App.EHR_Contract.clinics(i);
-      let id = clinic[0].toNumber()
-      let location = clinic[1]
-      let numberOfPatients = clinic[2].toNumber()
+      let clinic = await App.EHR_Contract.getClinic(i);
+      let id = clinic[0]
+      let location = decryptWithAES(clinic[2], currentAccount)
+      let numberOfPatients = clinic[3]
 
-      // 3- Show the task on the screen --> Putting it in a html
       let $newTemplate = $clinicTemplate.clone()
       $newTemplate.find('.clinicID').html(id)
       $newTemplate.find('.clinicLocation').html(location)
@@ -151,13 +184,42 @@ App = {
         App.viewClinicsPatient(event.target.id)
       });
 
-      //4- putting it our table
-      $('#clinicTable').append($newTemplate)
-
-      App.savedClinics.push(clinic)
+      $(`#clinicTable`).append($newTemplate)
     }
   },
 
+  viewClinicByID: async () => {
+    const currentAccount = await App.getAccount()
+    const clinicCount = await App.EHR_Contract.clinicsCount()
+    const $clinicTemplate = $('.clinicTemplate')
+    const requiredClinic = parseInt($('#requiredClinicID').val())
+
+    if (clinicCount < requiredClinic) {
+      window.alert("Sorry, cannot find a clinic with this id")
+      return
+    }
+
+    let clinic = await App.EHR_Contract.getClinic(requiredClinic);
+    let id = clinic[0]
+    let location = decryptWithAES(clinic[2], currentAccount)
+    let numberOfPatients = clinic[3]
+
+    let $newTemplate = $clinicTemplate.clone()
+    $newTemplate.find('.clinicID').html(id)
+    $newTemplate.find('.clinicLocation').html(location)
+    $newTemplate.find('.clinicNumberOfPatients').html(numberOfPatients)
+    let viewPatientsBtn = $newTemplate.find('.clinicViewButton')[0]
+    viewPatientsBtn.innerText = "View"
+    viewPatientsBtn.id = id
+    viewPatientsBtn.removeAttribute("hidden");
+    viewPatientsBtn.addEventListener('click', function handleClick(event) {
+      App.viewClinicsPatient(event.target.id)
+    });
+
+    $(`#clinicTable`).append($newTemplate)
+  },
+
+  // TODO
   viewClinicsPatient: async (clinicID) => {
     let clinicPatients = (App.savedPatients).filter((patient) => patient[1].toNumber() == clinicID)
     const $clinicPatientsTemplate = $('.clinicPatientsTemplate')
@@ -206,30 +268,6 @@ App = {
       labVisits.appendChild(btn);
 
       $('#clinicPatientsTable').append($newTemplate)
-    }
-  },
-
-  createClinic: async () => {
-    const currentAccount = await App.getAccount()
-    console.log("🚀 ~ file: app.js ~ line 214 ~ createClinic: ~ currentAccount", currentAccount);
-    print("CREATING A DIGITAL SIGNATURE", 1)
-
-    const location = $('#newClinicLocation').val()
-
-    let message = location + ""
-    print("message before: " + message)
-    message = web3.utils.sha3(message)
-    print("message after hashing: " + message)
-
-    try {
-      let signature = await App.sign(message, currentAccount)
-      print("VERIFYING ACCOUNT")
-      const newAccount = await web3.eth.accounts.create();
-      const creationResult = await App.EHR_Contract.createClinic(newAccount.address, location, message, signature, { from: currentAccount })
-      print("CLINIC ADDED SUCCESSFULLY")
-    } catch (error) {
-      print("error: " + error.data);
-      window.alert("Sorry you are not authorized")
     }
   },
 
@@ -639,15 +677,15 @@ const print = (text = "", type = 0) => {
   }
 };
 
-// const encryptWithAES = (text, key) => {
-//   return CryptoJS.AES.encrypt(text, key).toString();
-// }
+const encryptWithAES = (text, key) => {
+  return CryptoJS.AES.encrypt(text, key).toString();
+}
 
-// const decryptWithAES = (ciphertext, key) => {
-//   const bytes = CryptoJS.AES.decrypt(ciphertext, key);
-//   const originalText = bytes.toString(CryptoJS.enc.Utf8);
-//   return originalText;
-// }
+const decryptWithAES = (ciphertext, key) => {
+  const bytes = CryptoJS.AES.decrypt(ciphertext, key);
+  const originalText = bytes.toString(CryptoJS.enc.Utf8);
+  return originalText;
+}
 
 $(() => {
   $(window).load(async () => {

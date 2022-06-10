@@ -1,4 +1,5 @@
 pragma solidity ^0.5.0;
+pragma experimental ABIEncoderV2;
 
 // Creating a regular visit --> creates a prescription --> creates medicines
 // Address = public key
@@ -103,12 +104,20 @@ contract EHR {
         bytes32 _hash,
         bytes memory _signature
     ) public {
+        // string memory hashedMessage
+        // string memory hashedRes = string(
+        //     abi.encodePacked(_signature, systemAdmin)
+        // );
+        // require(
+        //     compareStrings(hashedRes, hashedMessage),
+        //     "Sorry, digest message is different"
+        // );
+
         address recoveredAddress = recover(_hash, _signature);
         require(
             recoveredAddress == systemAdmin,
             "Sorry, you are not authorized"
         );
-        // require(msg.sender == systemAdmin, "Sorry, you are not authorized");
 
         clinicsCount++;
         clinics[clinicsCount] = Clinic(
@@ -118,6 +127,11 @@ contract EHR {
             0,
             _hash
         );
+    }
+
+    function getClinic(int256 _id) public view returns (Clinic memory) {
+        require(msg.sender == systemAdmin, "Sorry, you are no authorized");
+        return clinics[_id];
     }
 
     function createPatient(
@@ -250,6 +264,14 @@ contract EHR {
             _dose,
             _period
         );
+    }
+
+    function compareStrings(string memory a, string memory b)
+        public
+        pure
+        returns (bool)
+    {
+        return keccak256(abi.encodePacked(a)) == keccak256(abi.encodePacked(b));
     }
 
     /**

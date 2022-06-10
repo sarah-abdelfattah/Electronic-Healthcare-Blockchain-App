@@ -39,7 +39,15 @@
             </form>
           </div>
           <div class="section">
-            <h4 class="subTitle">All Clinics</h3>
+            <h4 class="subTitle">Find clinic by id</h4>
+            <form onsubmit="App.viewClinicByID(); return false;">
+              <input id="requiredClinicID" placeholder="Clinic location" required></input>
+              <button type="submit">Find clinic</button>
+            </form>
+          </div>
+          <div class="section">
+            <h4 class="subTitle">Clinics Data</h3>
+              <button onclick="App.viewAllClinics(); return false;">View all clinics</button>
               <table id="clinicTable" class="table">
                 <tr class="tableHeader">
                   <th class="cell">Clinic ID</th>
@@ -47,13 +55,14 @@
                   <th class="cell">Number of patients</th>
                   <th class="cell">View Patients</th>
                 </tr>
-                <tbody>
+                <tbody id="clinicBody">
                   <tr class="clinicTemplate row">
                     <td class="clinicID cell"></td>
                     <td class="clinicLocation cell"></td>
                     <td class="clinicNumberOfPatients cell"></td>
                     <td class="cell" onclick=""><button class="clinicViewButton" hidden></button></td>
                   </tr>
+                </tbody>
               </table>
           </div>
           <!-- <div class="section">
@@ -100,6 +109,7 @@
     <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js"
       integrity="sha256-nWBTbvxhJgjslRyuAKJHK+XcZPlCnmIAAMixz6EefVk=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@truffle/contract@4.3.5/dist/truffle-contract.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="app.js"></script>
   </body>
 

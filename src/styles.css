@@ -104,4 +104,5 @@ button{
   padding: 5px 15px;
   color: white;
   background-color: #871c1c;
+  cursor: pointer;
 }
