@@ -29,6 +29,8 @@ contract EHR {
     mapping(int256 => Medicine) public medicines;
 
     mapping(address => bool) public availableClinics;
+    mapping(address => int256) public mapClinicAddressToID;
+    mapping(address => int256[]) clinicPatients; //clinic ID -> patients
 
     enum VisitTypes {
         periodicCheckup,
@@ -48,6 +50,7 @@ contract EHR {
         address patientAddress;
         bytes32 hashMessage;
         string data;
+        address addedBy;
     }
 
     struct RegularVisit {
@@ -89,8 +92,6 @@ contract EHR {
 
     constructor() public {
         systemAdmin = msg.sender;
-        address a = 0xdF252F4b48dC5954ca39822E41479cD5B1ff72c9;
-        availableClinics[a] = true;
     }
 
     function createClinic(
@@ -123,6 +124,8 @@ contract EHR {
         );
 
         availableClinics[_clinicAddress] = true;
+        mapClinicAddressToID[_clinicAddress] = clinicsCount;
+        // clinicPatients[_clinicAddress] = [];
     }
 
     function getClinic(int256 _id) public view returns (Clinic memory) {
@@ -144,17 +147,24 @@ contract EHR {
             patientsCount,
             _patientAddress,
             _hash,
-            _data
+            _data,
+            recoveredAddress
         );
+
+        clinicPatients[recoveredAddress].push(patientsCount);
     }
 
-    function getPatient(int256 _id, address _sender)
-        public
-        view
-        returns (Patient memory)
-    {
-        require(isClinic(_sender), "Sorry, you are not authorized");
+    function getPatient(int256 _id) public view returns (Patient memory) {
+        require(
+            isClinic(msg.sender) || msg.sender == systemAdmin,
+            "Sorry, you are not authorized"
+        );
         return patients[_id];
+    }
+
+    function getMyPatients() public view returns (Patient memory) {
+        require(isClinic(msg.sender), "Sorry, you are not authorized");
+        return clinicPatients[msg.sender];
     }
 
     // function createRegularVisit(
@@ -265,6 +275,11 @@ contract EHR {
     function isClinic(address _a) public view returns (bool) {
         return (availableClinics[_a]);
     }
+
+    // function getClinicID(int256 _id) public view returns (Clinic memory) {
+    //     require(msg.sender == systemAdmin, "Sorry, you are no authorized");
+    //     return clinics[_id];
+    // }
 
     function compareStrings(string memory a, string memory b)
         public
