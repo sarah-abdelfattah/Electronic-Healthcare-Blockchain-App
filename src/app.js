@@ -17,6 +17,7 @@ clinicAddresses =
     "0xF88Dce941C183D5B775B1F0e52f06F1fC49B2e47"
   ]
 currentAddress = ""
+vTypes = ['Period Checkup', 'Case Management', 'Complain']
 
 App = {
   loading: false,
@@ -230,21 +231,23 @@ App = {
     }
     try {
       let clinic = await App.EHR_Contract.getClinic(requiredClinic);
-      console.log("🚀 ~ file: app.js ~ line 230 ~ viewClinicByID: ~ clinic", clinic);
       let id = clinic[0]
       let location = decryptWithAES(clinic[3], currentAddress)
       let data = id + ":" + location
+      if (location) {
+        await draw(2, 'clinicBody', data)
 
-      await draw(2, 'clinicBody', data)
-
-      let btn = document.createElement("button");
-      btn.id = id
-      btn.innerText = "View"
-      btn.addEventListener('click', function handleClick(event) {
-        console.log("🚀 ~ file: app.js ~ line 208 ~ handleClick ~ event", event.target.id);
-        // App.viewClinicsPatient(event.target.id) // TODO
-      });
-      el.lastChild.appendChild(btn)
+        let btn = document.createElement("button");
+        btn.id = id
+        btn.innerText = "View"
+        btn.addEventListener('click', function handleClick(event) {
+          console.log("🚀 ~ file: app.js ~ line 208 ~ handleClick ~ event", event.target.id);
+          // App.viewClinicsPatient(event.target.id) // TODO
+        });
+        el.lastChild.appendChild(btn)
+      } else {
+        throw new Error('Authorization')
+      }
     } catch (error) {
       console.log("🚀 ~ file: app.js ~ line 247 ~ viewClinicByID: ~ error", error);
       window.alert("Sorry, you are not Authorized!")
@@ -359,8 +362,7 @@ App = {
         btn.id = id
         btn.innerText = "View"
         btn.addEventListener('click', function handleClick(event) {
-          console.log("🚀 ~ file: app.js ~ line 208 ~ handleClick ~ event", event.target.id);
-          // TODO
+          App.viewPatientRegularVisits(event.target.id)
         });
         el.lastChild.appendChild(btn)
 
@@ -369,8 +371,7 @@ App = {
         btn.id = id
         btn.innerText = "View"
         btn.addEventListener('click', function handleClick(event) {
-          console.log("🚀 ~ file: app.js ~ line 208 ~ handleClick ~ event", event.target.id);
-          // TODO
+          App.viewPatientLabVisits(event.target.id)
         });
         el.lastChild.appendChild(btn)
       }
@@ -401,8 +402,7 @@ App = {
       btn.id = id
       btn.innerText = "View"
       btn.addEventListener('click', function handleClick(event) {
-        console.log("🚀 ~ file: app.js ~ line 208 ~ handleClick ~ event", event.target.id);
-        // TODO
+        App.viewPatientRegularVisits(event.target.id)
       });
       el.lastChild.appendChild(btn)
 
@@ -411,8 +411,7 @@ App = {
       btn.id = id
       btn.innerText = "View"
       btn.addEventListener('click', function handleClick(event) {
-        console.log("🚀 ~ file: app.js ~ line 208 ~ handleClick ~ event", event.target.id);
-        // TODO
+        App.viewPatientLabVisits(event.target.id)
       });
       el.lastChild.appendChild(btn)
     }
@@ -443,15 +442,14 @@ App = {
       let data = decryptWithAES(patient[3], currentAddress)
       data = id + ":" + data
 
-      await draw(9, 'patientBody', data)
+      await draw(8, 'patientBody', data)
 
       // regular visits
       let btn = document.createElement("button");
       btn.id = id
       btn.innerText = "View"
       btn.addEventListener('click', function handleClick(event) {
-        console.log("🚀 ~ file: app.js ~ line 208 ~ handleClick ~ event", event.target.id);
-        // TODO
+        App.viewPatientRegularVisits(event.target.id)
       });
       el.lastChild.appendChild(btn)
 
@@ -460,14 +458,131 @@ App = {
       btn.id = id
       btn.innerText = "View"
       btn.addEventListener('click', function handleClick(event) {
-        console.log("🚀 ~ file: app.js ~ line 208 ~ handleClick ~ event", event.target.id);
-        // TODO
+        App.viewPatientLabVisits(event.target.id)
       });
       el.lastChild.appendChild(btn)
     } catch (error) {
       console.log("🚀 ~ file: app.js ~ line 247 ~ viewClinicByID: ~ error", error);
       window.alert("Sorry, you are not Authorized!")
     }
+  },
+
+  /******************** REGULAR VISITS *********************/
+  createRegularVisit: async () => {
+    try {
+      print("current account: " + currentAddress)
+
+      const patientID = $('#newRegularVisitPatient').val()
+      const heartRate = $('#newRegularVisitHeartRate').val()
+      const temperature = $('#newRegularVisitTemperature').val()
+      const diagnosis = $('#newRegularVisitDiagnosis').val()
+      const visitType = vTypes[parseInt(document.querySelector('input[name="newRegularVisitVisitType"]:checked').value)];
+      const referral = $('#newRegularVisitReferral').val()
+      const followUp = $('#newRegularVisitFollowUp').val()
+
+      const medicines = await getMedicines()
+      console.log("🚀 ~ file: app.js ~ line 484 ~ createRegularVisit: ~ medicines", medicines);
+
+      let allData = heartRate + ":" + temperature + ":" + diagnosis + ":" + visitType + ":" + referral + ":" + followUp + ":" + medicines
+      const encryptedData = encryptWithAES(allData, currentAddress)
+
+      print("ENCRYPTION", 1)
+      print("Encrypted Data: " + encryptedData)
+
+      const dispatchCreate = async (address, hash, sign, data, acc) => {
+        await App.EHR_Contract.createRegularVisit(patientID, hash, sign, data, { from: acc })
+      }
+
+      await App.creationHelper(encryptedData, dispatchCreate)
+
+      print("REGULAR VISIT ADDED SUCCESSFULLY", 1)
+    } catch (error) {
+      print("error: " + error);
+      window.alert("Sorry you are not authorized")
+    }
+  },
+
+  viewPatientRegularVisits: async (incomingID) => {
+    let el = document.getElementsByClassName(`regularVisitBody`)[0]
+    let requiredPatient = parseInt($('#requiredPatientRegularVisit').val())
+    if (!requiredPatient) requiredPatient = incomingID
+    const regularVisitsCount = await App.EHR_Contract.getPatientRegularVisitsCount(requiredPatient, currentAddress)
+    print("Number of Regular Visits: " + regularVisitsCount)
+
+    while (el.hasChildNodes()) {
+      el.removeChild(el.lastChild);
+    }
+
+    for (let i = 0; i < regularVisitsCount; i++) {
+      let patient = await App.EHR_Contract.getPatientRegularVisits(requiredPatient, i, currentAddress);
+      let id = patient[0]
+      let patientID = patient[1]
+      let data = decryptWithAES(patient[4], currentAddress)
+      data = id + ":" + patientID + ":" + data
+
+      await draw(8, 'regularVisitBody', data)
+
+      let btn = document.createElement("button");
+      btn.id = id
+      btn.innerText = "Show"
+      btn.addEventListener('click', function handleClick(event) {
+        let container = document.getElementById(`medicinesClicked`)
+
+        let medicines = data.split(":")
+        medicines = medicines[medicines.length - 1]
+
+        let p = document.createElement("p");
+        p.innerText = medicines
+        container.appendChild(p)
+      });
+      el.lastChild.appendChild(btn)
+    }
+  },
+
+  viewMyRegularVisits: async () => {
+    let el = document.getElementsByClassName(`regularVisitBody`)[0]
+    const regularVisitsCount = await App.EHR_Contract.getClinicRegularVisitsCount(currentAddress)
+    print("Number of Regular Visits: " + regularVisitsCount)
+
+    while (el.hasChildNodes()) {
+      el.removeChild(el.lastChild);
+    }
+
+    for (let i = 0; i < regularVisitsCount; i++) {
+      let patient = await App.EHR_Contract.getClinicRegularVisits(i, currentAddress);
+      let id = patient[0]
+      let patientID = patient[1]
+      let data = decryptWithAES(patient[4], currentAddress)
+      data = id + ":" + patientID + ":" + data
+
+      await draw(8, 'regularVisitBody', data)
+
+      let btn = document.createElement("button");
+      btn.id = id
+      btn.innerText = "Show"
+      btn.addEventListener('click', function handleClick(event) {
+        let container = document.getElementById(`medicinesClicked`)
+
+        let medicines = data.split(":")
+        medicines = medicines[8]
+        medicines = medicines.substring(14)
+        let p = document.createElement("p");
+        p.innerText = !medicines ? "none" : `THE MEDICINES: ${medicines}`
+        container.appendChild(p)
+      });
+      el.lastChild.appendChild(btn)
+    }
+  },
+
+  handleAddMedicine: async () => {
+    let el = document.getElementById(`medicinesAdded`)
+    let name = $('#medicineName').val()
+    let dose = $('#medicineDose').val()
+    let period = $('#medicinePeriod').val()
+
+    let p = document.createElement("p");
+    p.innerText = "Name--> " + name + ", Dose--> " + dose + ", Period--> " + period
+    el.appendChild(p)
   },
 
   /******************** LAB VISITS *********************/
@@ -500,10 +615,10 @@ App = {
     }
   },
 
-  viewPatientLabVisits: async () => {
+  viewPatientLabVisits: async (incomingID) => {
     let el = document.getElementsByClassName(`labVisitBody`)[0]
-    const requiredPatient = parseInt($('#requiredPatientLabVisit').val())
-
+    let requiredPatient = parseInt($('#requiredPatientLabVisit').val())
+    if (!requiredPatient) requiredPatient = incomingID
     const labVisitsCount = await App.EHR_Contract.getPatientLabVisitsCount(requiredPatient, currentAddress)
     print("Number of Lab Visits: " + labVisitsCount)
 
@@ -540,141 +655,6 @@ App = {
 
       await draw(6, 'labVisitBody', data)
     }
-  },
-
-  /******************** REGULAR VISITS *********************/
-  renderRegularVisits: async () => {
-    const regularVisitsCount = await App.EHR_Contract.regularVisitsCount()
-    const $regularVisitTemplate = $('.regularVisitTemplate')
-
-    for (let i = 1; i <= regularVisitsCount; i++) {
-      let regularVisit = await App.EHR_Contract.regularVisits(i);
-
-      let $newTemplate = $regularVisitTemplate.clone()
-      $newTemplate.find('.regularVisitID').html(regularVisit[0].toNumber())
-      $newTemplate.find('.regularVisitHeartRate').html(regularVisit[3].toNumber())
-      $newTemplate.find('.regularVisitTemperature').html(regularVisit[4].toNumber())
-      $newTemplate.find('.regularVisitDiagnosis').html(regularVisit[5])
-      let types = ["Periodic Checkup", "Case Management", "Complain"]
-      $newTemplate.find('.regularVisitType').html(types[regularVisit[6].toNumber()])
-
-      // patients
-      let patient = $newTemplate.find('.regularVisitPatient')[0]
-      let p = document.createElement("p");
-      let count = document.createTextNode(regularVisit[1].toNumber());
-      p.appendChild(count);
-      patient.appendChild(p);
-      let btn = document.createElement("button");
-      let text = document.createTextNode("Show");
-      btn.id = regularVisit[1].toNumber()
-      btn.appendChild(text);
-      btn.addEventListener('click', function handleClick(event) {
-        App.viewPatientsRegularVisit(event.target.id)
-      });
-      patient.appendChild(btn);
-
-      // clinics
-      let clinic = $newTemplate.find('.regularVisitClinic')[0]
-      p = document.createElement("p");
-      count = document.createTextNode(regularVisit[2].toNumber());
-      p.appendChild(count);
-      clinic.appendChild(p);
-      btn = document.createElement("button");
-      text = document.createTextNode("Show");
-      btn.id = regularVisit[2].toNumber()
-      btn.appendChild(text);
-      btn.addEventListener('click', function handleClick(event) {
-        App.viewClinicsRegularVisit(event.target.id)
-      });
-      clinic.appendChild(btn);
-
-      // Prescription
-      let viewPatientsBtn = $newTemplate.find('.regularVisitPrescription')[0]
-      viewPatientsBtn.innerText = "View"
-      viewPatientsBtn.id = regularVisit[0].toNumber()
-      viewPatientsBtn.removeAttribute("hidden");
-      viewPatientsBtn.addEventListener('click', function handleClick(event) {
-        App.viewPrescription(event.target.id)
-      });
-
-      $('#regularVisitsTable').append($newTemplate)
-      App.savedRegularVisits.push(regularVisit)
-    }
-  },
-
-  viewPatientsRegularVisit: async (patientID) => {
-    let patientRegularVisits = (App.savedRegularVisits).filter((regularVisit) => regularVisit[1].toNumber() == patientID)
-
-    const $regularVisitPatientTemplate = $('.regularVisitPatientTemplate')
-
-    for (let i = 0; i < patientRegularVisits.length; i++) {
-      let $newTemplate = $regularVisitPatientTemplate.clone()
-      $newTemplate.find('.regularVisitPatientID').html(patientRegularVisits[i][0].toNumber())
-      $newTemplate.find('.regularVisitPatientClinicID').html(patientRegularVisits[i][2].toNumber())
-      $newTemplate.find('.regularVisitPatientHeartRate').html(patientRegularVisits[i][3].toNumber())
-      $newTemplate.find('.regularVisitPatientTemperature').html(patientRegularVisits[i][4].toNumber())
-      $newTemplate.find('.regularVisitPatientDiagnosis').html(patientRegularVisits[i][5])
-      let types = ["Periodic Checkup", "Case Management", "Complain"]
-      $newTemplate.find('.regularVisitPatientType').html(types[patientRegularVisits[i][6].toNumber()])
-
-      // Prescription
-      let viewPatientsBtn = $newTemplate.find('.regularVisitPatientPrescription')[0]
-      viewPatientsBtn.innerText = "View"
-      viewPatientsBtn.id = patientRegularVisits[i][0].toNumber()
-      viewPatientsBtn.removeAttribute("hidden");
-      viewPatientsBtn.addEventListener('click', function handleClick(event) {
-        App.viewPrescription(event.target.id)
-      });
-
-      $('#RegularVisitsPatientsTable').append($newTemplate)
-    }
-  },
-
-  viewClinicsRegularVisit: async (clinicID) => {
-    let clinicRegularVisits = (App.savedRegularVisits).filter((regularVisit) => regularVisit[2].toNumber() == clinicID)
-
-    const $regularVisitClinicTemplate = $('.regularVisitClinicTemplate')
-
-    for (let i = 0; i < clinicRegularVisits.length; i++) {
-      let $newTemplate = $regularVisitClinicTemplate.clone()
-      $newTemplate.find('.regularVisitClinicID').html(clinicRegularVisits[i][0].toNumber())
-      $newTemplate.find('.regularVisitClinicPatientID').html(clinicRegularVisits[i][1].toNumber())
-      $newTemplate.find('.regularVisitClinicHeartRate').html(clinicRegularVisits[i][3].toNumber())
-      $newTemplate.find('.regularVisitClinicTemperature').html(clinicRegularVisits[i][4].toNumber())
-      $newTemplate.find('.regularVisitClinicDiagnosis').html(clinicRegularVisits[i][5])
-      let types = ["Periodic Checkup", "Case Management", "Complain"]
-      $newTemplate.find('.regularVisitClinicType').html(types[clinicRegularVisits[i][6].toNumber()])
-
-      // Prescription
-      let viewClinicsBtn = $newTemplate.find('.regularVisitClinicPrescription')[0]
-      viewClinicsBtn.innerText = "View"
-      viewClinicsBtn.id = clinicRegularVisits[i][0].toNumber()
-      viewClinicsBtn.removeAttribute("hidden");
-      viewClinicsBtn.addEventListener('click', function handleClick(event) {
-        App.viewPrescription(event.target.id)
-      });
-
-      $('#RegularVisitsClinicsTable').append($newTemplate)
-    }
-  },
-
-  createRegularVisit: async () => {
-    App.setLoading(true)
-    const patient = $('#newRegularVisitPatient').val()
-    const clinic = $('#newRegularVisitClinic').val()
-    const heartRate = $('#newRegularVisitHeartRate').val()
-    const temperature = $('#newRegularVisitTemperature').val()
-    const diagnosis = $('#newRegularVisitDiagnosis').val()
-    const type = document.querySelector('input[name="newRegularVisitVisitType"]:checked').value;
-    const referral = $('#newRegularVisitReferral').val()
-    const followUp = $('#newRegularVisitFollowUp').val()
-    const lab = $('#newRegularVisitLab').val()
-
-    const result = await App.EHR_Contract.createRegularVisit(patient, clinic, heartRate, temperature, diagnosis, type,
-      referral, followUp, lab, App.numberOfAddedMedicines, { from: App.account })
-    numberOfAddedMedicines = 0;
-    addedMedicines = []
-    window.location.reload()
   },
 
   /******************** PRESCRIPTION *********************/
@@ -768,22 +748,6 @@ App = {
     await renderMedicines()
   },
 
-
-  // createLabVisit: async () => {
-  //   App.setLoading(true)
-  //   const patientId = $('#newLabVisitPatient').val()
-  //   const heartRate = $('#newLabVisitHeartRate').val()
-  //   const temperature = $('#newLabVisitTemperature').val()
-  //   const testType = $('#newLabTestType').val()
-  //   const testResult = $('#newLabVisitTestResult').val()
-
-  //   const patient = (App.savedPatients).find((patient) => patient[0].toNumber() == patientId)
-  //   const clinicId = patient[1].toNumber()
-
-  //   const result = await App.EHR_Contract.createLabVisit(patientId, clinicId, heartRate, temperature, testType, testResult, { from: App.account })
-  //   window.location.reload()
-  // },
-
   /******************** SEEDING *********************/
   seedingFunction: async () => {
     // CLINICS
@@ -822,6 +786,17 @@ const draw = async (items, className, data) => {
 
   el.append(bodyItem)
 };
+
+const getMedicines = async () => {
+  let res = ""
+  const el = document.getElementById(`medicinesAdded`)
+  const children = el.childNodes
+  children.forEach(p => {
+    res = res + " + " + p.innerText;
+  });
+
+  return res
+}
 
 const encryptWithAES = (text, key) => {
   return CryptoJS.AES.encrypt(text, key).toString();

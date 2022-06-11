@@ -108,7 +108,71 @@
           <hr />
         </div>
 
-        <!-- TODO Lab visits -->
+        <!--  Regular visits -->
+        <div class="innerContainer">
+          <h2 class="title">Regular Visits</h2>
+          <div class="section">
+            <h4 class="subTitle">Add Regular Visit</h3>
+              <form onsubmit="App.createRegularVisit(); return false;">
+                <input id="newRegularVisitPatient" type="text" placeholder="Patient ID" required></input>
+                <input id="newRegularVisitHeartRate" type="number" placeholder="Heart Rate" required></input>
+                <input id="newRegularVisitTemperature" type="number" placeholder="Temperature" required></input>
+                <input id="newRegularVisitDiagnosis" type="text" placeholder="Diagnosis" required></input>
+
+                <!-- Visit type  -->
+                <input type="radio" id="periodCheckup" name="newRegularVisitVisitType" value="0">
+                <label for="periodCheckup">Period Checkup</label><br>
+                <input type="radio" id="caseManagement" name="newRegularVisitVisitType" value="1">
+                <label for="caseManagement">Case Management</label><br>
+                <input type="radio" id="complain" name="newRegularVisitVisitType" value="2">
+                <label for="complain">Complain</label>
+
+                <!-- Prescriptions -->
+                <input id="newRegularVisitReferral" type="text" placeholder="Referral" required></input>
+                <input id="newRegularVisitFollowUp" type="text" placeholder="FollowUp" required></input>
+                <h6>Add medicine lists</h6>
+                <div id="medicinesAdded">
+                </div>
+                <input id="medicineName" type="text" placeholder="Medicine Name" required></input>
+                <input id="medicineDose" type="text" placeholder="Medicine Dose" required></input>
+                <input id="medicinePeriod" type="text" placeholder="Medicine Period" required></input>
+                <button onclick="App.handleAddMedicine(); return false;" type="submit">Add Medicine</button>
+                <button type="submit">Record Regular Visit</button>
+              </form>
+          </div>
+          <div class="section">
+            <h4 class="subTitle">Find patient's regular vists</h4>
+            <form onsubmit="App.viewPatientRegularVisits(); return false;">
+              <input id="requiredPatientRegularVisit" placeholder="Patient ID" required></input>
+              <button type="submit">Find Regular Visits</button>
+            </form>
+          </div>
+          <div class="section">
+            <h4 class="subTitle">Regular Visits Data</h3>
+              <button onclick="App.viewAllRegularVisits(); return false;">View All Regular Visits</button>
+              <button onclick="App.viewMyRegularVisits(); return false;">View My Regular Visits</button>
+              <table id="regularVisitTable" class="table">
+                <div class="tableHeader">
+                  <p>Visit ID</p>
+                  <p>Patient ID</p>
+                  <p>Heart Rate</p>
+                  <p>Temperature</p>
+                  <p>Diagnosis</p>
+                  <p>Visit Type</p>
+                  <p>Referral</p>
+                  <p>Follow up</p>
+                  <p>Medicines</p>
+                </div>
+                <div class="regularVisitBody tableBody"></div>
+              </table>
+          </div>
+          <div id="medicinesClicked">
+
+          </div>
+          <hr />
+        </div>
+
+        <!--  Lab visits -->
         <div class="innerContainer">
           <h2 class="title">Lab Visits</h2>
           <div class="section">
@@ -118,7 +182,7 @@
                 <input id="newLabVisitHeartRate" type="number" placeholder="Heart Rate" required></input>
                 <input id="newLabVisitTemperature" type="number" placeholder="Temperature" required></input>
                 <input id="newLabVisitTestType" type="text" placeholder="Test Type" required></input>
-                <input id="newLabVisitTestResult" type="number" placeholder="Test Result" required></input>
+                <input id="newLabVisitTestResult" type="text" placeholder="Test Result" required></input>
                 <button type="submit">Record Lab Visit</button>
               </form>
           </div>
@@ -147,6 +211,7 @@
           </div>
           <hr />
         </div>
+
       </div>
     </div>
 

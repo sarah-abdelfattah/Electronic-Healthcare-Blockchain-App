@@ -18,19 +18,22 @@ contract EHR {
     int256 public clinicsCount = 0;
     int256 public regularVisitsCount = 0;
     int256 public labVisitsCount = 0;
-    int256 public prescriptionsCount = 0;
-    int256 public medicinesCount = 0;
+    // int256 public prescriptionsCount = 0;
+    // int256 public medicinesCount = 0;
 
     mapping(int256 => Clinic) public clinics;
     mapping(int256 => Patient) public patients;
     mapping(int256 => RegularVisit) public regularVisits;
     mapping(int256 => LabVisit) public labVisits;
-    mapping(int256 => Prescription) public prescriptions;
-    mapping(int256 => Medicine) public medicines;
+    // mapping(int256 => Prescription) public prescriptions;
+    // mapping(int256 => Medicine) public medicines;
 
     mapping(address => bool) public availableClinics;
     mapping(address => int256) public mapClinicAddressToID;
     mapping(address => Patient[]) clinicPatients; //Clinic Address -> patients
+
+    mapping(int256 => RegularVisit[]) patientsRegularVisits; //Patient ID -> regularVisits
+    mapping(address => RegularVisit[]) clinicsRegularVisits; //Clininc Address -> regularVisits
 
     mapping(int256 => LabVisit[]) patientsLabVisits; //Patient ID -> labVisits
     mapping(address => LabVisit[]) clinicsLabVisits; //Clininc Address -> labVisits
@@ -59,11 +62,10 @@ contract EHR {
     struct RegularVisit {
         int256 regularVisitID;
         int256 patientID;
-        int256 clinicID;
-        int256 visitHeartRate;
-        int256 visitTemperature;
-        string diagnosis;
-        // VisitTypes visitType;
+        address clinicAddress; //the clinic that added it
+        bytes32 hashMessage;
+        string data; //visitHeartRate + visitTemperature + diagnosis + visitType + Prescription
+        // Prescription prescription;
     }
 
     struct LabVisit {
@@ -74,22 +76,22 @@ contract EHR {
         string data; //visitHeartRate + visitTemperature + testType + testResult
     }
 
-    struct Prescription {
-        int256 regularVisitID;
-        string referral;
-        string followUp;
-        string lab;
-        int256 numberOfMedicines;
-        int256 medicineOffset;
-    }
+    // struct Prescription {
+    //     int256 regularVisitID;
+    //     string referral;
+    //     string followUp;
+    //     strin regular;
+    //     int256 numberOfMedicines;
+    //     int256 medicineOffset;
+    // }
 
-    struct Medicine {
-        int256 medicineId;
-        int256 regularVisitID;
-        string name;
-        string dose;
-        string period;
-    }
+    // struct Medicine {
+    //     int256 medicineId;
+    //     int256 regularVisitID;
+    //     string name;
+    //     string dose;
+    //     string period;
+    // }
 
     constructor() public {
         systemAdmin = msg.sender;
@@ -208,7 +210,10 @@ contract EHR {
         view
         returns (uint256)
     {
-        require(isClinic(_sender), "Sorry, you are not authorized");
+        require(
+            isClinic(_sender) && patientBelongsToSender(_id, _sender),
+            "Sorry, you are not authorized"
+        );
         return patientsLabVisits[_id].length;
     }
 
@@ -239,75 +244,74 @@ contract EHR {
         return clinicsLabVisits[_sender][_visitID];
     }
 
-    // function createRegularVisit(
-    //     int256 _patientID,
-    //     int256 _clinicID,
-    //     int256 _visitHeartRate,
-    //     int256 _visitTemperature,
-    //     string memory _diagnosis,
-    //     VisitTypes _visitType,
-    //     string memory _referral,
-    //     string memory _followUp,
-    //     string memory _lab,
-    //     int256 _numberOfMedicines
-    // ) public {
-    //     // VisitTypes temp = VisitTypes.periodicCheckup;
-    //     // if (_visitType == 0) {
-    //     //     temp = VisitTypes.periodicCheckup;
-    //     // } else if (_visitType == 1) {
-    //     //     temp = VisitTypes.caseManagement;
-    //     // } else {
-    //     //     temp = VisitTypes.complain;
-    //     // }
+    function createRegularVisit(
+        int256 _patientID,
+        bytes32 _hash,
+        bytes memory _signature,
+        string memory _data
+    ) public {
+        address recoveredAddress = recover(_hash, _signature);
+        require(
+            isClinic(recoveredAddress) &&
+                patientBelongsToSender(_patientID, recoveredAddress),
+            "Sorry, you are not authorized"
+        );
 
-    //     patients[_patientID].numberOfRegularVisits =
-    //         patients[_patientID].numberOfRegularVisits +
-    //         1;
+        regularVisitsCount++;
+        regularVisits[regularVisitsCount] = RegularVisit(
+            regularVisitsCount,
+            _patientID,
+            recoveredAddress,
+            _hash,
+            _data
+        );
 
-    //     regularVisitsCount++;
+        patientsRegularVisits[_patientID].push(
+            regularVisits[regularVisitsCount]
+        );
+        clinicsRegularVisits[recoveredAddress].push(
+            regularVisits[regularVisitsCount]
+        );
+    }
 
-    //     regularVisits[regularVisitsCount] = RegularVisit(
-    //         regularVisitsCount,
-    //         _patientID,
-    //         _clinicID,
-    //         _visitHeartRate,
-    //         _visitTemperature,
-    //         _diagnosis,
-    //         _visitType
-    //     );
+    function getPatientRegularVisitsCount(int256 _id, address _sender)
+        public
+        view
+        returns (uint256)
+    {
+        require(
+            isClinic(_sender) && patientBelongsToSender(_id, _sender),
+            "Sorry, you are not authorized"
+        );
+        return patientsRegularVisits[_id].length;
+    }
 
-    //     createPrescription(
-    //         regularVisitsCount,
-    //         _referral,
-    //         _followUp,
-    //         _lab,
-    //         _numberOfMedicines
-    //     );
-    // }
+    function getPatientRegularVisits(
+        int256 _id,
+        uint256 _visitID,
+        address _sender
+    ) public view returns (RegularVisit memory) {
+        require(isClinic(_sender), "Sorry, you are not authorized");
+        return patientsRegularVisits[_id][_visitID];
+    }
 
-    // function createLabVisit(
-    //     int256 _patientID,
-    //     int256 _clinicID,
-    //     int256 _visitHeartRate,
-    //     int256 _visitTemperature,
-    //     string memory _testType,
-    //     string memory _testResult
-    // ) public {
-    //     patients[_patientID].numberOfLabVisits =
-    //         patients[_patientID].numberOfLabVisits +
-    //         1;
+    function getClinicRegularVisitsCount(address _sender)
+        public
+        view
+        returns (uint256)
+    {
+        require(isClinic(_sender), "Sorry, you are not authorized");
+        return clinicsRegularVisits[_sender].length;
+    }
 
-    //     labVisitsCount++;
-    //     labVisits[labVisitsCount] = LabVisit(
-    //         labVisitsCount,
-    //         _patientID,
-    //         _clinicID,
-    //         _visitHeartRate,
-    //         _visitTemperature,
-    //         _testType,
-    //         _testResult
-    //     );
-    // }
+    function getClinicRegularVisits(uint256 _visitID, address _sender)
+        public
+        view
+        returns (RegularVisit memory)
+    {
+        require(isClinic(_sender), "Sorry, you are not authorized");
+        return clinicsRegularVisits[_sender][_visitID];
+    }
 
     // function createPrescription(
     //     int256 _regularVisitID,
