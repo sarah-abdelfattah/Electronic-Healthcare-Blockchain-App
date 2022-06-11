@@ -129,13 +129,14 @@
 
                 <!-- Prescriptions -->
                 <input id="newRegularVisitReferral" type="text" placeholder="Referral" required></input>
-                <input id="newRegularVisitFollowUp" type="text" placeholder="FollowUp" required></input>
+                <input id="newRegularVisitFollowUp" type="text" placeholder="Follow Up" required></input>
+                <input id="newRegularVisitLabTest" type="text" placeholder="Lab Test" required></input>
                 <h6>Add medicine lists</h6>
                 <div id="medicinesAdded">
                 </div>
-                <input id="medicineName" type="text" placeholder="Medicine Name" required></input>
-                <input id="medicineDose" type="text" placeholder="Medicine Dose" required></input>
-                <input id="medicinePeriod" type="text" placeholder="Medicine Period" required></input>
+                <input id="medicineName" type="text" placeholder="Medicine Name"></input>
+                <input id="medicineDose" type="text" placeholder="Medicine Dose"></input>
+                <input id="medicinePeriod" type="text" placeholder="Medicine Period"></input>
                 <button onclick="App.handleAddMedicine(); return false;" type="submit">Add Medicine</button>
                 <button type="submit">Record Regular Visit</button>
               </form>
@@ -161,6 +162,7 @@
                   <p>Visit Type</p>
                   <p>Referral</p>
                   <p>Follow up</p>
+                  <p>Lab test</p>
                   <p>Medicines</p>
                 </div>
                 <div class="regularVisitBody tableBody"></div>

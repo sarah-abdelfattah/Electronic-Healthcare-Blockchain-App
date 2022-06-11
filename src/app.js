@@ -7,14 +7,13 @@
  * 5- verify
  */
 
-adminAddress = "0xfA256B842c59D6257a819C1FA4A342EE185a16E5"
+adminAddress = "0x9840B0d3264990d862AbF1502dB91D20cB2c4d76"
 clinicAddresses =
-  ["0xdF252F4b48dC5954ca39822E41479cD5B1ff72c9",
-    "0x3c59C0B1C9CCDaa0f8061D165e6835C1f9100702",
-    "0xC7fC962AA4E5246181A8458b98C1b0858b4dbc63",
-    "0xa71361B829ff13Ddd08Fb3a01b1875DF4d7Fe174",
-    "0x1b4b18e5688ab4C038fadeA33B6E13F88F8A21e1",
-    "0xF88Dce941C183D5B775B1F0e52f06F1fC49B2e47"
+  ["0x5a9BFbF072AE04CDda9C6f06604CC9c78450248D",
+    "0x895FF686a3Eb5d99a4d4bCd3ee4b87687C8e30b8",
+    "0x35127f7Fc44a5dEcC9CEa199bc7c0EE131E688Bd",
+    "0xf356C633Eee36390B4F5d9d5A8e881aAca4C83e7",
+    "0x48d59971aB86EDa62E0661235766377a65000D1F",
   ]
 currentAddress = ""
 vTypes = ['Period Checkup', 'Case Management', 'Complain']
@@ -479,11 +478,11 @@ App = {
       const visitType = vTypes[parseInt(document.querySelector('input[name="newRegularVisitVisitType"]:checked').value)];
       const referral = $('#newRegularVisitReferral').val()
       const followUp = $('#newRegularVisitFollowUp').val()
+      const labTest = $('#newRegularVisitLabTest').val()
 
       const medicines = await getMedicines()
-      console.log("🚀 ~ file: app.js ~ line 484 ~ createRegularVisit: ~ medicines", medicines);
 
-      let allData = heartRate + ":" + temperature + ":" + diagnosis + ":" + visitType + ":" + referral + ":" + followUp + ":" + medicines
+      let allData = heartRate + ":" + temperature + ":" + diagnosis + ":" + visitType + ":" + referral + ":" + followUp + ":" + labTest + ":" + medicines
       const encryptedData = encryptWithAES(allData, currentAddress)
 
       print("ENCRYPTION", 1)
@@ -520,7 +519,7 @@ App = {
       let data = decryptWithAES(patient[4], currentAddress)
       data = id + ":" + patientID + ":" + data
 
-      await draw(8, 'regularVisitBody', data)
+      await draw(9, 'regularVisitBody', data)
 
       let btn = document.createElement("button");
       btn.id = id
@@ -555,7 +554,7 @@ App = {
       let data = decryptWithAES(patient[4], currentAddress)
       data = id + ":" + patientID + ":" + data
 
-      await draw(8, 'regularVisitBody', data)
+      await draw(9, 'regularVisitBody', data)
 
       let btn = document.createElement("button");
       btn.id = id
@@ -564,7 +563,8 @@ App = {
         let container = document.getElementById(`medicinesClicked`)
 
         let medicines = data.split(":")
-        medicines = medicines[8]
+        medicines = medicines[9]
+        console.log("🚀 ~ file: app.js ~ line 567 ~ handleClick ~ medicines", medicines);
         medicines = medicines.substring(14)
         let p = document.createElement("p");
         p.innerText = !medicines ? "none" : `THE MEDICINES: ${medicines}`
