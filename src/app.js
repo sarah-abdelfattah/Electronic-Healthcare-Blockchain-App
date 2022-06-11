@@ -16,7 +16,7 @@ clinicAddresses =
     "0x48d59971aB86EDa62E0661235766377a65000D1F",
   ]
 currentAddress = ""
-vTypes = ['Period Checkup', 'Case Management', 'Complain']
+vTypes = ['Period Checkup', 'Case Management', 'Complaint']
 
 App = {
   loading: false,
