@@ -1,40 +1,40 @@
-body{
+body {
   background-color: #F6F6F6;
   padding: 2rem
 }
 
-hr{
+hr {
   border: none;
   border-top: 2px solid #b1b1b1;
   margin: 0;
 }
 
-h1{
+h1 {
   text-align: center;
   margin: 0;
 }
 
-p{
+p {
   text-align: center;
   margin: 1rem 0;
 }
 
-.container{
+.container {
   background-color: white;
   border-radius: 15px;
   padding: 1rem 2rem;
 }
 
-.innerContainer{
+.innerContainer {
   margin-bottom: 3rem;
 }
 
-.title{
+.title {
   color: #01334b;
   margin: 10px 0;
 }
 
-.section{
+.section {
   margin-bottom: 25px;
 }
 
@@ -43,11 +43,12 @@ p{
   margin: 0.5rem 0;
 }
 
-input, textarea{
+input,
+textarea {
   display: block;
   width: 30%;
   margin: 0;
-  padding: 0.5rem 0.75rem ;
+  padding: 0.5rem 0.75rem;
   border: none;
   border-radius: 5px;
   transition: box-shadow 300ms;
@@ -57,17 +58,17 @@ input, textarea{
   border: 2px solid #F2F2F2;
 }
 
-.table{
+.table {
   width: 100%;
   border-radius: 5px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
 }
 
-  /* font-family: 'Courier New', Courier, monospace; */
+/* font-family: 'Courier New', Courier, monospace; */
 
-.tableHeader{
+.tableHeader {
   font-size: 20px;
   font-weight: 500;
   color: #ffffff;
@@ -78,48 +79,43 @@ input, textarea{
   align-items: center;
 }
 
-.bodyItem{
-display: flex;
-flex-direction: row;
- justify-content: space-around;
+.bodyItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
   align-items: center;
 }
 
-.tableBody{
+.tableBody {
   background: #fafafa;
 }
 
- .tableBody div:nth-of-type(even){
+.tableBody div:nth-of-type(even) {
   background: #f5f5f5;
 }
 
-
-button{
+button {
   margin: 1rem 0;
-}
-
-button{
   border: none;
   border-radius: 5px;
   padding: 5px 15px;
   color: white;
   background-color: #871c1c;
   cursor: pointer;
-  
 }
 
-h6{
+h6 {
   margin-top: 1rem;
 }
 
-input[type="radio"]{
-display: inline;
-width: 25px;
-margin-right: 10px;
+input[type="radio"] {
+  display: inline;
+  width: 25px;
+  margin-right: 10px;
 }
 
-#periodCheckup{
-margin-top: 25px;
+#periodCheckup {
+  margin-top: 25px;
 }
 
 #complaint {
