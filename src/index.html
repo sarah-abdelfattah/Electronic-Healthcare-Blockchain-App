@@ -8,14 +8,14 @@
     <!-- Bootstrap -->
     <link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <title>Security project</title>
+    <title>Security Project</title>
   </head>
 
   <body>
     <h1 id="loader">Loading...</h1>
     <div id="content">
       <h1>EHR</h1>
-      <p>A blockchain application for Electronic Healpcare Records</p>
+      <p>A blockchain application for Electronic Healthcare Records</p>
 
       <div class="container">
         <!-- ACCOUNT -->
@@ -33,7 +33,7 @@
           <div class="section">
             <h4 class="subTitle">Add New Clinic</h4>
             <form onsubmit="App.createClinic(); return false;">
-              <input id="newClinicLocation" placeholder="Clinic location" required></input>
+              <input id="newClinicLocation" placeholder="Clinic Location" required></input>
               <button type="submit">Create Clinic</button>
             </form>
           </div>
@@ -108,7 +108,7 @@
           <hr />
         </div>
 
-        <!--  Regular visits -->
+        <!-- Regular Visits -->
         <div class="innerContainer">
           <h2 class="title">Regular Visits</h2>
           <div class="section">
@@ -119,13 +119,13 @@
                 <input id="newRegularVisitTemperature" type="number" placeholder="Temperature" required></input>
                 <input id="newRegularVisitDiagnosis" type="text" placeholder="Diagnosis" required></input>
 
-                <!-- Visit type  -->
+                <!-- Visit Type -->
                 <input type="radio" id="periodCheckup" name="newRegularVisitVisitType" value="0">
                 <label for="periodCheckup">Period Checkup</label><br>
                 <input type="radio" id="caseManagement" name="newRegularVisitVisitType" value="1">
                 <label for="caseManagement">Case Management</label><br>
-                <input type="radio" id="complain" name="newRegularVisitVisitType" value="2">
-                <label for="complain">Complain</label>
+                <input type="radio" id="complaint" name="newRegularVisitVisitType" value="2">
+                <label for="complaint">Complaint</label>
 
                 <!-- Prescriptions -->
                 <input id="newRegularVisitReferral" type="text" placeholder="Referral" required></input>
@@ -142,7 +142,7 @@
               </form>
           </div>
           <div class="section">
-            <h4 class="subTitle">Find patient's regular vists</h4>
+            <h4 class="subTitle">Find patient's regular visits</h4>
             <form onsubmit="App.viewPatientRegularVisits(); return false;">
               <input id="requiredPatientRegularVisit" placeholder="Patient ID" required></input>
               <button type="submit">Find Regular Visits</button>
@@ -161,8 +161,8 @@
                   <p>Diagnosis</p>
                   <p>Visit Type</p>
                   <p>Referral</p>
-                  <p>Follow up</p>
-                  <p>Lab test</p>
+                  <p>Follow Up</p>
+                  <p>Lab Test</p>
                   <p>Medicines</p>
                 </div>
                 <div class="regularVisitBody tableBody"></div>
@@ -174,7 +174,7 @@
           <hr />
         </div>
 
-        <!--  Lab visits -->
+        <!-- Lab Visits -->
         <div class="innerContainer">
           <h2 class="title">Lab Visits</h2>
           <div class="section">
@@ -189,7 +189,7 @@
               </form>
           </div>
           <div class="section">
-            <h4 class="subTitle">Find patient's lab vists</h4>
+            <h4 class="subTitle">Find patient's lab visits</h4>
             <form onsubmit="App.viewPatientLabVisits(); return false;">
               <input id="requiredPatientLabVisit" placeholder="Patient ID" required></input>
               <button type="submit">Find Lab Visits</button>
@@ -216,7 +216,6 @@
 
       </div>
     </div>
-
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
