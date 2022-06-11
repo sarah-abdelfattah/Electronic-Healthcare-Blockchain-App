@@ -107,3 +107,21 @@ button{
   cursor: pointer;
   
 }
+
+h6{
+  margin-top: 1rem;
+}
+
+input[type="radio"]{
+display: inline;
+width: 25px;
+margin-right: 10px;
+}
+
+#periodCheckup{
+margin-top: 25px;
+}
+
+#complain{
+  margin-bottom: 25px;
+}
